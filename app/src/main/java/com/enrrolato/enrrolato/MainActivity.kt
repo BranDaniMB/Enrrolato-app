@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
             val intento1 = Intent(this, Menu_screen::class.java)
             startActivity(intento1)
 
+            // HOLI
+
         }
     }
     }

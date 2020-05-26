@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         button.setOnClickListener {
-            val intento1 = Intent(this, Menu_screen::class.java)
+            val intento1 = Intent(this, MenuScreen::class.java)
             startActivity(intento1)
 
             // HOLI

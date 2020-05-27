@@ -7,5 +7,7 @@
     <color name="cyan">#2EB7BD</color>
     <color name="darkCyan">#0D181C</color>
     <color name="orange">#F9B122</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
 </resources>

@@ -1,8 +1,10 @@
 package com.enrrolato.enrrolato
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +24,25 @@ class MainActivity : AppCompatActivity() {
 
         // Setup
         setup()
+        // Session Verifica si ya se inicio sesión
+        session()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        loginLayout.visibility = View.VISIBLE
+    }
+
+    private fun session() {
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        val email = prefs.getString("email", null)
+        val provider = prefs.getString("provider", null)
+
+        if (email != null && provider != null) {
+            loginLayout.visibility = View.INVISIBLE
+            showMenu(email, ProviderType.valueOf(provider))
+        }
     }
 
     private fun setup() {
@@ -55,7 +76,12 @@ class MainActivity : AppCompatActivity() {
         }*/
 
         // Para cerrar sesión
-        /*loginBtn.setOnClickListener{
+        /*loginBtn.setOnClickListener {
+            // Borrar los datos guardados
+            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+            prefs.clear()
+            prefs.apply()
+
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
         }*/

@@ -14,4 +14,7 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb571493460456296</string>
     <!-- Preferences File -->
     <string name="prefs_file" translatable="false">com.enrrolato.enrrolato.PREFERENCES_FILE_KEY</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

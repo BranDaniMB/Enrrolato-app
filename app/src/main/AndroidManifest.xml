@@ -16,6 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".MenuScreen"></activity>
+        <activity android:name=".ProfileScreenFragment"></activity>
+        <activity android:name=".PrincipalScreen" />
         <activity android:name=".MainActivity" android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

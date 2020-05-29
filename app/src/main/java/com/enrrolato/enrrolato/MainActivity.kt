@@ -22,6 +22,12 @@ import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
+enum class ProviderType {
+    BASIC,
+    GOOGLE,
+    FACEBOOK
+}
+
 class MainActivity : AppCompatActivity() {
 
     private val GOOGLE_SIGN_IN = 100;
@@ -190,7 +196,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showMenu(email: String, provider: ProviderType) {
-        val menuIntent = Intent(this, MenuScreen::class.java).apply {
+        val menuIntent = Intent(this, PrincipalScreen::class.java).apply {
             putExtra("email", email)
             putExtra("provider", provider)
         }

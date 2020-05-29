@@ -9,7 +9,8 @@ import androidx.core.content.ContextCompat
 
 enum class ProviderType {
     BASIC,
-    GOOGLE
+    GOOGLE,
+    FACEBOOK
 }
 
 class MenuScreen : AppCompatActivity() {

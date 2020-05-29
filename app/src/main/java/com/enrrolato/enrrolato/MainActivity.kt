@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Cambiamos al tema por defecto
-        setTheme(R.style.AppTheme)
+        setTheme(R.style.Theme_AppCompat_NoActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

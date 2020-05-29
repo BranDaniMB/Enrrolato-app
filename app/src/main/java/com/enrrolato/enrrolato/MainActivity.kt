@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private val callbackManager = CallbackManager.Factory.create();
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Cambiamos al tema por defecto
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

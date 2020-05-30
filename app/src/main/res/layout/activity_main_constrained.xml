@@ -132,15 +132,14 @@
             android:id="@+id/loginBtn"
             android:layout_width="192dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/round_shape"
             android:padding="5dp"
             android:text="@string/log_in_action"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/googleLoginBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resetPassword" />
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/facebookLoginBtn"
@@ -150,20 +149,17 @@
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
+        <com.google.android.gms.common.SignInButton
             android:id="@+id/googleLoginBtn"
-            android:layout_width="192dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/round_shape_light"
-            android:text="@string/google_log_in"
-            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/facebookLoginBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

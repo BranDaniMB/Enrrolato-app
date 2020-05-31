@@ -34,7 +34,6 @@ class PrincipalScreen : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener false
                 }
             }
-
         }
     }
 

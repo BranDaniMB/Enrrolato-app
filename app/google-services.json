@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "55283551393",
+    "firebase_url": "https://enrrolato-1588267227733.firebaseio.com",
+    "project_id": "enrrolato-1588267227733",
+    "storage_bucket": "enrrolato-1588267227733.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55283551393:android:22289dff17259c7cf5b4e0",
+        "android_client_info": {
+          "package_name": "com.enrrolato.enrrolato"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "55283551393-slbmg5o1jmtu2f1ms1b9ldkpkmvhn3t7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpo2Q1XkQt1t8Q4sAhPbA7ZQFhyC94XqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "55283551393-slbmg5o1jmtu2f1ms1b9ldkpkmvhn3t7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

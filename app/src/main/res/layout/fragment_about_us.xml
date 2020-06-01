@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AboutUsFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/ly_aboutUs">
 
     <LinearLayout
-        android:id="@+id/ly_aboutUs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/nav"
@@ -28,7 +28,7 @@
                 android:id="@+id/btBackToProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:backgroundTint="#FFFFFF"
+                android:backgroundTint="@color/cyan"
                 android:src="@drawable/ic_back" />
 
         <TextView
@@ -58,7 +58,7 @@
             android:gravity="center"
             android:text="Cafetería, bowls saludables y heladería artesanal con helados de rollo a la plancha en Sarchí"
             android:textColor="#000000"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -69,33 +69,45 @@
             android:layout_marginTop="45dp"
             android:layout_marginRight="75dp"
             android:gravity="center"
-            android:text="Teléfonos:
-                   8302-6566 / 8875-5945 "
+            android:text="Teléfonos:"
             android:textColor="#000000"
-            android:textSize="18sp"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtTelephone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="75dp"
+            android:layout_marginRight="75dp"
+            android:gravity="center"
+            android:text="8302-6566 / 8875-5945"
+            android:textColor="#000000"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             android:layout_marginBottom="30dp"
-            android:gravity="center">
+            android:layout_gravity="center">
 
             <ImageButton
+                android:id="@+id/btFB"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_fb"
                 android:backgroundTint="@color/cyan"/>
 
             <ImageButton
+                android:id="@+id/btIG"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_ig"
                 android:backgroundTint="@color/cyan"/>
 
         </LinearLayout>
-
 
     </LinearLayout>
 

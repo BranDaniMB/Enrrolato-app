@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">Enrrolato</string>
+    <string name="log_in_title">Iniciar sesión</string>
+    <string name="username">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="reset_password">Recupérala</string>
+    <string name="log_in_action">Ingresar</string>
+    <string name="google_log_in">Ingresar con Google</string>
+    <string name="facebook_log_in">Ingresar con Facebook</string>
+    <string name="sign_up">¿No tienes una cuenta? Crea una</string>
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_app_id" translatable="false">571493460456296</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb571493460456296</string>
+    <!-- Preferences File -->
+    <string name="prefs_file" translatable="false">com.enrrolato.enrrolato.PREFERENCES_FILE_KEY</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

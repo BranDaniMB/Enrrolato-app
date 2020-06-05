@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.enrrolato.enrrolato.database.Enrrolato
+import com.enrrolato.enrrolato.database.ProviderType
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -20,13 +22,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.activity_main.*
-
-enum class ProviderType {
-    BASIC,
-    GOOGLE,
-    FACEBOOK
-}
+import kotlinx.android.synthetic.main.activity_main_constrained.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -116,7 +112,7 @@ class MainActivity : AppCompatActivity() {
 
         // Google login
         val googleLogin:SignInButton = findViewById(R.id.googleLoginBtn)
-        googleLogin.setSize(SignInButton.SIZE_STANDARD);
+        googleLogin.setSize(SignInButton.SIZE_WIDE);
         googleLogin.setOnClickListener{
             val googleConfig = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -200,10 +196,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showMenu(email: String, provider: ProviderType) {
-        val menuIntent = Intent(this, PrincipalScreen::class.java).apply {
-            putExtra("email", email)
-            putExtra("provider", provider)
-        }
+        val menuIntent = Intent(this, PrincipalScreen::class.java)
+        Enrrolato.email = email
+        Enrrolato.provider = provider
         startActivity(menuIntent)
     }
 }

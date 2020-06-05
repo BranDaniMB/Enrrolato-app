@@ -6,8 +6,6 @@
     <string name="forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="reset_password">Recupérala</string>
     <string name="log_in_action">Ingresar</string>
-    <string name="google_log_in">Ingresar con Google</string>
-    <string name="facebook_log_in">Ingresar con Facebook</string>
     <string name="sign_up">¿No tienes una cuenta? Crea una</string>
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_app_id" translatable="false">571493460456296</string>

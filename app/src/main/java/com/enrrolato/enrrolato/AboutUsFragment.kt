@@ -20,8 +20,8 @@ import androidx.fragment.app.Fragment
  */
 public class AboutUsFragment : Fragment() {
 
-    var facebookId: String = "fb://page/310380802646024"
-    var urlPageFB: String = "https://www.facebook.com/CREACIONESMAPASU"
+    var facebookId: String = "fb://page/2662776063795795"
+    var urlPageFB: String = "https://www.facebook.com/Enrrolato"
     var urlPageIG: Uri = Uri.parse("http://instagram.com/_u/enrrolato")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        //loginLayout.visibility = View.VISIBLE
+        loginLayout.visibility = View.VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         val provider = prefs.getString("provider", null)
 
         if (email != null && provider != null) {
-            //loginLayout.visibility = View.INVISIBLE
+            loginLayout.visibility = View.INVISIBLE
             showMenu(email, ProviderType.valueOf(provider))
         }
     }
@@ -191,8 +191,8 @@ class MainActivity : AppCompatActivity() {
         builder.setTitle("Error")
         builder.setMessage("Se ha producido un error autenticando el usuario")
         builder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog =  builder.create();
-        dialog.show();
+        val dialog: AlertDialog =  builder.create()
+        dialog.show()
     }
 
     private fun showMenu(email: String, provider: ProviderType) {

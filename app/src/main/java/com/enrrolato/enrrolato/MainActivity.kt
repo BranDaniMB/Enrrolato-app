@@ -2,31 +2,27 @@ package com.enrrolato.enrrolato
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.enrrolato.enrrolato.database.Enrrolato
+import com.enrrolato.enrrolato.database.ProviderType
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.internal.CallbackManagerImpl
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.activity_main.*
-
-enum class ProviderType {
-    BASIC,
-    GOOGLE,
-    FACEBOOK
-}
+import kotlinx.android.synthetic.main.activity_main_constrained.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         // Cambiamos al tema por defecto
         setTheme(R.style.Theme_AppCompat_NoActionBar)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main_constrained)
 
         // Analytics Event
         val analytics : FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -74,6 +70,8 @@ class MainActivity : AppCompatActivity() {
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 showMenu(account.email ?: "", ProviderType.GOOGLE)
+                            } else if (it.isCanceled) {
+
                             } else {
                                 showAlert();
                             }
@@ -113,7 +111,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Google login
-        googleLoginBtn.setOnClickListener{
+        val googleLogin:SignInButton = findViewById(R.id.googleLoginBtn)
+        googleLogin.setSize(SignInButton.SIZE_WIDE);
+        googleLogin.setOnClickListener{
             val googleConfig = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -191,15 +191,14 @@ class MainActivity : AppCompatActivity() {
         builder.setTitle("Error")
         builder.setMessage("Se ha producido un error autenticando el usuario")
         builder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog =  builder.create();
-        dialog.show();
+        val dialog: AlertDialog =  builder.create()
+        dialog.show()
     }
 
     private fun showMenu(email: String, provider: ProviderType) {
-        val menuIntent = Intent(this, PrincipalScreen::class.java).apply {
-            putExtra("email", email)
-            putExtra("provider", provider)
-        }
+        val menuIntent = Intent(this, PrincipalScreen::class.java)
+        Enrrolato.email = email
+        Enrrolato.provider = provider
         startActivity(menuIntent)
     }
 }

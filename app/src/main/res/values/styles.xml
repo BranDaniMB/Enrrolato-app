@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/cyan</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/gotu_regular</item>
     </style>
     <!-- Splash Screen -->
     <style name="SplashTheme" parent="AppTheme">

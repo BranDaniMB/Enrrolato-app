@@ -30,6 +30,7 @@
             android:layout_marginTop="35dp"
             android:background="@drawable/round_shape"
             android:text="Crear helado"
+            android:fontFamily="@font/gotu_regular"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -39,6 +40,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="35dp"
             android:background="@drawable/round_shape"
+            android:fontFamily="@font/gotu_regular"
             android:text="Ver menú"
             android:textColor="#FFFFFF" />
 
@@ -50,6 +52,7 @@
             android:layout_marginTop="35dp"
             android:background="@drawable/round_shape"
             android:text="Helados de temporada"
+            android:fontFamily="@font/gotu_regular"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>

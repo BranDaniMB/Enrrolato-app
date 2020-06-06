@@ -25,6 +25,8 @@
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:text="Cuenta"
+            android:fontFamily="@font/gotu_regular"
+            android:textSize="12pt"
             android:textColor="#000000" />
 
         <TextView
@@ -35,6 +37,7 @@
             android:layout_marginLeft="30dp"
             android:gravity="left"
             android:text="Correo electrónico asociado"
+            android:fontFamily="@font/gotu_regular"
             android:textColor="#000000" />
 
         <TextView
@@ -44,6 +47,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="40dp"
             android:text="xxx@gmail.com"
+            android:fontFamily="@font/gotu_regular"
             android:textColor="#000000" />
 
         <Button
@@ -52,6 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="65dp"
+            android:fontFamily="@font/gotu_regular"
             android:background="@drawable/round_shape"
             android:text="Cambiar contraseña" />
 
@@ -61,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:fontFamily="@font/gotu_regular"
             android:background="@drawable/round_shape"
             android:text="Acerca de" />
 
@@ -71,6 +77,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:background="@drawable/round_shape"
+            android:fontFamily="@font/gotu_regular"
             android:text="Eliminar cuenta y datos" />
 
         <Button
@@ -79,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:fontFamily="@font/gotu_regular"
             android:background="@drawable/round_shape"
             android:text="Cerrar sesión" />
     </LinearLayout>

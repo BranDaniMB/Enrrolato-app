@@ -37,6 +37,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Acerca de"
+            android:fontFamily="@font/gotu_regular"
+            android:textSize="12pt"
             android:textColor="#000000"/>
 
         </LinearLayout>
@@ -58,7 +60,8 @@
             android:gravity="center"
             android:text="Cafetería, bowls saludables y heladería artesanal con helados de rollo a la plancha en Sarchí"
             android:textColor="#000000"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:fontFamily="@font/gotu_regular"
             android:textStyle="bold" />
 
         <TextView
@@ -71,7 +74,8 @@
             android:gravity="center"
             android:text="Teléfonos:"
             android:textColor="#000000"
-            android:textSize="15sp"
+            android:textSize="16sp"
+            android:fontFamily="@font/gotu_regular"
             android:textStyle="bold" />
 
         <TextView
@@ -83,7 +87,8 @@
             android:gravity="center"
             android:text="8302-6566 / 8875-5945"
             android:textColor="#000000"
-            android:textSize="15sp"
+            android:textSize="16sp"
+            android:fontFamily="@font/gotu_regular"
             android:textStyle="bold" />
 
         <LinearLayout

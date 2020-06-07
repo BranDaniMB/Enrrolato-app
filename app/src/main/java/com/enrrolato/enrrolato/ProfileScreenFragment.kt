@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import com.enrrolato.enrrolato.database.Enrrolato
 
 /**
  * A simple [Fragment] subclass.
@@ -17,6 +19,8 @@ import android.widget.Button
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile_screen, container, false)
         val btAbout = view.findViewById<View>(R.id.btAboutUs) as Button
+        val email = view.findViewById<View>(R.id.txtAssociatedEmail) as TextView
+        email.text = Enrrolato.email
 
         btAbout.setOnClickListener {
             showAbouUsFragment()

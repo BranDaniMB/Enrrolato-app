@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
-
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
  * A simple [Fragment] subclass.
@@ -20,11 +20,12 @@ import androidx.fragment.app.Fragment
  */
 public class AboutUsFragment : Fragment() {
 
-    var facebookId: String = "fb://page/2662776063795795"
-    var urlPageFB: String = "https://www.facebook.com/Enrrolato"
-    var urlPageIG: Uri = Uri.parse("http://instagram.com/_u/enrrolato")
+    private val facebookId: String = "fb://page/2662776063795795"
+    private val urlPageFB: String = "https://www.facebook.com/Enrrolato"
+    private val urlPageIG: Uri = Uri.parse("http://instagram.com/_u/enrrolato")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_about_us, container, false)
         val btProfile = view.findViewById<View>(R.id.btBackToProfile) as ImageButton
@@ -32,6 +33,7 @@ public class AboutUsFragment : Fragment() {
         val btInstagram = view.findViewById<View>(R.id.btIG) as ImageButton
 
         btProfile.setOnClickListener {
+            //nav.visibility = View.VISIBLE
             showProfileFragment()
         }
 
@@ -44,10 +46,6 @@ public class AboutUsFragment : Fragment() {
         }
 
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun showProfileFragment() {

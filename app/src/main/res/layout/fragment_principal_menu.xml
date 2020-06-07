@@ -1,57 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cyan"
     tools:context=".PrincipalMenuFragment">
 
-    <LinearLayout
-        android:id="@+id/ly_menu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/nav"
-        android:layout_weight="1"
-        android:background="@color/cyan"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/enrrolato"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/enrrolato_logo_description" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/enrrolato" />
+    <Button
+        android:id="@+id/btCreateIceCream"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/round_shape"
+        android:text="@string/create_ice_cream"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-        <Button
-            android:id="@+id/btCreateIceCream"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/round_shape"
-            android:text="Crear helado"
-            android:textColor="#FFFFFF" />
+    <Button
+        android:id="@+id/btShowMenu"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/round_shape"
+        android:text="@string/show_menu"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/btShowSeasonIcecream"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btCreateIceCream" />
 
-        <Button
-            android:id="@+id/btShowMenu"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/round_shape"
-            android:text="Ver menú"
-            android:textColor="#FFFFFF" />
+    <Button
+        android:id="@+id/btShowSeasonIcecream"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="128dp"
+        android:background="@drawable/round_shape"
+        android:text="@string/season_ice_cream"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/btShowSeasonIcecream"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/round_shape"
-            android:text="Helados de temporada"
-            android:textColor="#FFFFFF" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

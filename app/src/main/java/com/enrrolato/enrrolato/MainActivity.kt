@@ -23,6 +23,7 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_main_constrained.*
+import kotlinx.android.synthetic.main.activity_reset_password.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         setup()
         // Session Verifica si ya se inicio sesión
         session()
+
+        recoverPassword()
     }
 
     override fun onStart() {
@@ -200,6 +203,13 @@ class MainActivity : AppCompatActivity() {
         Enrrolato.email = email
         Enrrolato.provider = provider
         startActivity(menuIntent)
+    }
+
+    private fun recoverPassword() {
+        resetPassword.setOnClickListener {
+            val recovery = Intent(this, ResetPassword::class.java)
+            startActivity(recovery)
+        }
     }
 }
 

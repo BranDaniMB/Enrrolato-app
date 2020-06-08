@@ -4,18 +4,21 @@
     <item
         android:id="@+id/home"
         android:title="Inicio"
+        android:fontFamily="@font/gotu_regular"
         android:icon="@drawable/ic_home">
     </item>
 
     <item
         android:id="@+id/shop"
         android:title="Carrito"
+        android:fontFamily="@font/gotu_regular"
         android:icon="@drawable/ic_shop">
     </item>
 
     <item
         android:id="@+id/profile"
         android:title="Cuenta"
+        android:fontFamily="@font/gotu_regular"
         android:icon="@drawable/ic_profile">
     </item>
 

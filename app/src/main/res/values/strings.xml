@@ -1,5 +1,18 @@
 <resources>
-    <string name="app_name">Enrrolato</string>
+    <!--************ Alerts strings ************-->
+    <!-- General Alerts -->
+    <string name="accept_action">Aceptar</string>
+    <string name="alert_title">Ha ocurrido un error</string>
+    <!-- Different Passwords Alert -->
+    <string name="different_passwords">Las contraseñas no coinciden</string>
+    <!-- Sign Up Alert -->
+    <string name="sign_up_alert">Se ha producido un error al registrarse</string>
+    <!-- Log In Alert -->
+    <string name="log_in_alert">Se ha producido un error autenticando el usuario</string>
+
+    <!--************ Activity Strings ************-->
+    <!-- Log In Activity -->
+    <string name="app_name" translatable="false">Enrrolato</string>
     <string name="log_in_title">Iniciar sesión</string>
     <string name="username">Correo electrónico</string>
     <string name="password">Contraseña</string>
@@ -7,6 +20,32 @@
     <string name="reset_password">Recupérala</string>
     <string name="log_in_action">Ingresar</string>
     <string name="sign_up">¿No tienes una cuenta? Crea una</string>
+    <!-- Sign Up Activity -->
+    <string name="sign_up_title">Regístrate</string>
+    <string name="new_password">Ingresa tu contraseña</string>
+    <string name="repeat_password">Repite tu contraseña</string>
+    <string name="help_sign_up">Si quieres continuar con Google o Facebook, no es necesario que realices con este registro.</string>
+    <string name="sign_up_action">Registrarme</string>
+    <!-- About Us Fragment -->
+    <string name="about_us">Acerca de</string>
+    <string name="enrrolato_logo_description">Logo de Enrrolato</string>
+    <string name="facebook_logo_description">Logo de Facebook</string>
+    <string name="instagram_logo_description">Logo de Instagram</string>
+    <string name="enrrolato_description">Cafetería, bowls saludables y heladería artesanal con helados de rollo a la plancha en Sarchí</string>
+    <string name="phones_title">Teléfonos:</string>
+    <string name="phones_value">8302-6566 / 8875-5945</string>
+    <!-- Principal Menú -->
+    <string name="create_ice_cream">Crear helado</string>
+    <string name="show_menu">Ver menú</string>
+    <string name="season_ice_cream">Helados de temporada</string>
+    <!-- Profile Fragment -->
+    <string name="account">Cuenta</string>
+    <string name="email_text">Correo electrónico asociado</string>
+    <string name="change_password">Cambiar contraseña</string>
+    <string name="close_account">Eliminar cuenta y datos</string>
+    <string name="log_out">Cerrar sesión</string>
+
+    <!--************ Config Strings, don´t translate and touch ************-->
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_app_id" translatable="false">571493460456296</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb571493460456296</string>

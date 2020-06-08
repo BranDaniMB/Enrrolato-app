@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Cambiamos al tema por defecto
-        setTheme(R.style.Theme_AppCompat_NoActionBar)
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_constrained)
 
@@ -159,19 +159,10 @@ class MainActivity : AppCompatActivity() {
                 })
         }
 
-        // Para crear la cuenta, da error si ya esta creada.
-        /*loginBtn.setOnClickListener {
-            if (usernameField.text.isNullOrEmpty() && passwordField.text.isNullOrEmpty()) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(usernameField.text.toString()
-                    , passwordField.text.toString()).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showMenu(it.result?.user?.email ?: "", ProviderType.BASIC)
-                    } else {
-                        showAlert();
-                    }
-                }
-            }
-        }*/
+        signUpBtn.setOnClickListener {
+            val signUpIntent = Intent(this, SignUpActivity::class.java)
+            startActivity(signUpIntent)
+        }
 
         // Para cerrar sesión
         /*loginBtn.setOnClickListener {
@@ -191,9 +182,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showAlert() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error autenticando el usuario")
-        builder.setPositiveButton("Aceptar", null)
+        builder.setTitle(R.string.alert_title)
+        builder.setMessage(R.string.log_in_alert)
+        builder.setPositiveButton(R.string.accept_action, null)
         val dialog: AlertDialog =  builder.create()
         dialog.show()
     }

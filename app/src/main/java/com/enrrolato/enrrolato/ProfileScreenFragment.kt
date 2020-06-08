@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile_screen.*
 
+import com.enrrolato.enrrolato.database.Enrrolato
 
 /**
  * A simple [Fragment] subclass.
@@ -27,7 +28,6 @@ import kotlinx.android.synthetic.main.fragment_profile_screen.*
         val btAbout = view.findViewById<View>(R.id.btAboutUs) as Button
         val btExit = view.findViewById<View>(R.id.btLogout) as Button
         val btRestore = view.findViewById<View>(R.id.btChangePassword) as Button
-
         showEmail(view)
 
         btAbout.setOnClickListener {

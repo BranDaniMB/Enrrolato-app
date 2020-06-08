@@ -44,6 +44,14 @@
     <string name="change_password">Cambiar contraseña</string>
     <string name="close_account">Eliminar cuenta y datos</string>
     <string name="log_out">Cerrar sesión</string>
+    <!-- Reset Password -->
+    <string name="reset_password_title">Recuperar contraseña</string>
+    <string name="reset_password_info">Ingrese el correo electrónico asociado a la cuenta</string>
+    <string name="reset_password_action">Recuperar contraseña</string>
+    <string name="reset_password_tip">Recibirá un correo a está dirección con las instrucciones.</string>
+    <!-- Reset Password Fragment -->
+    <string name="reset_password_fragment_title">Cambiar contraseña</string>
+    <string name="reset_password_fragment_action">Cambiar contraseña</string>
 
     <!--************ Config Strings, don´t translate and touch ************-->
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->

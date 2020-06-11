@@ -53,7 +53,6 @@
             android:layout_marginBottom="16dp"
             android:textColor="#000000"
             android:textSize="16sp"
-            android:background="@drawable/text_field_shape"
             app:layout_constraintBottom_toTopOf="@+id/btChangePassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

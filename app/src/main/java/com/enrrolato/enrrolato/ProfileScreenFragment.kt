@@ -1,5 +1,6 @@
 package com.enrrolato.enrrolato
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile_screen.*
 
 import com.enrrolato.enrrolato.database.Enrrolato
+import com.enrrolato.enrrolato.database.ProviderType
+import com.facebook.login.LoginManager
 
 /**
  * A simple [Fragment] subclass.
@@ -68,25 +71,23 @@ import com.enrrolato.enrrolato.database.Enrrolato
     }
 
     private fun showEmail(view: View) {
-            var associedEmail: TextView = view.findViewById(R.id.txtAssociatedEmail) as TextView
-            associedEmail.setText(FirebaseAuth.getInstance().currentUser?.email)
+        val associedEmail: TextView = view.findViewById(R.id.txtAssociatedEmail) as TextView
+        associedEmail.text = FirebaseAuth.getInstance().currentUser?.email
     }
 
     private fun logOut() {
         val int: Intent = Intent(activity, MainActivity::class.java)
+        this.activity?.let {
+            val prefs = it.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+            prefs.clear()
+            prefs.apply()
+        }
+        if (Enrrolato.provider == ProviderType.FACEBOOK) {
+            LoginManager.getInstance().logOut()
+        }
+        FirebaseAuth.getInstance().signOut()
         startActivity(int)
-        Toast.makeText(context, "Usted ha cerrado sesión", Toast.LENGTH_SHORT).show()
-
-/*        if (logOut == true) {
-            FirebaseAuth.getInstance().signOut()
-            val i2 = requireActivity().Intent(this@ProfileScreenFragment, MainActivity::class.java)
-            startActivity(i2)
-            finish()
-            return true */
-
-//        val i1 = Intent(activity, MainActivity::class.java)
-//        startActivity(i1)
-//        Toast.makeText(ProfileScreenFragment.this, "Usted ha cerrado sesión", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(R.string.log_out_message), Toast.LENGTH_LONG).show()
     }
 
 

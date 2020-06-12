@@ -9,7 +9,8 @@
     <string name="sign_up_alert">Se ha producido un error al registrarse</string>
     <!-- Log In Alert -->
     <string name="log_in_alert">Se ha producido un error autenticando el usuario</string>
-
+    <!-- Log Out message -->
+    <string name="log_out_message">Usted ha cerrado sesión</string>
     <!--************ Activity Strings ************-->
     <!-- Log In Activity -->
     <string name="app_name" translatable="false">Enrrolato</string>
@@ -26,6 +27,7 @@
     <string name="repeat_password">Repite tu contraseña</string>
     <string name="help_sign_up">Si quieres continuar con Google o Facebook, no es necesario que realices con este registro.</string>
     <string name="sign_up_action">Registrarme</string>
+    <string name="sign_up_message">Inicia sesión con tu nueva cuenta</string>
     <!-- About Us Fragment -->
     <string name="about_us">Acerca de</string>
     <string name="enrrolato_logo_description">Logo de Enrrolato</string>

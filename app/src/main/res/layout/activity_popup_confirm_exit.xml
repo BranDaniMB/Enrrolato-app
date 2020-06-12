@@ -28,7 +28,7 @@
 
         <Button
             android:id="@+id/btCancel"
-            android:background="@color/black"
+            android:background="@drawable/round_shape"
             android:layout_marginRight="50dp"
             android:text="Cancelar"
             android:fontFamily="@font/gotu_regular"
@@ -37,7 +37,7 @@
 
         <Button
             android:id="@+id/btOk"
-            android:background="@color/black"
+            android:background="@drawable/round_shape"
             android:text="Aceptar"
             android:fontFamily="@font/gotu_regular"
             android:layout_width="match_parent"

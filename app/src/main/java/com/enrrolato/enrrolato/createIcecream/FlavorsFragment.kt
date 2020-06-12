@@ -1,25 +1,24 @@
-package com.enrrolato.enrrolato
+package com.enrrolato.enrrolato.createIcecream
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import com.enrrolato.enrrolato.createIcecream.FlavorsFragment
+import android.widget.ImageButton
+import com.enrrolato.enrrolato.PrincipalMenuFragment
+import com.enrrolato.enrrolato.R
+import com.enrrolato.enrrolato.RestorePasswordFragment
 
-/**
- * A simple [Fragment] subclass.
- */
-class PrincipalMenuFragment : Fragment() {
+class FlavorsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_principal_menu, container, false)
-        val btCreate = view.findViewById<View>(R.id.btCreateIceCream) as Button
+        val view = inflater.inflate(R.layout.fragment_flavors, container, false)
+        val back = view.findViewById<View>(R.id.btBackToPrincipal) as ImageButton
 
-        btCreate.setOnClickListener {
-            createIceCream()
+        back.setOnClickListener {
+            backToPrincipal()
         }
 
         return view
@@ -29,21 +28,19 @@ class PrincipalMenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    fun createIceCream() {
-        val fragment = FlavorsFragment()
+    fun backToPrincipal() {
+        val fragment = PrincipalMenuFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()
-        transaction.replace(R.id.ly_principal, fragment)
+        transaction.replace(R.id.ly_flavor, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
 
-    fun viewMenu() {
+    fun nextStep() {
         // CODE HERE
     }
 
-    fun seasonIceCream() {
-        // CODE HERE
-    }
+
 
 }

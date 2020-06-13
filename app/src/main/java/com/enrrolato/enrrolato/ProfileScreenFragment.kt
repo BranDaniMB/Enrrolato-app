@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseAuth
         showEmail(view)
 
         btAbout.setOnClickListener {
-            showAbouUsFragment()
+            showAboutUsFragment()
         }
 
         btRestore.setOnClickListener {
@@ -45,7 +45,7 @@ import com.google.firebase.auth.FirebaseAuth
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun showAbouUsFragment() {
+    private fun showAboutUsFragment() {
         val fragment = AboutUsFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()

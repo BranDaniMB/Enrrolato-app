@@ -33,8 +33,9 @@ class PrincipalMenuFragment : Fragment() {
         val fragment = FlavorsFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()
-        transaction.replace(R.id.ly_principal, fragment)
+        transaction. replace(R.id.ly_principal, fragment)
         transaction.addToBackStack(null)
+        //transaction.hide(this)
         transaction.commit()
     }
 

@@ -28,7 +28,7 @@ class FlavorsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    fun backToPrincipal() {
+    private fun backToPrincipal() {
         val fragment = PrincipalMenuFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()

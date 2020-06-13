@@ -15,10 +15,10 @@ class PrincipalMenuFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_principal_menu, container, false)
-        val btCreate = view.findViewById<View>(R.id.btCreateIceCream) as Button
+        val view = inflater.inflate(R.layout.fragment_principal_menu, container, false)
+        val create = view.findViewById<View>(R.id.btCreateIceCream) as Button
 
-        btCreate.setOnClickListener {
+        create.setOnClickListener {
             createIceCream()
         }
 
@@ -35,7 +35,6 @@ class PrincipalMenuFragment : Fragment() {
         val transaction = fm.beginTransaction()
         transaction. replace(R.id.ly_principal, fragment)
         transaction.addToBackStack(null)
-        //transaction.hide(this)
         transaction.commit()
     }
 

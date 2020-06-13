@@ -50,6 +50,8 @@ public class AboutUsFragment : Fragment() {
         return view
     }
 
+
+
     private fun showProfileFragment() {
         val fragment = ProfileScreenFragment()
         val fm = requireActivity().supportFragmentManager

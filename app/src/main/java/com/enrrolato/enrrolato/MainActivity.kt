@@ -52,8 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
-        loginLayout.visibility = View.VISIBLE
+        session()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -92,7 +91,6 @@ class MainActivity : AppCompatActivity() {
         val provider = prefs.getString("provider", null)
 
         if (email != null && provider != null) {
-            loginLayout.visibility = View.INVISIBLE
             showMenu(email, ProviderType.valueOf(provider))
         }
     }
@@ -163,21 +161,6 @@ class MainActivity : AppCompatActivity() {
             val signUpIntent = Intent(this, SignUpActivity::class.java)
             startActivity(signUpIntent)
         }
-
-        // Para cerrar sesión
-        /*loginBtn.setOnClickListener {
-            // Borrar los datos guardados
-            val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-            prefs.clear()
-            prefs.apply()
-
-            if (provider == ProviderType.FACEBOOK.name) {
-                LoginManager.getInstance().logOut()
-            }
-
-            FirebaseAuth.getInstance().signOut()
-            onBackPressed()
-        }*/
     }
 
     private fun showAlert() {
@@ -193,7 +176,13 @@ class MainActivity : AppCompatActivity() {
         val menuIntent = Intent(this, PrincipalScreen::class.java)
         Enrrolato.email = email
         Enrrolato.provider = provider
+        // Guardando la session
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+        prefs.putString("email", email)
+        prefs.putString("provider", provider.name)
+        prefs.apply()
         startActivity(menuIntent)
+        finish()
     }
 
     private fun recoverPassword() {

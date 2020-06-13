@@ -1,130 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ly_flavor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/ly_flavor"
     android:background="@color/cyan"
     android:orientation="vertical"
     tools:context=".createIcecream.FlavorsFragment">
 
     <!-- androidx.core.widget.NestedScrollView -->
 
-    <LinearLayout
+    <ImageButton
+        android:id="@+id/btBackToPrincipal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/cyan"
+        android:src="@drawable/ic_back"
+        app:layout_constraintEnd_toStartOf="@+id/txtFlavor"
+        app:layout_constraintHorizontal_bias="0.158"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/btBackToPrincipal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="64dp"
-            android:backgroundTint="@color/cyan"
-            android:src="@drawable/ic_back" />
+    <TextView
+        android:id="@+id/txtFlavor"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Sabores"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txtFlavor"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Sabores"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="50dp"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <Spinner
         android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@color/white"
+        android:contentDescription="Elija sabor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFlavor" />
+
+    <!-- ICONO DE MÁS -->
+
+    <RadioButton
+        android:id="@+id/rbSpecial"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/gotu_regular"
+        android:text="Especiales"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_dynamic" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="5dp"
-            android:contentDescription="Elija sabor"
-            android:background="@color/white"/>
+    <RadioButton
+        android:id="@+id/rbLicour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gotu_regular"
+        android:text="Licor"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rbSpecial" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <RadioButton
+        android:id="@+id/rbTraditional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gotu_regular"
+        android:text="Especiales"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rbLicour" />
 
-            <RadioButton
-                android:id="@+id/rbTraditional"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Especiales"
-                android:fontFamily="@font/gotu_regular"
-                android:textColor="@color/black"
-                android:layout_marginTop="15dp"/>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/cyan"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toTopOf="@+id/choosenFlavors"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rbTraditional" />
 
-            <RadioButton
-                android:id="@+id/rbLicour"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Licor"
-                android:fontFamily="@font/gotu_regular"
-                android:textColor="@color/black"
-                android:layout_marginTop="15dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/choosenFlavors"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:layout_weight="1"
+        android:background="@color/black"
+        android:contentDescription="lista de exámenes"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btContinue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-            <RadioButton
-                android:id="@+id/rbSpecial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Especiales"
-                android:fontFamily="@font/gotu_regular"
-                android:textColor="@color/black"
-                android:layout_marginTop="15dp"/>
+    <Button
+        android:id="@+id/btContinue"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/round_shape"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Siguiente"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- ICONO DE MÁS -->
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="@color/cyan"
-                android:layout_gravity="center"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/choosenFlavors"
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:background="@color/black"
-                android:contentDescription="lista de exámenes"
-                android:scrollbars="vertical"/>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btContinue"
-            android:layout_marginTop="17dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="Siguiente"
-            android:background="@drawable/round_shape"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,10 +37,20 @@ class FlavorsFragment : Fragment() {
         transaction.commit()
     }
 
-    fun nextStep() {
+    private fun nextStep() {
         // CODE HERE
     }
 
+    private fun chargeFlavors() {
+        // CODE HERE
+    }
 
+    private fun flavorProcess() {
+        // CODE HERE
+    }
+
+    private fun filtrer() {
+        // CODE HERE
+    }
 
 }

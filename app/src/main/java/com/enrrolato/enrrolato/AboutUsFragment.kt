@@ -12,11 +12,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AboutUsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 public class AboutUsFragment : Fragment() {
 
     private val facebookId: String = "fb://page/2662776063795795"

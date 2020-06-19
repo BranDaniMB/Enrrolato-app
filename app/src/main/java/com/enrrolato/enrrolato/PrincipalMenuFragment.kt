@@ -29,8 +29,8 @@ class PrincipalMenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    fun createIceCream() {
-        val fragment = FlavorsFragment()
+    private fun createIceCream() {
+        val fragment = DefaultFlavorFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()
         transaction. replace(R.id.ly_principal, fragment)

@@ -11,7 +11,7 @@
     android:id="@+id/ly_flavor">
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollview"
+        android:id="@+id/scrollviewFlavor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -28,7 +28,7 @@
 
 
     <ImageButton
-        android:id="@+id/btBackToPrincipal"
+        android:id="@+id/btBackToDefault"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -46,7 +46,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Sabores"
+        android:text="Sabores personalizados"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -59,7 +59,7 @@
         android:id="@+id/spFlavor"
         android:layout_height="48dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="32dp"
         android:background="@color/white"
         android:contentDescription="Elija sabor"
@@ -67,6 +67,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtFlavor" />
+      <!--  style="@style/spinner_style" -->
 
         <RadioGroup
             android:id="@+id/rgFlavor"
@@ -98,22 +99,12 @@
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rbSpecial" />
+                app:layout_constraintTop_toBottomOf="@+id/imgPlus" />
 
-            <RadioButton
-                android:id="@+id/rbSpecial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/gotu_regular"
-                android:text="Especiales"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rbLicour" />
         </RadioGroup>
 
     <ImageButton
+        android:id="@+id/imgPlus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

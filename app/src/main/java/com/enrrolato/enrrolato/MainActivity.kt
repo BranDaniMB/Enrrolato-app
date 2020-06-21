@@ -177,7 +177,6 @@ class MainActivity : AppCompatActivity() {
     private fun showMenu(email: String, provider: ProviderType) {
         val menuIntent = Intent(this, PrincipalScreen::class.java)
         Enrrolato.instance.initUser(email, provider)
-        // Enrrolato.instance.update()
         // Guardando la session
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("email", email)

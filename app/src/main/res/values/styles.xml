@@ -19,10 +19,10 @@
         <item name="android:windowExitAnimation">@anim/anim_exit_dialog</item>
     </style>
 
-    <!--
+
     <style name="spinner_style" >
         <item name="android:background">@drawable/spinner_bg</item>
     </style>
-    -->
+
 
 </resources>

@@ -1,5 +1,6 @@
 package com.enrrolato.enrrolato
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -174,8 +175,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showMenu(email: String, provider: ProviderType) {
         val menuIntent = Intent(this, PrincipalScreen::class.java)
-        Enrrolato.email = email
-        Enrrolato.provider = provider
+        Enrrolato.instance.initUser(email, provider)
+        // Enrrolato.instance.update()
         // Guardando la session
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("email", email)

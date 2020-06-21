@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         val provider = prefs.getString("provider", null)
 
         if (email != null && provider != null) {
+            Enrrolato.instance.initUser(email, ProviderType.valueOf(provider))
             showMenu(email, ProviderType.valueOf(provider))
         }
     }

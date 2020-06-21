@@ -19,25 +19,9 @@ class Enrrolato: Application() {
             get() = FirebaseDatabase.getInstance()
     private var user: User? = null
     var listFlavors: ArrayList<Flavor> = ArrayList()
-        get() {
-            loadFlavors()
-            return field;
-        }
     var listFillings: ArrayList<Filling> = ArrayList()
-        get() {
-            loadFillings()
-            return field
-        }
     var listToppings: ArrayList<Topping> = ArrayList()
-        get() {
-            loadToppings()
-            return field
-        }
     var listContainers: ArrayList<Container> = ArrayList()
-        get() {
-            loadContainers()
-            return field
-        }
     val String.toBoolean
         get() = this == "1"
 
@@ -59,16 +43,17 @@ class Enrrolato: Application() {
         val flavorListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val temp: HashMap<String, HashMap<String, String>> = dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
-                temp.forEach {
+                listFlavors.clear();
+                for ((key, value) in temp) {
                     listFlavors.add(
-                        Flavor(it.value["name"]!!,
-                        it.value["isLiqueur"]!!.toBoolean,
-                        it.value["isSpecial"]!!.toBoolean,
-                        it.value["isExclusive"]!!.toBoolean,
-                        it.value["avaliable"]!!.toBoolean)
+                        Flavor(value["name"]!!,
+                            value["isLiqueur"]!!.toBoolean,
+                            value["isSpecial"]!!.toBoolean,
+                            value["isExclusive"]!!.toBoolean,
+                            value["avaliable"]!!.toBoolean)
                     )
                 }
-                println(listFlavors.size)
+                println("Flavor: " + listFlavors.size)
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message
@@ -84,13 +69,14 @@ class Enrrolato: Application() {
         val fillingListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val temp: HashMap<String, HashMap<String, String>> = dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
-                temp.forEach {
-                    listFillings.add(Filling(it.value["name"]!!,
-                        it.value["avaliable"]!!.toBoolean,
-                        it.value["isExclusive"]!!.toBoolean)
+                listFillings.clear()
+                for ((key, value) in temp) {
+                    listFillings.add(Filling(value["name"]!!,
+                        value["avaliable"]!!.toBoolean,
+                        value["isExclusive"]!!.toBoolean)
                     )
                 }
-                println(listFlavors.size)
+                println("Filling: " + listFillings.size)
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message
@@ -106,13 +92,14 @@ class Enrrolato: Application() {
         val toppingListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val temp: HashMap<String, HashMap<String, String>> = dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
-                temp.forEach {
+                listToppings.clear()
+                for ((key, value) in temp) {
                     listToppings.add(
-                        Topping(it.value["name"]!!,
-                        it.value["avaliable"]!!.toBoolean)
+                        Topping(value["name"]!!,
+                            value["avaliable"]!!.toBoolean)
                     )
                 }
-                println(listToppings.size)
+                println("Topping: " + listToppings.size)
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message
@@ -128,13 +115,14 @@ class Enrrolato: Application() {
         val containerListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val temp: HashMap<String, HashMap<String, String>> = dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
-                temp.forEach {
+                listContainers.clear()
+                for ((key, value) in temp) {
                     listContainers.add(
-                        Container(it.value["name"]!!,
-                        it.value["avaliable"]!!.toBoolean)
+                        Container(value["name"]!!,
+                            value["avaliable"]!!.toBoolean)
                     )
                 }
-                println(listContainers.size)
+                println("Container: " + listContainers.size)
             }
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message

@@ -82,7 +82,7 @@ class ProfileScreenFragment : Fragment() {
         alertDialog.show()
 
         bt_ok.setOnClickListener {
-            fragmentManager!!.beginTransaction()!!.remove(this).commit();
+            fragmentManager!!.beginTransaction().remove(this).commit();
             alertDialog.cancel()
 
             val int: Intent = Intent(activity, MainActivity::class.java)

@@ -7,12 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.enrrolato.enrrolato.DefaultFlavorFragment
-import com.enrrolato.enrrolato.PrincipalMenuFragment
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.RestorePasswordFragment
-import com.enrrolato.enrrolato.iceCream.Flavor
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_flavors.*
 
 class FlavorsFragment : Fragment() {
 

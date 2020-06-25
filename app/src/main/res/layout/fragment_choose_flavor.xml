@@ -7,11 +7,11 @@
     android:layout_height="match_parent"
     android:background="@color/cyan"
     android:orientation="vertical"
-    tools:context=".createIcecream.FlavorsFragment"
-    android:id="@+id/ly_flavor">
+    tools:context=".menu.ChooseFlavorFragment"
+    android:id="@+id/ly_flavor_menu">
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollviewFlavor"
+        android:id="@+id/scrollviewChooseMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -28,27 +28,26 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="-43dp">
 
-
             <ImageButton
-                android:id="@+id/btBackToDefault"
+                android:id="@+id/btBackToMenu2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/cyan"
                 android:src="@drawable/ic_back"
-                app:layout_constraintEnd_toStartOf="@+id/txtFlavor"
+                app:layout_constraintEnd_toStartOf="@+id/txtMenuFlavor"
                 app:layout_constraintHorizontal_bias="0.158"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtFlavor"
+                android:id="@+id/txtMenuFlavor"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="Sabores personalizados"
+                android:text="Menú de sabores"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -56,86 +55,92 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/spFlavor"
-                style="@style/spinner_style"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="32dp"
-                android:background="@color/black"
-                android:contentDescription="Elija sabor"
-                android:spinnerMode="dropdown"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rgFlavor" />
-
-            <RadioGroup
-                android:id="@+id/rgFlavor"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txtTrad"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:fontFamily="@font/gotu_regular"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Sabores tradicionales"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtFlavor">
-
-                <RadioButton
-                    android:id="@+id/rbTradicional"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:fontFamily="@font/gotu_regular"
-                    android:text="Tradicional"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rbLicour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/gotu_regular"
-                    android:text="Licor"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imgPlus" />
-
-            </RadioGroup>
+                app:layout_constraintTop_toBottomOf="@+id/txtMenuFlavor"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/choosenFlavors"
+                android:id="@+id/rvTrad"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="32dp"
                 android:layout_weight="1"
                 android:background="@color/black"
-                android:contentDescription="lista de sabores"
+                android:contentDescription="lista de sabores tradicionales"
                 android:scrollbars="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/btContinue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spFlavor" />
+                app:layout_constraintTop_toBottomOf="@+id/txtTrad" />
 
-            <Button
-                android:id="@+id/btContinue"
+            <TextView
+                android:id="@+id/txtLic"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginBottom="64dp"
-                android:background="@drawable/round_shape"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
-                android:text="Siguiente"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gotu_regular"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Sabores con licor"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvTrad"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvLic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="32dp"
+                android:layout_weight="1"
+                android:background="@color/black"
+                android:contentDescription="lista de sabores con licor"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtLic" />
+
+            <TextView
+                android:id="@+id/txtSpecial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gotu_regular"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Sabores especiales"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvLic"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSpecial"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
+                android:layout_weight="1"
+                android:background="@color/black"
+                android:contentDescription="lista de sabores especiales"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSpecial" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

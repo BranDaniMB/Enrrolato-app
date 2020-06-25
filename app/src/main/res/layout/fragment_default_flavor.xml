@@ -8,7 +8,7 @@
     android:background="@color/cyan"
     android:orientation="vertical"
     android:id="@+id/ly_default"
-    tools:context=".DefaultFlavorFragment">
+    tools:context=".createIcecream.DefaultFlavorFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollviewDefault"
@@ -131,8 +131,8 @@
             android:layout_marginBottom="64dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/round_shape"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
             android:text="Siguiente"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

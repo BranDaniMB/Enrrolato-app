@@ -9,13 +9,10 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.enrrolato.enrrolato.DefaultFlavorFragment
+import com.enrrolato.enrrolato.AdapterIceCream
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
-import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.fragment_flavors.*
-import org.w3c.dom.Text
 
 
 class FlavorsFragment : Fragment() {
@@ -68,7 +65,8 @@ class FlavorsFragment : Fragment() {
     }
 
     private fun backToDefault() {
-        val fragment = DefaultFlavorFragment()
+        val fragment =
+            DefaultFlavorFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()
         transaction.replace(R.id.ly_flavor, fragment)
@@ -81,7 +79,8 @@ class FlavorsFragment : Fragment() {
 
         if(rf == null || flavorSelected.equals("Seleccione sabor") || flavorSelected.isEmpty()) {
             errorFlavor(msg)
-        } else {
+        }
+        else {
             // DIRIGIRSE A LA PANTALLA DE SELECCIÓN DE JARABES
         }
     }
@@ -177,10 +176,10 @@ class FlavorsFragment : Fragment() {
 
         if(count < 3) {
             recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            var  af: AdapterFlavor
+            var  af: AdapterIceCream
 
             listToRecycler.add(flavorSelected)
-            af = AdapterFlavor(listToRecycler)
+            af = AdapterIceCream(listToRecycler)
             recyclerFlavors.adapter = af
             count += 1
         }
@@ -204,8 +203,9 @@ class FlavorsFragment : Fragment() {
         bt_ok.setOnClickListener {
             alertDialog.cancel()
         }
-
     }
+
+
 }
 
 /* database.child("business").child("ingredients").child("flavors").addValueEventListener(object: ValueEventListener {

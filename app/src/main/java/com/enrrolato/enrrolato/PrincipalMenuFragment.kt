@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.enrrolato.enrrolato.createIcecream.FlavorsFragment
+import com.enrrolato.enrrolato.createIcecream.DefaultFlavorFragment
+import com.enrrolato.enrrolato.menu.MenuFragment
 
 /**
  * A simple [Fragment] subclass.
@@ -14,12 +15,21 @@ import com.enrrolato.enrrolato.createIcecream.FlavorsFragment
 class PrincipalMenuFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_principal_menu, container, false)
         val create = view.findViewById<View>(R.id.btCreateIceCream) as Button
+        val show = view.findViewById<View>(R.id.btShowMenu) as Button
+        val season = view.findViewById<View>(R.id.btShowSeasonIcecream) as Button
 
         create.setOnClickListener {
             createIceCream()
+        }
+
+        show.setOnClickListener {
+            viewMenu()
+        }
+
+        season.setOnClickListener {
+            seasonIceCream()
         }
 
         return view
@@ -30,7 +40,8 @@ class PrincipalMenuFragment : Fragment() {
     }
 
     private fun createIceCream() {
-        val fragment = DefaultFlavorFragment()
+        val fragment =
+            DefaultFlavorFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()
         transaction. replace(R.id.ly_principal, fragment)
@@ -39,7 +50,12 @@ class PrincipalMenuFragment : Fragment() {
     }
 
     fun viewMenu() {
-        // CODE HERE
+        val fragment = MenuFragment()
+        val fm = requireActivity().supportFragmentManager
+        val transaction = fm.beginTransaction()
+        transaction. replace(R.id.ly_principal, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     fun seasonIceCream() {

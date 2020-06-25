@@ -1,4 +1,4 @@
-package com.enrrolato.enrrolato
+package com.enrrolato.enrrolato.createIcecream
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.RecyclerView
-import com.enrrolato.enrrolato.createIcecream.FlavorsFragment
+import com.enrrolato.enrrolato.PrincipalMenuFragment
+import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 
@@ -116,12 +116,13 @@ class DefaultFlavorFragment : Fragment() {
         val msg: String = "Debe seleccionar un helado"
 
         if(flavorSelected.equals("Seleccione helado") || flavorSelected.isEmpty()) {
-          errorFlavor(msg)
+            errorFlavor(msg)
         }
         else {
             // BRINCA DIRECTAMENTE A ESCOGER EL TOPPING
         }
     }
+
 
     private fun errorFlavor(msg: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
@@ -138,6 +139,7 @@ class DefaultFlavorFragment : Fragment() {
         bt_ok.setOnClickListener {
             alertDialog.cancel()
         }
-
     }
+
+
 }

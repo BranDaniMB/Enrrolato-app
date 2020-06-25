@@ -1,14 +1,12 @@
-package com.enrrolato.enrrolato.createIcecream
+package com.enrrolato.enrrolato
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.enrrolato.enrrolato.R
-import kotlinx.android.synthetic.main.item_list.view.*
 
-class AdapterFlavor(): RecyclerView.Adapter<AdapterFlavor.ViewHolder>() {
+class AdapterIceCream(): RecyclerView.Adapter<AdapterIceCream.ViewHolder>() {
 
     lateinit var list: ArrayList<String>
 

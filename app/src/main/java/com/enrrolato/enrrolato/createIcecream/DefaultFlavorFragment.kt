@@ -113,13 +113,19 @@ class DefaultFlavorFragment : Fragment() {
     }
 
     private fun nextStepTopping() {
-        val msg: String = "Debe seleccionar un helado"
 
         if(flavorSelected.equals("Seleccione helado") || flavorSelected.isEmpty()) {
-            errorFlavor(msg)
+            errorFlavor("Debe seleccionar un helado")
         }
         else {
             // BRINCA DIRECTAMENTE A ESCOGER EL TOPPING
+            // TIENE QUE LLEVARSE EL SABOR / HELADO YA DEFINIDO
+            val fragment = ToppingFragment()
+            val fm = requireActivity().supportFragmentManager
+            val transaction = fm.beginTransaction()
+            transaction.replace(R.id.ly_default, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
     }
 
@@ -130,7 +136,7 @@ class DefaultFlavorFragment : Fragment() {
         val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_choose_flavor, null)
         val message = popupMaxFlavor.findViewById<View>(R.id.txtMessage) as TextView
         message.text = msg
-        val bt_ok: Button = popupMaxFlavor.findViewById(R.id.btOkFlavor);
+        val bt_ok: Button = popupMaxFlavor.findViewById(R.id.btOk);
         alertDialogBuilder?.setView(popupMaxFlavor)
         val alertDialog: AlertDialog = alertDialogBuilder!!.create()
         alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog

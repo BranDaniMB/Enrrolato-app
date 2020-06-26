@@ -75,10 +75,8 @@ class FlavorsFragment : Fragment() {
     }
 
     private fun nextStep(rf: RecyclerView) {
-        val msg: String = "No se han seleccionado sabores"
-
         if(rf == null || flavorSelected.equals("Seleccione sabor") || flavorSelected.isEmpty()) {
-            errorFlavor(msg)
+            errorFlavor("No se han seleccionado sabores")
         }
         else {
             // DIRIGIRSE A LA PANTALLA DE SELECCIÓN DE JARABES
@@ -172,19 +170,23 @@ class FlavorsFragment : Fragment() {
     }
 
     private fun chooseFlavor(recyclerFlavors: RecyclerView) {
-        val msg: String = "Usted excedió el máximo de sabores"
-
         if(count < 3) {
             recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             var  af: AdapterIceCream
 
-            listToRecycler.add(flavorSelected)
-            af = AdapterIceCream(listToRecycler)
-            recyclerFlavors.adapter = af
-            count += 1
+            if(!listToRecycler.contains(flavorSelected)) {
+
+                listToRecycler.add(flavorSelected)
+                af = AdapterIceCream(listToRecycler)
+                recyclerFlavors.adapter = af
+                count += 1
+            }
+            else {
+                errorFlavor("Ya seleccionó este sabor")
+            }
         }
         else {
-            errorFlavor(msg)
+            errorFlavor("Usted excedió el máximo de sabores")
         }
     }
 
@@ -194,7 +196,7 @@ class FlavorsFragment : Fragment() {
         val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_choose_flavor, null)
         val message = popupMaxFlavor.findViewById<View>(R.id.txtMessage) as TextView
         message.text = msg
-        val bt_ok: Button = popupMaxFlavor.findViewById(R.id.btOkFlavor);
+        val bt_ok: Button = popupMaxFlavor.findViewById(R.id.btOk);
         alertDialogBuilder?.setView(popupMaxFlavor)
         val alertDialog: AlertDialog = alertDialogBuilder!!.create()
         alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog

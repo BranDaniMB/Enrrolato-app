@@ -114,7 +114,6 @@ class ChooseFlavorFragment : Fragment() {
                 flavorList.add(name)
                 chooseFlavor(rv, list, a)
             }
-            // NO SE ESTAN CARGANDO TODOS
         }
     }
 

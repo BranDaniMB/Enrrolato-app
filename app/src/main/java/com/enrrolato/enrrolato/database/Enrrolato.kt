@@ -150,9 +150,6 @@ class Enrrolato: Application() {
         ref.addValueEventListener(userListener)
     }
 
-    fun isValidSession(): Boolean {
-        return user != null
-    }
 
     fun update() {
         loadFlavors()

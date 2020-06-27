@@ -1,4 +1,4 @@
 package com.enrrolato.enrrolato.iceCream
 
-class Container constructor(id: Int, name: String, available: Boolean): IceCreamElement {
+class Container constructor(public val name: String, public val available: Boolean): IceCreamElement {
 }

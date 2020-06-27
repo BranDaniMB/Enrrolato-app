@@ -13,4 +13,16 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
+    <style name="alert_dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/popup_background</item>
+        <item name="android:windowEnterAnimation">@anim/anim_enter_dialog</item>
+        <item name="android:windowExitAnimation">@anim/anim_exit_dialog</item>
+    </style>
+
+
+    <style name="spinner_style" >
+        <item name="android:background">@drawable/spinner_bg</item>
+    </style>
+
+
 </resources>

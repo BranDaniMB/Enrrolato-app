@@ -3,6 +3,7 @@ package com.enrrolato.enrrolato
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.database.ProviderType
@@ -25,7 +26,7 @@ class SignUpActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(usernameField.text.toString()
                         , newPasswordField.text.toString()).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            showMenu(it.result?.user?.email ?: "", ProviderType.BASIC)
+                            showLogin()
                         } else {
                             signUpAlert()
                         }
@@ -55,10 +56,10 @@ class SignUpActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showMenu(email: String, provider: ProviderType) {
-        val menuIntent = Intent(this, PrincipalScreen::class.java)
-        Enrrolato.email = email
-        Enrrolato.provider = provider
-        startActivity(menuIntent)
+    private fun showLogin() {
+        val loginIntent = Intent(this, MainActivity::class.java)
+        startActivity(loginIntent)
+        Toast.makeText(baseContext, getString(R.string.sign_up_message), Toast.LENGTH_LONG).show()
+        finish()
     }
 }

@@ -7,14 +7,15 @@
     android:layout_height="match_parent"
     android:background="@color/cyan"
     android:orientation="vertical"
-    tools:context=".createIcecream.FlavorsFragment"
-    android:id="@+id/ly_flavor">
+    tools:context=".createIcecream.ToppingFragment"
+    android:id="@+id/ly_topping">
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollviewFlavor"
+        android:id="@+id/scrollviewTopping"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingBottom="30dp"
         tools:layout_editor_absoluteX="57dp"
         tools:layout_editor_absoluteY="159dp">
 
@@ -24,31 +25,31 @@
             android:layout_weight="1"
             android:background="@color/cyan"
             android:orientation="vertical"
+            android:paddingBottom="40dp"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="-43dp">
 
-
             <ImageButton
-                android:id="@+id/btBackToDefault"
+                android:id="@+id/btBackToFilling"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/cyan"
                 android:src="@drawable/ic_back"
-                app:layout_constraintEnd_toStartOf="@+id/txtFlavor"
+                app:layout_constraintEnd_toStartOf="@+id/txtToppings"
                 app:layout_constraintHorizontal_bias="0.158"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtFlavor"
+                android:id="@+id/txtToppings"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="Sabores personalizados"
+                android:text="Escogencia de toppings"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -57,77 +58,43 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
-                android:id="@+id/spFlavor"
+                android:id="@+id/spTopping"
                 style="@style/spinner_style"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="32dp"
                 android:background="@color/black"
-                android:contentDescription="Elija sabor"
+                android:contentDescription="Elija topping"
                 android:spinnerMode="dropdown"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rgFlavor" />
-
-            <RadioGroup
-                android:id="@+id/rgFlavor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtFlavor">
-
-                <RadioButton
-                    android:id="@+id/rbTradicional"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:fontFamily="@font/gotu_regular"
-                    android:text="Tradicional"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <RadioButton
-                    android:id="@+id/rbLicour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/gotu_regular"
-                    android:text="Licor"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imgPlus" />
-
-            </RadioGroup>
+                app:layout_constraintTop_toBottomOf="@+id/txtToppings" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/choosenFlavors"
+                android:id="@+id/choosenTopping"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginBottom="32dp"
                 android:layout_weight="1"
                 android:background="@color/black"
                 android:contentDescription="lista de sabores"
                 android:scrollbars="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/btContinue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spFlavor" />
+                app:layout_constraintTop_toBottomOf="@+id/spTopping" />
+
 
             <Button
-                android:id="@+id/btContinue"
+                android:id="@+id/btCotinueToContainer"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginBottom="64dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/round_shape"
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp"
@@ -135,7 +102,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/choosenTopping" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

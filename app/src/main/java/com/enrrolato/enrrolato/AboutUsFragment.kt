@@ -10,16 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_sign_up.*
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AboutUsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 public class AboutUsFragment : Fragment() {
 
     private val facebookId: String = "fb://page/2662776063795795"
@@ -33,6 +25,7 @@ public class AboutUsFragment : Fragment() {
         val btProfile = view.findViewById<View>(R.id.btBackToProfile) as ImageButton
         val btFace = view.findViewById<View>(R.id.btFB) as ImageButton
         val btInstagram = view.findViewById<View>(R.id.btIG) as ImageButton
+        val whatsapp = view.findViewById<View>(R.id.btWhatsapp) as ImageButton
 
         btProfile.setOnClickListener {
             //nav.visibility = View.VISIBLE
@@ -45,6 +38,10 @@ public class AboutUsFragment : Fragment() {
 
         btInstagram.setOnClickListener {
             igLink()
+        }
+
+        whatsapp.setOnClickListener {
+            whatsappLink()
         }
 
         return view
@@ -86,6 +83,12 @@ public class AboutUsFragment : Fragment() {
         }
     }
 
+    private fun whatsappLink() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        val uri = "whatsapp://send?phone=" + "+50683026566"
+        intent.data = Uri.parse(uri)
+        startActivity(intent)
+    }
 
 
 }

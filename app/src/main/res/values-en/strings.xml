@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accept_action">Accept</string>
+    <string name="alert_title">An error has occurred</string>
+    <string name="different_passwords">Passwords don\'t match</string>
+    <string name="sign_up_alert">An error has occurred during registration</string>
+    <string name="log_in_alert">An error has occurred while authenticating</string>
+    <string name="log_in_title">Log in</string>
+    <string name="username">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="reset_password">Reset it!</string>
+    <string name="log_in_action">Log in</string>
+    <string name="sign_up">Don\'t have an account? Create one</string>
+    <string name="sign_up_title">Sign up</string>
+    <string name="new_password">Enter your password</string>
+    <string name="repeat_password">Repeat your password</string>
+    <string name="hello_blank_fragment">Sample text</string>
+    <string name="help_sign_up">If you want to proceed with Google or Facebook, you don\'t need to do this sign up.</string>
+    <string name="sign_up_action">Sign up</string>
+    <string name="about_us">About us</string>
+    <string name="enrrolato_logo_description">Enrrolato\'s logo</string>
+    <string name="facebook_logo_description">Facebook\'s logo</string>
+    <string name="instagram_logo_description">Instagram\'s logo</string>
+    <string name="phones_title">Phone numbers:</string>
+    <string name="create_ice_cream">Create ice cream</string>
+    <string name="show_menu">Show menu</string>
+    <string name="season_ice_cream">Season ice creams</string>
+    <string name="account">Account</string>
+    <string name="email_text">Linked email</string>
+    <string name="change_password">Change password</string>
+    <string name="close_account">Delete account</string>
+    <string name="log_out">Log out</string>
+    <string name="reset_password_info">Enter the email linked to the account</string>
+    <string name="reset_password_title">Reset password</string>
+    <string name="reset_password_action">Reset password</string>
+    <string name="reset_password_fragment_title">Change password</string>
+    <string name="reset_password_fragment_action">Change password</string>
+    <string name="reset_password_tip">You\'ll receive an email with further instructions</string>
+    <string name="enrrolato_description">Cafeteria, healthy bowls, and artisan ice cream shop with griddled rolled-up ice creams on Sarchi</string>
+</resources>

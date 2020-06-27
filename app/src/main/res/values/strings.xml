@@ -9,7 +9,8 @@
     <string name="sign_up_alert">Se ha producido un error al registrarse</string>
     <!-- Log In Alert -->
     <string name="log_in_alert">Se ha producido un error autenticando el usuario</string>
-
+    <!-- Log Out message -->
+    <string name="log_out_message">Usted ha cerrado sesión</string>
     <!--************ Activity Strings ************-->
     <!-- Log In Activity -->
     <string name="app_name" translatable="false">Enrrolato</string>
@@ -26,6 +27,7 @@
     <string name="repeat_password">Repite tu contraseña</string>
     <string name="help_sign_up">Si quieres continuar con Google o Facebook, no es necesario que realices con este registro.</string>
     <string name="sign_up_action">Registrarme</string>
+    <string name="sign_up_message">Inicia sesión con tu nueva cuenta</string>
     <!-- About Us Fragment -->
     <string name="about_us">Acerca de</string>
     <string name="enrrolato_logo_description">Logo de Enrrolato</string>
@@ -33,7 +35,7 @@
     <string name="instagram_logo_description">Logo de Instagram</string>
     <string name="enrrolato_description">Cafetería, bowls saludables y heladería artesanal con helados de rollo a la plancha en Sarchí</string>
     <string name="phones_title">Teléfonos:</string>
-    <string name="phones_value">8302-6566 / 8875-5945</string>
+    <string name="phones_value" translatable="false">8302-6566 / 8875-5945</string>
     <!-- Principal Menú -->
     <string name="create_ice_cream">Crear helado</string>
     <string name="show_menu">Ver menú</string>
@@ -59,7 +61,16 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb571493460456296</string>
     <!-- Preferences File -->
     <string name="prefs_file" translatable="false">com.enrrolato.enrrolato.PREFERENCES_FILE_KEY</string>
+    <!-- Database paths -->
+    <string name="db_app" translatable="false">app</string>
+    <string name="db_app_users" translatable="false">app/users</string>
+    <string name="db_business" translatable="false">business</string>
+    <string name="db_ingredients" translatable="false">business/ingredients</string>
+    <string name="db_flavors" translatable="false">business/ingredients/flavors</string>
+    <string name="db_fillings" translatable="false">business/ingredients/fillings</string>
+    <string name="db_toppings" translatable="false">business/ingredients/toppings</string>
+    <string name="db_containers" translatable="false">business/ingredients/containers</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Texto de ejemplo</string>
 </resources>

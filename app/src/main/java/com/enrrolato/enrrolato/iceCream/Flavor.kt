@@ -1,12 +1,11 @@
 package com.enrrolato.enrrolato.iceCream
 
 class Flavor constructor(
-    id: Int,
-    name: String,
-    isLiqueur: Boolean,
-    isSpecial: Boolean,
-    isExclusive: Boolean,
-    avaliable: Boolean
+    public val name: String,
+    public val isLiqueur: Boolean,
+    public val isSpecial: Boolean,
+    public val isExclusive: Boolean,
+    public val avaliable: Boolean
 ): IceCreamElement {
 
 }

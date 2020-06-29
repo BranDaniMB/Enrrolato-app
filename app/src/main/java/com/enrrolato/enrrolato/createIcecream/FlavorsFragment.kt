@@ -39,7 +39,7 @@ class FlavorsFragment : Fragment() {
         val recyclerFlavors = view.findViewById<View>(R.id.choosenFlavors) as RecyclerView
         val next = view.findViewById<View>(R.id.btContinue) as Button
 
-        chargeFlavors(flavor, recyclerFlavors)
+        loadFlavors(flavor, recyclerFlavors)
 
         trad.setOnClickListener {
           filtrerTrad(flavor, recyclerFlavors)
@@ -83,7 +83,7 @@ class FlavorsFragment : Fragment() {
         }
     }
 
-    private fun chargeFlavors(f: Spinner, rv: RecyclerView) {
+    private fun loadFlavors(f: Spinner, rv: RecyclerView) {
         listFlavor = enrrolato.listFlavors
         var list: ArrayList<Flavor> = ArrayList()
         flavorList = ArrayList()

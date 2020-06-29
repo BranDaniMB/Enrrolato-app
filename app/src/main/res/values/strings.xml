@@ -12,6 +12,8 @@
     <!-- Log Out message -->
     <string name="log_out_message">Usted ha cerrado sesión</string>
     <!--************ Activity Strings ************-->
+    <!-- Generic strings -->
+    <string name="continue_action">Siguiente</string>
     <!-- Log In Activity -->
     <string name="app_name" translatable="false">Enrrolato</string>
     <string name="log_in_title">Iniciar sesión</string>
@@ -54,6 +56,21 @@
     <!-- Reset Password Fragment -->
     <string name="reset_password_fragment_title">Cambiar contraseña</string>
     <string name="reset_password_fragment_action">Cambiar contraseña</string>
+    <!-- Flavors Fragment -->
+    <string name="flavor_title">Sabores personalizados</string>
+    <string name="flavor_list">Lista de sabores</string>
+    <string name="flavor_selector">Elija sabor</string>
+    <string name="regular_flavor">Tradicional</string>
+    <string name="liquor_flavor">Licor</string>
+    <!-- Syrup Fragment -->
+    <string name="syrup_title">Selección del jarabe</string>
+    <string name="syrup_list">Lista de jarabe</string>
+    <string name="syrup_selector">Elija jarabe</string>
+    <!-- Toppings Fragment -->
+    <string name="topping_title">Selección del jarabe</string>
+    <string name="topping_list">Lista de sabores</string>
+    <string name="topping_selector">Elija sabor</string>
+    <!-- <string name="name">Sample text</string> -->
 
     <!--************ Config Strings, don´t translate and touch ************-->
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->

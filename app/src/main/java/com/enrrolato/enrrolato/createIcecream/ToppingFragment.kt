@@ -7,20 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import bolts.Bolts
 import com.enrrolato.enrrolato.AdapterIceCream
 import com.enrrolato.enrrolato.PrincipalMenuFragment
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 import com.enrrolato.enrrolato.iceCream.Topping
-import com.facebook.FacebookSdk.getApplicationContext
-import kotlinx.android.synthetic.main.fragment_topping.*
-import kotlin.properties.Delegates
 
 class ToppingFragment : Fragment() {
 
@@ -42,7 +36,7 @@ class ToppingFragment : Fragment() {
         var fill = view.findViewById<View>(R.id.choosenTopping) as RecyclerView
         var next = view.findViewById<View>(R.id.btCotinueToContainer) as Button
 
-        chargeTopping(spinner, fill)
+        loadToppings(spinner, fill)
 
         //back.setOnClickListener {
         //    back()
@@ -55,7 +49,7 @@ class ToppingFragment : Fragment() {
         return view
     }
 
-    private fun chargeTopping(spT: Spinner, rv: RecyclerView) {
+    private fun loadToppings(spT: Spinner, rv: RecyclerView) {
         listTopping = enrrolato.listToppings
         var list: ArrayList<Flavor> = ArrayList()
         toppingList = ArrayList()

@@ -1,5 +1,6 @@
 <resources>
     <!--************ Alerts strings ************-->
+    <!--************ Alerts strings ************-->
     <!-- General Alerts -->
     <string name="accept_action">Aceptar</string>
     <string name="alert_title">Ha ocurrido un error</string>

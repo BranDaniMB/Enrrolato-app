@@ -150,6 +150,20 @@ class Enrrolato: Application() {
         ref.addValueEventListener(userListener)
     }
 
+    public fun getUsername(email: String?) {
+        /* val auth: FirebaseAuth = FirebaseAuth.getInstance()
+         val mail = database.getReference(applicationContext.getString(R.string.db_app_users) +"/"+ email.hashCode().toString())
+         val exist = database.reference.child("" + mail).child("username").toString()
+
+         // BUSCANDO LAS KEY QUE SON IGUALES A ESTO, Y CUANDO LA ENCUENTRO, LA AGARRO, SINO EXISTE, DEJARLA VACÍA
+
+         if(mail.equals(auth.currentUser?.equals(email))) {
+             if(!exist.isEmpty()) {
+                 return exist
+             }
+         }
+         return ""*/
+    }
 
     fun update() {
         loadFlavors()

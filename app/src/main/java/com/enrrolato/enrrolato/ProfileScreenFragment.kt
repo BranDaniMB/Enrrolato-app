@@ -73,7 +73,7 @@ class ProfileScreenFragment : Fragment() {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
         val popupConfirmExitView =
-            layoutInflater.inflate(R.layout.activity_popup_confirm_exit, null)
+            layoutInflater.inflate(R.layout.popup_confirm_exit, null)
         val bt_ok: Button = popupConfirmExitView.findViewById(R.id.btOk);
         val bt_cancel: Button = popupConfirmExitView.findViewById(R.id.btCancel);
         alertDialogBuilder?.setView(popupConfirmExitView)

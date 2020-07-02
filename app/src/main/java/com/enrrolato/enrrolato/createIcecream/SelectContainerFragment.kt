@@ -22,7 +22,6 @@ class SelectContainerFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         var view: View =  inflater.inflate(R.layout.fragment_select_container, container, false)
         var back= view.findViewById<View>(R.id.btBackToTopping) as ImageButton
         var cup = view.findViewById<View>(R.id.btCup) as Button
@@ -49,12 +48,12 @@ class SelectContainerFragment : Fragment() {
         return view
     }
 
-   private fun backToTopping() {
-       val fragment = ToppingFragment() // NO VA A PRINCIPAL SINO A FILLING
-       val fm = requireActivity().supportFragmentManager
-       val transaction = fm.beginTransaction()
-       transaction.replace(R.id.ly_container, fragment)
-       transaction.addToBackStack(null)
+    private fun backToTopping() {
+        val fragment = ToppingFragment()
+        val fm = requireActivity().supportFragmentManager
+        val transaction = fm.beginTransaction()
+        transaction.replace(R.id.ly_container, fragment)
+        transaction.addToBackStack(null)
        transaction.commit()
    }
 

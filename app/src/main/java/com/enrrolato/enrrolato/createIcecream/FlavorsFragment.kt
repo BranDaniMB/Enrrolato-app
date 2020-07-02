@@ -1,5 +1,8 @@
 package com.enrrolato.enrrolato.createIcecream
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,12 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.AdapterIceCream
+import com.enrrolato.enrrolato.MainActivity
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
+import kotlinx.android.synthetic.main.fragment_flavors.*
+
 
 
 class FlavorsFragment : Fragment() {
@@ -23,12 +30,7 @@ class FlavorsFragment : Fragment() {
     private lateinit var flavorSelected: String
     private var listToRecycler: ArrayList<String> = ArrayList()
     private var count: Int = 0
-
-    private lateinit var name: String
-    private var licour: Boolean = true
-    private var special: Boolean = true
-    private var exclusive: Boolean = true
-    private var avaliable: Boolean = true
+    private lateinit var mLayoutManager: LinearLayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_flavors, container, false)
@@ -91,14 +93,9 @@ class FlavorsFragment : Fragment() {
         flavorList.add("Seleccione sabor")
 
         for (list in listFlavor) {
-            name = list.name
-            licour = list.isLiqueur
-            special = list.isSpecial
-            exclusive = list.isExclusive
-            avaliable = list.avaliable
 
-            if (!special || (special && licour) && !exclusive && avaliable) {
-                flavorList.add(name)
+            if (!list.isSpecial || (list.isSpecial && list.isLiqueur) && !list.isExclusive && list.avaliable) {
+                flavorList.add(list.name)
             }
         }
 
@@ -131,16 +128,12 @@ class FlavorsFragment : Fragment() {
         flavorList.add("Seleccione sabor")
 
         for(list in listFlavor) {
-            name = list.name
-            licour = list.isLiqueur
-            special = list.isSpecial
-            exclusive = list.isExclusive
-            avaliable = list.avaliable
 
-            if (!special && !exclusive && avaliable) {
-                flavorList.add(name)
+            if (!list.isSpecial && !list.isExclusive && list.avaliable) {
+                flavorList.add(list.name)
             }
         }
+
         fillSpinner(f, rv)
     }
 
@@ -152,14 +145,9 @@ class FlavorsFragment : Fragment() {
         flavorList.add("Seleccione sabor")
 
         for(list in listFlavor) {
-            name = list.name
-            licour = list.isLiqueur
-            special = list.isSpecial
-            exclusive = list.isExclusive
-            avaliable = list.avaliable
 
-            if ((special && licour) && !exclusive && avaliable) {
-                flavorList.add(name)
+            if ((list.isSpecial && list.isLiqueur) && !list.isExclusive && list.avaliable) {
+                flavorList.add(list.name)
             }
         }
         fillSpinner(f, rv)
@@ -170,14 +158,32 @@ class FlavorsFragment : Fragment() {
     }
 
     private fun chooseFlavor(recyclerFlavors: RecyclerView) {
+        mLayoutManager = LinearLayoutManager(context)
+        recyclerFlavors.setHasFixedSize(true)
+        recyclerFlavors.itemAnimator = DefaultItemAnimator()
+        recyclerFlavors.layoutManager = mLayoutManager
+        recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
         if(count < 3) {
             recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             var  af: AdapterIceCream
 
             if(!listToRecycler.contains(flavorSelected)) {
 
+                //txtLicourAlert.visibility = 1
+
                 listToRecycler.add(flavorSelected)
                 af = AdapterIceCream(listToRecycler)
+
+                af.setOnClickListener(object: View.OnClickListener {
+                    override fun onClick(v: View) {
+                        var m: String = "Desea eliminar el sabor"
+                        //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
+                        popupMessage(recyclerFlavors.getChildAdapterPosition(v), af, m)
+                        count -= 1
+                    }
+                })
+
                 recyclerFlavors.adapter = af
                 count += 1
             }
@@ -203,6 +209,31 @@ class FlavorsFragment : Fragment() {
         alertDialog.show()
 
         bt_ok.setOnClickListener {
+            alertDialog.cancel()
+        }
+    }
+
+    private fun popupMessage(i: Int, a: AdapterIceCream, m: String) {
+        val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
+        val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+        val popupConfirmMessageView = layoutInflater.inflate(R.layout.popup_confirmation_message, null)
+        val msg: TextView = popupConfirmMessageView.findViewById(R.id.txtConfirmMessage)
+        msg.text = m
+        val bt_ok: Button = popupConfirmMessageView.findViewById(R.id.btOk1);
+        val bt_cancel: Button = popupConfirmMessageView.findViewById(R.id.btCancel1);
+        alertDialogBuilder?.setView(popupConfirmMessageView)
+        val alertDialog: AlertDialog = alertDialogBuilder!!.create()
+        alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog
+        alertDialog.show()
+
+        bt_ok.setOnClickListener {
+            alertDialog.cancel()
+            listToRecycler.removeAt(i)
+            a.notifyItemRemoved(i)
+            //Toast.makeText(context, "Usted ha eliminado " + n, Toast.LENGTH_SHORT).show()
+        }
+
+        bt_cancel.setOnClickListener {
             alertDialog.cancel()
         }
     }

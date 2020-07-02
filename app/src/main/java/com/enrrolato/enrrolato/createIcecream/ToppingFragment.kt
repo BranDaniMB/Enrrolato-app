@@ -1,12 +1,14 @@
 package com.enrrolato.enrrolato.createIcecream
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.AdapterIceCream
@@ -16,6 +18,7 @@ import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 import com.enrrolato.enrrolato.iceCream.Topping
 
+
 class ToppingFragment : Fragment() {
 
     private lateinit var listTopping: ArrayList<Topping>
@@ -24,23 +27,22 @@ class ToppingFragment : Fragment() {
     private var listToRecycler: ArrayList<String> = ArrayList()
     private lateinit var toppingSelected: String
 
+    private var count: Int = 0
+    private lateinit var mLayoutManager: LinearLayoutManager
+    private lateinit var af: AdapterIceCream
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_topping, container, false)
-        //var back = view.findViewById<View>(R.id.btBackToFilling) as ImageButton
         var spinner = view.findViewById<View>(R.id.spTopping) as Spinner
         var fill = view.findViewById<View>(R.id.choosenTopping) as RecyclerView
         var next = view.findViewById<View>(R.id.btCotinueToContainer) as Button
 
         loadToppings(spinner, fill)
-
-        //back.setOnClickListener {
-        //    back()
-        //}
 
         next.setOnClickListener {
           selectContainer(fill)
@@ -84,6 +86,10 @@ class ToppingFragment : Fragment() {
 
                 if(!toppingSelected.equals("Seleccione topping")) {
                     chooseTopping(rv)
+                    //}
+                    //else {
+                    //    errorTopping("Debe seleccionar algún topping")
+                    //}
                 }
             }
 
@@ -93,31 +99,57 @@ class ToppingFragment : Fragment() {
     }
 
     private fun selectContainer(rv: RecyclerView) {
-        if (rv != null) {
+        if (rv == null || toppingSelected.equals("Seleccione topping") || toppingSelected.isEmpty()) {
+            errorTopping("Debe seleccionar algún topping")
+        } else {
+
             val fragment = SelectContainerFragment()
             val fm = requireActivity().supportFragmentManager
             val transaction = fm.beginTransaction()
             transaction.replace(R.id.ly_topping, fragment)
             transaction.addToBackStack(null)
             transaction.commit()
-        } else {
-            errorTopping("Debe seleccionar algún topping")
         }
     }
 
     private fun chooseTopping(recyclerToppings: RecyclerView) {
+        mLayoutManager = LinearLayoutManager(context)
+        recyclerToppings.setHasFixedSize(true)
+        recyclerToppings.itemAnimator = DefaultItemAnimator()
+        recyclerToppings.layoutManager = mLayoutManager
         recyclerToppings.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        var af: AdapterIceCream
 
         if (!listToRecycler.contains(toppingSelected)) {
 
-            listToRecycler.add(toppingSelected)
-            af = AdapterIceCream(listToRecycler)
-            recyclerToppings.adapter = af
+            if(count < 2)  { // HAY QUE MEJORARLO
+
+                listToRecycler.add(toppingSelected)
+                af = AdapterIceCream(listToRecycler)
+
+                af.setOnClickListener(object: View.OnClickListener {
+                    override fun onClick(v: View) {
+                        var m: String = "Desea eliminar el topping"
+                        //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
+                        popupMessage(recyclerToppings.getChildAdapterPosition(v), af, m)
+                    }
+                })
+                recyclerToppings.adapter = af
+
+            } else {
+                // YA SELECCIONÓ EL MÁXIMO
+                // ¿QUIERE ELEGIR UN TOPPING MÁS?
+            }
+
         } else {
             errorTopping("Ya seleccionó este topping")
         }
     }
+
+    private fun remove(p:Int) {
+        listToRecycler.removeAt(p)
+        af.notifyItemRemoved(p)
+    }
+
 
     private fun errorTopping(msg: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
@@ -136,5 +168,30 @@ class ToppingFragment : Fragment() {
         }
     }
 
+    private fun popupMessage(i: Int, a: AdapterIceCream, m: String) {
+        val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
+        val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+        val popupConfirmMessageView =
+            layoutInflater.inflate(R.layout.popup_confirmation_message, null)
+        val msg: TextView = popupConfirmMessageView.findViewById(R.id.txtConfirmMessage)
+        msg.text = m
+        val bt_ok: Button = popupConfirmMessageView.findViewById(R.id.btOk1);
+        val bt_cancel: Button = popupConfirmMessageView.findViewById(R.id.btCancel1);
+        alertDialogBuilder?.setView(popupConfirmMessageView)
+        val alertDialog: AlertDialog = alertDialogBuilder!!.create()
+        alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog
+        alertDialog.show()
+
+        bt_ok.setOnClickListener {
+            alertDialog.cancel()
+            listToRecycler.removeAt(i)
+            a.notifyItemRemoved(i)
+            //Toast.makeText(context, "Usted ha eliminado " + n, Toast.LENGTH_SHORT).show()
+        }
+
+        bt_cancel.setOnClickListener {
+            alertDialog.cancel()
+        }
+    }
 
 }

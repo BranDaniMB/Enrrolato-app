@@ -27,13 +27,24 @@
             android:paddingBottom="40dp"
             tools:ignore="MissingConstraints">
 
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/cyan"
+                android:src="@drawable/ic_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/txtToppings"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="Selección de topping"
+                android:text="@string/topping_title"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -76,10 +87,10 @@
             <TextView
                 android:id="@+id/txtToppingAlert"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="64dp"
                 android:layout_marginTop="10dp"
-                android:text="* Topping extra tiene un valor de 400 colones"
+                android:text="@string/topping_alert"
                 android:visibility="invisible"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"

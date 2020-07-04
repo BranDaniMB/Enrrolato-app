@@ -4,12 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_reset_password.*
-import kotlinx.android.synthetic.main.fragment_restore_password.*
 
 class ResetPassword : AppCompatActivity() {
 
@@ -44,27 +41,27 @@ class ResetPassword : AppCompatActivity() {
     }
 
     private fun goToBack() {
-        val back = Intent(this, MainActivity::class.java)
+        val back = Intent(this, LoginActivity::class.java)
         startActivity(back)
     }
 
     private fun successful() {
         val toast: Toast =
-            Toast.makeText(this, "Se envió el correo correctamente", Toast.LENGTH_SHORT)
+            Toast.makeText(this, getString(R.string.reset_password_success), Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         toast.show()
     }
 
     private fun failure() {
         val toast: Toast =
-            Toast.makeText(this, "El correo no se pudo enviar", Toast.LENGTH_SHORT)
+            Toast.makeText(this, getString(R.string.reset_password_failure), Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         toast.show()
     }
 
     private fun empty() {
         val toast: Toast =
-            Toast.makeText(this, "El campo de texto se encuentra vacío", Toast.LENGTH_SHORT)
+            Toast.makeText(this, getString(R.string.reset_password_empty), Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         toast.show()
     }

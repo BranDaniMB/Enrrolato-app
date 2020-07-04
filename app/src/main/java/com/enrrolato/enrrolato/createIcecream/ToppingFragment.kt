@@ -37,13 +37,22 @@ class ToppingFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view: View = inflater.inflate(R.layout.fragment_topping, container, false)
-        var spinner = view.findViewById<View>(R.id.spTopping) as Spinner
-        var fill = view.findViewById<View>(R.id.choosenTopping) as RecyclerView
-        var next = view.findViewById<View>(R.id.btCotinueToContainer) as Button
+        val view: View = inflater.inflate(R.layout.fragment_topping, container, false)
+        val spinner = view.findViewById<View>(R.id.spTopping) as Spinner
+        val fill = view.findViewById<View>(R.id.choosenTopping) as RecyclerView
+        val next = view.findViewById<View>(R.id.btCotinueToContainer) as Button
+        val back = view.findViewById<View>(R.id.backBtn) as ImageButton
 
         loadToppings(spinner, fill)
 
+        back.setOnClickListener {
+            val fragment = FillingFragment()
+            val fm = requireActivity().supportFragmentManager
+            val transaction = fm.beginTransaction()
+            transaction.replace(R.id.ly_topping, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
         next.setOnClickListener {
           selectContainer(fill)
         }
@@ -56,7 +65,7 @@ class ToppingFragment : Fragment() {
         var list: ArrayList<Flavor> = ArrayList()
         toppingList = ArrayList()
 
-        toppingList.add("Seleccione topping")
+        toppingList.add(getString(R.string.topping_selector))
 
         for(list in listTopping) {
 
@@ -84,7 +93,7 @@ class ToppingFragment : Fragment() {
             override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
                 toppingSelected = av?.getItemAtPosition(i).toString()
 
-                if(!toppingSelected.equals("Seleccione topping")) {
+                if(!toppingSelected.equals(getString(R.string.topping_selector))) {
                     chooseTopping(rv)
                     //}
                     //else {
@@ -99,8 +108,8 @@ class ToppingFragment : Fragment() {
     }
 
     private fun selectContainer(rv: RecyclerView) {
-        if (rv == null || toppingSelected.equals("Seleccione topping") || toppingSelected.isEmpty()) {
-            errorTopping("Debe seleccionar algún topping")
+        if (rv == null || toppingSelected.equals(getString(R.string.topping_selector)) || toppingSelected.isEmpty()) {
+            errorTopping(getString(R.string.no_topping))
         } else {
 
             val fragment = SelectContainerFragment()
@@ -128,7 +137,7 @@ class ToppingFragment : Fragment() {
 
                 af.setOnClickListener(object: View.OnClickListener {
                     override fun onClick(v: View) {
-                        var m: String = "Desea eliminar el topping"
+                        var m: String = getString(R.string.delete_topping_prompt)
                         //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
                         popupMessage(recyclerToppings.getChildAdapterPosition(v), af, m)
                     }
@@ -136,12 +145,12 @@ class ToppingFragment : Fragment() {
                 recyclerToppings.adapter = af
 
             } else {
-                // YA SELECCIONÓ EL MÁXIMO
+                // YA SELECCIONÓ EL MÁXIMO: errorTopping(getString(R.string.max_topping))
                 // ¿QUIERE ELEGIR UN TOPPING MÁS?
             }
 
         } else {
-            errorTopping("Ya seleccionó este topping")
+            errorTopping(getString(R.string.duplicated_topping))
         }
     }
 

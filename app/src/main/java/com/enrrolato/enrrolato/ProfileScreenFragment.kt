@@ -85,9 +85,9 @@ class ProfileScreenFragment : Fragment() {
             fragmentManager!!.beginTransaction().remove(this).commit();
             alertDialog.cancel()
 
-            val int: Intent = Intent(activity, MainActivity::class.java)
+            val int: Intent = Intent(activity, LoginActivity::class.java)
             startActivity(int)
-            Toast.makeText(context, "Usted ha cerrado sesión", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.log_out_message), Toast.LENGTH_SHORT).show()
             val prefs = activity!!.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
             prefs.clear()
             prefs.apply()

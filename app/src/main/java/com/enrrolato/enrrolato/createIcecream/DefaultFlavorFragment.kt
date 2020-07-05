@@ -19,12 +19,6 @@ class DefaultFlavorFragment : Fragment() {
     private var enrrolato = Enrrolato.instance
     private lateinit var flavorSelected: String
 
-    private lateinit var name: String
-    private var licour: Boolean = true
-    private var special: Boolean = true
-    private var exclusive: Boolean = true
-    private var avaliable: Boolean = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -81,14 +75,9 @@ class DefaultFlavorFragment : Fragment() {
             flavorList.add("Seleccione helado")
 
             for (list in listFlavor) {
-                name = list.name
-                licour = list.isLiqueur
-                special = list.isSpecial
-                exclusive = list.isExclusive
-                avaliable = list.avaliable
 
-                if (special  && !licour && avaliable) {
-                    flavorList.add(name)
+                if (list.isSpecial  && !list.isLiqueur && list.avaliable) {
+                    flavorList.add(list.name)
                 }
             }
             fillSpinner(f)

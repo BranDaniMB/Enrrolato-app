@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.enrrolato.enrrolato.database.Enrrolato
 import com.google.firebase.auth.FirebaseAuth
 
 /**
@@ -19,13 +20,18 @@ import com.google.firebase.auth.FirebaseAuth
 
 class ProfileScreenFragment : Fragment() {
 
+    private var enrrolato = Enrrolato.instance
+    private var auth = FirebaseAuth.getInstance()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile_screen, container, false)
         val btAbout = view.findViewById<View>(R.id.btAboutUs) as Button
         val btOut = view.findViewById<View>(R.id.btLogout) as Button
         val btRestore = view.findViewById<View>(R.id.btChangePassword) as Button
+        val email = view.findViewById<View>(R.id.txtAssociatedUsername) as TextView
+
         showEmail(view)
+        //email.text = enrrolato.getUsername(auth.currentUser?.email)
 
         btAbout.setOnClickListener {
             showAboutUsFragment()
@@ -66,7 +72,7 @@ class ProfileScreenFragment : Fragment() {
 
     private fun showEmail(view: View) {
         val associedEmail: TextView = view.findViewById(R.id.txtAssociatedEmail) as TextView
-        associedEmail.text = FirebaseAuth.getInstance().currentUser?.email
+        associedEmail.text = auth.currentUser?.email
     }
 
     private fun logOut() {

@@ -1,5 +1,6 @@
 package com.enrrolato.enrrolato.createIcecream
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 import com.enrrolato.enrrolato.iceCream.Topping
+import org.w3c.dom.Text
 
 
 class ToppingFragment : Fragment() {
@@ -31,7 +33,6 @@ class ToppingFragment : Fragment() {
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var af: AdapterIceCream
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -41,8 +42,9 @@ class ToppingFragment : Fragment() {
         var spinner = view.findViewById<View>(R.id.spTopping) as Spinner
         var fill = view.findViewById<View>(R.id.choosenTopping) as RecyclerView
         var next = view.findViewById<View>(R.id.btCotinueToContainer) as Button
+        var alert = view.findViewById<View>(R.id.txtToppingAlert) as TextView
 
-        loadToppings(spinner, fill)
+        loadToppings(spinner, fill, alert)
 
         next.setOnClickListener {
           selectContainer(fill)
@@ -51,7 +53,7 @@ class ToppingFragment : Fragment() {
         return view
     }
 
-    private fun loadToppings(spT: Spinner, rv: RecyclerView) {
+    private fun loadToppings(spT: Spinner, rv: RecyclerView, alert: TextView) {
         listTopping = enrrolato.listToppings
         var list: ArrayList<Flavor> = ArrayList()
         toppingList = ArrayList()
@@ -64,7 +66,7 @@ class ToppingFragment : Fragment() {
                 toppingList.add(list.name)
             }
         }
-        fillSpinner(spT, rv)
+        fillSpinner(spT, rv, alert)
     }
 
     private fun back() {
@@ -76,7 +78,7 @@ class ToppingFragment : Fragment() {
         transaction.commit()
     }
 
-    private fun fillSpinner(topping: Spinner, rv: RecyclerView) {
+    private fun fillSpinner(topping: Spinner, rv: RecyclerView, alert: TextView) {
         val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, toppingList)
         topping.adapter = array
         topping.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -85,7 +87,7 @@ class ToppingFragment : Fragment() {
                 toppingSelected = av?.getItemAtPosition(i).toString()
 
                 if(!toppingSelected.equals("Seleccione topping")) {
-                    chooseTopping(rv)
+                    chooseTopping(rv, alert)
                     //}
                     //else {
                     //    errorTopping("Debe seleccionar algún topping")
@@ -112,7 +114,8 @@ class ToppingFragment : Fragment() {
         }
     }
 
-    private fun chooseTopping(recyclerToppings: RecyclerView) {
+    @SuppressLint("WrongConstant")
+    private fun chooseTopping(recyclerToppings: RecyclerView, alert: TextView) {
         mLayoutManager = LinearLayoutManager(context)
         recyclerToppings.setHasFixedSize(true)
         recyclerToppings.itemAnimator = DefaultItemAnimator()
@@ -121,24 +124,29 @@ class ToppingFragment : Fragment() {
 
         if (!listToRecycler.contains(toppingSelected)) {
 
-            if(count < 2)  { // HAY QUE MEJORARLO
+            listToRecycler.add(toppingSelected)
+            af = AdapterIceCream(listToRecycler)
 
-                listToRecycler.add(toppingSelected)
-                af = AdapterIceCream(listToRecycler)
+            af.setOnClickListener(View.OnClickListener { v ->
+                var m: String = "Desea eliminar el topping"
+                //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
+                popupMessage(recyclerToppings.getChildAdapterPosition(v), af, m)
+                count -= 1
+            })
 
-                af.setOnClickListener(object: View.OnClickListener {
-                    override fun onClick(v: View) {
-                        var m: String = "Desea eliminar el topping"
-                        //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
-                        popupMessage(recyclerToppings.getChildAdapterPosition(v), af, m)
-                    }
-                })
-                recyclerToppings.adapter = af
+            recyclerToppings.adapter = af
+            count += 1
 
-            } else {
-                // YA SELECCIONÓ EL MÁXIMO
-                // ¿QUIERE ELEGIR UN TOPPING MÁS?
+            if(count > 2) {
+                if(alert.visibility == View.INVISIBLE) {
+                    alert.visibility = View.VISIBLE
+                }
             }
+
+            //} else {
+            // YA SELECCIONÓ EL MÁXIMO
+            // ¿QUIERE ELEGIR UN TOPPING MÁS?
+            //}
 
         } else {
             errorTopping("Ya seleccionó este topping")

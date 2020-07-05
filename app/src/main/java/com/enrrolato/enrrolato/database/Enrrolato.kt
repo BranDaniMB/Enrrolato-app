@@ -6,6 +6,8 @@ import android.content.Context
 import com.enrrolato.enrrolato.MainActivity
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.iceCream.*
+import com.google.android.gms.auth.api.Auth
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 enum class ProviderType {
@@ -125,7 +127,6 @@ class Enrrolato: Application() {
                 println("Container: " + listContainers.size)
             }
             override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
             }
         }
         refContainer.addValueEventListener(containerListener)
@@ -150,7 +151,42 @@ class Enrrolato: Application() {
         ref.addValueEventListener(userListener)
     }
 
-    public fun getUsername(email: String?) {
+    public fun getUsername(email: String?) : String {
+        // MEJORARLO Y VER COMO SE HACE BIEN
+
+        //var auth = FirebaseAuth.getInstance()
+        val mail = email.hashCode().toString()
+        var r = ""
+        database.reference.child("app").child("users").addValueEventListener(object: ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var u: User = dataSnapshot.value as User
+
+                if(dataSnapshot.exists()) {
+                    if(u.email.equals(mail)) {
+                        if(!u.username?.isEmpty()!!) {
+                            r = u.username!!
+                        }
+                    }
+                }
+
+                /*if (dataSnapshot.exists()) {
+                    if(dataSnapshot.child("email").value?.equals(email)!!) {
+                        if(!dataSnapshot.child("username").exists()) {
+                            r = dataSnapshot.child("username").value.toString()
+                        }
+                        else {
+                            r = ""
+                        }
+                    }
+                }*/
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+            }
+        })
+        return ""
+
         /* val auth: FirebaseAuth = FirebaseAuth.getInstance()
          val mail = database.getReference(applicationContext.getString(R.string.db_app_users) +"/"+ email.hashCode().toString())
          val exist = database.reference.child("" + mail).child("username").toString()

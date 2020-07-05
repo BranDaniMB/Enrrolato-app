@@ -54,7 +54,6 @@
 
             <Spinner
                 android:id="@+id/spFlavor"
-                android:style="@style/spinner_style"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginStart="32dp"
@@ -67,6 +66,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rgFlavor" />
+            <!--        android:style="@style/spinner_style"   -->
 
             <RadioGroup
                 android:id="@+id/rgFlavor"
@@ -104,8 +104,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/choosenFlavors"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginTop="30dp"
@@ -116,7 +116,6 @@
                 android:contentDescription="lista de sabores"
                 android:scrollbars="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/btContinue"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spFlavor" />
 

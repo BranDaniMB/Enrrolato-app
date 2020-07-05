@@ -73,4 +73,9 @@
     <string name="reset_password_failure">The email couldn\'t be sent</string>
     <string name="reset_password_empty">The text field is empty</string>
     <string name="reset_password_auth_error">Authentication error</string>
+    <string name="container_title">Container chioce</string>
+    <string name="container_list">Container list</string>
+    <string name="container_selector">Choose a container</string>
+    <string name="container_to_cart">Add to shopping cart</string>
+    <string name="container_new_icecream">Add another ice cream</string>
 </resources>

@@ -64,7 +64,6 @@ class FillingFragment : Fragment() {
                 nameList.add(filling.name)
             }
         }
-
         s.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
     }
 

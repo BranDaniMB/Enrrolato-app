@@ -35,8 +35,6 @@ class SelectContainerFragment : Fragment() {
             backToTopping()
         }
 
-        //wrapping = cup.text.toString()
-
         addCart.setOnClickListener {
 
         }
@@ -56,7 +54,6 @@ class SelectContainerFragment : Fragment() {
                 nameList.add(container.name)
             }
         }
-
         s.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
     }
 

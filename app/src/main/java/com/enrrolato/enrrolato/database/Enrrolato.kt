@@ -129,8 +129,13 @@ class Enrrolato: Application() {
         refContainer.addValueEventListener(containerListener)
     }
 
-    public fun initUser(email: String?, provider: ProviderType?) {
-        val ref = database.getReference(applicationContext.getString(R.string.db_app_users) +"/"+ email.hashCode().toString())
+    public fun initUser(id: String, email: String?, provider: ProviderType?) {
+        user = User(email, "", provider)
+        val ref = database.getReference(applicationContext.getString(R.string.db_app_users))
+        ref.child(id).setValue(user)
+        /*ref.child("email").setValue(email)
+        ref.child("username").setValue("")
+        ref.child("provider").setValue(provider)*/
 
         val userListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -138,7 +143,7 @@ class Enrrolato: Application() {
                     val username: String? = dataSnapshot.child("username").value as String?
                     User(email, username, provider)
                 } else {
-                    User(email, null, provider)
+                    User(email,null, provider)
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {
@@ -148,40 +153,13 @@ class Enrrolato: Application() {
         ref.addValueEventListener(userListener)
     }
 
+    public fun getId(): String? {
+        return FirebaseAuth.getInstance().currentUser?.uid
+    }
+
     public fun getUsername(email: String?) : String {
         // MEJORARLO Y VER COMO SE HACE BIEN
 
-        //var auth = FirebaseAuth.getInstance()
-        val mail = email.hashCode().toString()
-        var r = ""
-        database.reference.child("app").child("users").addValueEventListener(object: ValueEventListener {
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var u: User = dataSnapshot.value as User
-
-                if(dataSnapshot.exists()) {
-                    if(u.email.equals(mail)) {
-                        if(!u.username?.isEmpty()!!) {
-                            r = u.username!!
-                        }
-                    }
-                }
-
-                /*if (dataSnapshot.exists()) {
-                    if(dataSnapshot.child("email").value?.equals(email)!!) {
-                        if(!dataSnapshot.child("username").exists()) {
-                            r = dataSnapshot.child("username").value.toString()
-                        }
-                        else {
-                            r = ""
-                        }
-                    }
-                }*/
-            }
-
-            override fun onCancelled(p0: DatabaseError) {
-            }
-        })
         return ""
 
         /* val auth: FirebaseAuth = FirebaseAuth.getInstance()

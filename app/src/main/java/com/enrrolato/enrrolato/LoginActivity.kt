@@ -68,7 +68,8 @@ class LoginActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().signInWithCredential(credential)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                showMenu(account.email ?: "", ProviderType.GOOGLE)
+                                var id: String? = FirebaseAuth.getInstance().currentUser?.uid
+                                showMenu(id, account.email ?: "", ProviderType.GOOGLE)
                             } else if (it.isCanceled) {
 
                             } else {
@@ -84,24 +85,27 @@ class LoginActivity : AppCompatActivity() {
 
     private fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        var id = prefs.getString("id", null)
         val email = prefs.getString("email", null)
         val provider = prefs.getString("provider", null)
 
         if (email != null && provider != null) {
-            Enrrolato.instance.initUser(email, ProviderType.valueOf(provider))
-            showMenu(email, ProviderType.valueOf(provider))
+            if (id != null) {
+                Enrrolato.instance.initUser(id, email, ProviderType.valueOf(provider))
+            }
+            showMenu(id, email, ProviderType.valueOf(provider))
         }
     }
 
     private fun setup() {
-
         // Da error si la cuenta no esta registrada
         loginBtn.setOnClickListener {
             if (!usernameField.text.isNullOrEmpty() && !passwordField.text.isNullOrEmpty()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString()
                     , passwordField.text.toString()).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        showMenu(it.result?.user?.email ?: "", ProviderType.BASIC)
+                        //var id: String? = FirebaseAuth.getInstance().currentUser?.uid
+                        showMenu(it.result?.user?.uid, it.result?.user?.email ?: "", ProviderType.BASIC)
                     } else {
                         showAlert();
                     }
@@ -137,7 +141,8 @@ class LoginActivity : AppCompatActivity() {
                             FirebaseAuth.getInstance().signInWithCredential(credential)
                                 .addOnCompleteListener {
                                     if (it.isSuccessful) {
-                                        showMenu(it.result?.user?.email ?: "", ProviderType.FACEBOOK)
+                                        var id: String? = FirebaseAuth.getInstance().currentUser?.uid
+                                        showMenu(id, it.result?.user?.email ?: "", ProviderType.FACEBOOK)
                                     } else {
                                         showAlert();
                                     }
@@ -170,11 +175,14 @@ class LoginActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showMenu(email: String, provider: ProviderType) {
+    private fun showMenu(id: String?, email: String, provider: ProviderType) {
         val menuIntent = Intent(this, PrincipalScreen::class.java)
-        Enrrolato.instance.initUser(email, provider)
+        if (id != null) {
+            Enrrolato.instance.initUser(id, email, provider)
+        }
         // Guardando la session
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+        prefs.putString("id", id)
         prefs.putString("email", email)
         prefs.putString("provider", provider.name)
         prefs.apply()

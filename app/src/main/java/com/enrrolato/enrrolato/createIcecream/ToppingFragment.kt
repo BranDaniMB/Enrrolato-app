@@ -41,18 +41,9 @@ class ToppingFragment : Fragment() {
         val spinner = view.findViewById<View>(R.id.spTopping) as Spinner
         val fill = view.findViewById<View>(R.id.choosenTopping) as RecyclerView
         val next = view.findViewById<View>(R.id.btCotinueToContainer) as Button
-        val back = view.findViewById<View>(R.id.backBtn) as ImageButton
 
         loadToppings(spinner, fill)
 
-        back.setOnClickListener {
-            val fragment = FillingFragment()
-            val fm = requireActivity().supportFragmentManager
-            val transaction = fm.beginTransaction()
-            transaction.replace(R.id.ly_topping, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
         next.setOnClickListener {
           selectContainer(fill)
         }
@@ -74,15 +65,6 @@ class ToppingFragment : Fragment() {
             }
         }
         fillSpinner(spT, rv)
-    }
-
-    private fun back() {
-        val fragment = PrincipalMenuFragment() // NO VA A PRINCIPAL SINO A FILLING
-        val fm = requireActivity().supportFragmentManager
-        val transaction = fm.beginTransaction()
-        transaction.replace(R.id.ly_topping, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 
     private fun fillSpinner(topping: Spinner, rv: RecyclerView) {

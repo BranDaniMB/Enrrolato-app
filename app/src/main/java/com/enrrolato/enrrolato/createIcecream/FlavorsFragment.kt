@@ -1,8 +1,5 @@
 package com.enrrolato.enrrolato.createIcecream
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,12 +11,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.AdapterIceCream
-import com.enrrolato.enrrolato.MainActivity
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
-import kotlinx.android.synthetic.main.fragment_flavors.*
-
 
 
 class FlavorsFragment : Fragment() {
@@ -67,8 +61,7 @@ class FlavorsFragment : Fragment() {
     }
 
     private fun backToDefault() {
-        val fragment =
-            DefaultFlavorFragment()
+        val fragment = DefaultFlavorFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()
         transaction.replace(R.id.ly_flavor, fragment)
@@ -77,11 +70,17 @@ class FlavorsFragment : Fragment() {
     }
 
     private fun nextStep(rf: RecyclerView) {
-        if(rf == null || flavorSelected.equals("Seleccione sabor") || flavorSelected.isEmpty()) {
-            errorFlavor("No se han seleccionado sabores")
+        if(rf == null || flavorSelected.equals(getString(R.string.flavor_selector)) || flavorSelected.isEmpty()) {
+            errorFlavor(getString(R.string.no_flavor))
         }
         else {
             // DIRIGIRSE A LA PANTALLA DE SELECCIÓN DE JARABES
+            val fragment = FillingFragment()
+            val fm = requireActivity().supportFragmentManager
+            val transaction = fm.beginTransaction()
+            transaction.replace(R.id.ly_flavor, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
     }
 
@@ -90,7 +89,7 @@ class FlavorsFragment : Fragment() {
         var list: ArrayList<Flavor> = ArrayList()
         flavorList = ArrayList()
 
-        flavorList.add("Seleccione sabor")
+        flavorList.add(getString(R.string.flavor_selector))
 
         for (list in listFlavor) {
 
@@ -110,7 +109,7 @@ class FlavorsFragment : Fragment() {
             override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
                 flavorSelected = av?.getItemAtPosition(i).toString()
 
-                if(!flavorSelected.equals("Seleccione sabor")) {
+                if(!flavorSelected.equals(getString(R.string.flavor_selector))) {
                     chooseFlavor(rv)
                 }
             }
@@ -124,8 +123,7 @@ class FlavorsFragment : Fragment() {
         listFlavor = enrrolato.listFlavors
         var list: ArrayList<Flavor>
         flavorList = ArrayList()
-
-        flavorList.add("Seleccione sabor")
+        flavorList.add(getString(R.string.flavor_selector))
 
         for(list in listFlavor) {
 
@@ -142,7 +140,7 @@ class FlavorsFragment : Fragment() {
         var list: ArrayList<Flavor>
         flavorList = ArrayList()
 
-        flavorList.add("Seleccione sabor")
+        flavorList.add(getString(R.string.flavor_selector))
 
         for(list in listFlavor) {
 
@@ -177,7 +175,7 @@ class FlavorsFragment : Fragment() {
 
                 af.setOnClickListener(object: View.OnClickListener {
                     override fun onClick(v: View) {
-                        var m: String = "Desea eliminar el sabor"
+                        var m: String = getString(R.string.delete_flavor_prompt)
                         //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
                         popupMessage(recyclerFlavors.getChildAdapterPosition(v), af, m)
                         count -= 1
@@ -188,11 +186,11 @@ class FlavorsFragment : Fragment() {
                 count += 1
             }
             else {
-                errorFlavor("Ya seleccionó este sabor")
+                errorFlavor(getString(R.string.duplicated_flavor))
             }
         }
         else {
-            errorFlavor("Usted excedió el máximo de sabores")
+            errorFlavor(getString(R.string.max_flavor))
         }
     }
 

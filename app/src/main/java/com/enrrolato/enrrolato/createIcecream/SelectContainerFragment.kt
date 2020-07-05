@@ -5,9 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
-import com.enrrolato.enrrolato.PrincipalMenuFragment
+import android.widget.Spinner
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.database.Enrrolato
 
@@ -23,29 +24,40 @@ class SelectContainerFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view: View =  inflater.inflate(R.layout.fragment_select_container, container, false)
-        var back= view.findViewById<View>(R.id.btBackToTopping) as ImageButton
-        var cup = view.findViewById<View>(R.id.btCup) as Button
-        var cone = view.findViewById<View>(R.id.btCone) as Button
+        var back = view.findViewById<View>(R.id.backBtn) as ImageButton
         var addCart = view.findViewById<View>(R.id.btAddToShopCart) as Button
         var addNewIceCream = view.findViewById<View>(R.id.btAddNewIceCream) as Button
+        val sp = view.findViewById<View>(R.id.spContainer) as Spinner
+
+        loadContainers(sp)
 
         back.setOnClickListener {
             backToTopping()
         }
 
-        cup.setOnClickListener {
-            wrapping = cup.text.toString()
-        }
-
-        cone.setOnClickListener {
-            wrapping = cone.text.toString()
-        }
+        //wrapping = cup.text.toString()
 
         addCart.setOnClickListener {
 
         }
 
         return view
+    }
+
+    private fun loadContainers(s: Spinner) {
+        val containers = Enrrolato.instance.listContainers
+        val nameList = ArrayList<String>()
+
+        nameList.add(getString(R.string.container_selector))
+
+        for (container in containers) {
+
+            if (container.available) {
+                nameList.add(container.name)
+            }
+        }
+
+        s.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
     }
 
     private fun backToTopping() {

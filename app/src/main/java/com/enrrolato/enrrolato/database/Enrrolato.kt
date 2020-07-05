@@ -1,9 +1,6 @@
 package com.enrrolato.enrrolato.database
 
-import android.app.Activity
 import android.app.Application
-import android.content.Context
-import com.enrrolato.enrrolato.MainActivity
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.iceCream.*
 import com.google.android.gms.auth.api.Auth

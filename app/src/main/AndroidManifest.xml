@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".PrincipalScreen" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

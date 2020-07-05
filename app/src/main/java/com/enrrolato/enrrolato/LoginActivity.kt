@@ -1,12 +1,9 @@
 package com.enrrolato.enrrolato
 
-import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.database.ProviderType
@@ -23,10 +20,9 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.activity_main_constrained.*
-import kotlinx.android.synthetic.main.activity_reset_password.*
+import kotlinx.android.synthetic.main.activity_login.*
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private val GOOGLE_SIGN_IN = 100;
     private val callbackManager = CallbackManager.Factory.create();
@@ -35,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         // Cambiamos al tema por defecto
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_constrained)
+        setContentView(R.layout.activity_login)
 
         // Analytics Event
         val analytics : FirebaseAnalytics = FirebaseAnalytics.getInstance(this);

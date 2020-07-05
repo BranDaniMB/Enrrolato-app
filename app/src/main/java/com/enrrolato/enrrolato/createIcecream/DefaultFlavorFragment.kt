@@ -32,7 +32,7 @@ class DefaultFlavorFragment : Fragment() {
         val spSeason = view.findViewById<View>(R.id.spSeasonFlavor) as Spinner
         val next = view.findViewById<View>(R.id.btNext) as Button
 
-        chargeSpecial(spSpecial)
+        loadSpecial(spSpecial)
 
         backPrincipal.setOnClickListener {
             backToPrincipal()
@@ -67,12 +67,12 @@ class DefaultFlavorFragment : Fragment() {
         transaction.commit()
     }
 
-    private fun chargeSpecial(f: Spinner) {
+    private fun loadSpecial(f: Spinner) {
             listFlavor = enrrolato.listFlavors
             var list: ArrayList<Flavor> = ArrayList()
             flavorList = ArrayList()
 
-            flavorList.add("Seleccione helado")
+            flavorList.add(getString(R.string.preset_flavor_list))
 
             for (list in listFlavor) {
 
@@ -103,8 +103,8 @@ class DefaultFlavorFragment : Fragment() {
 
     private fun nextStepTopping() {
 
-        if(flavorSelected.equals("Seleccione helado") || flavorSelected.isEmpty()) {
-            errorFlavor("Debe seleccionar un helado")
+        if(flavorSelected.equals(getString(R.string.preset_flavor_list)) || flavorSelected.isEmpty()) {
+            errorFlavor(getString(R.string.no_preset))
         }
         else {
             // BRINCA DIRECTAMENTE A ESCOGER EL TOPPING

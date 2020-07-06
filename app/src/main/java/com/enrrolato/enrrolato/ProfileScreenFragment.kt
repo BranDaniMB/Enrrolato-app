@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -28,10 +29,11 @@ class ProfileScreenFragment : Fragment() {
         val btAbout = view.findViewById<View>(R.id.btAboutUs) as Button
         val btOut = view.findViewById<View>(R.id.btLogout) as Button
         val btRestore = view.findViewById<View>(R.id.btChangePassword) as Button
-        val email = view.findViewById<View>(R.id.txtAssociatedUsername) as TextView
+        val username = view.findViewById<View>(R.id.txtAssociatedUsername) as TextView
+        val editUsername = view.findViewById<View>(R.id.btEditUsername) as ImageButton
 
         showEmail(view)
-        //email.text = enrrolato.getUsername(auth.currentUser?.email)
+        username.text = enrrolato.getUsername()
 
         btAbout.setOnClickListener {
             showAboutUsFragment()
@@ -43,6 +45,10 @@ class ProfileScreenFragment : Fragment() {
 
         btOut.setOnClickListener {
             logOut()
+        }
+
+        editUsername.setOnClickListener {
+
         }
 
         return view

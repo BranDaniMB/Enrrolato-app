@@ -130,12 +130,9 @@ class Enrrolato: Application() {
     }
 
     public fun initUser(id: String, email: String?, provider: ProviderType?) {
-        user = User(email, "", provider)
+        user = User(email, getUsername(), provider)
         val ref = database.getReference(applicationContext.getString(R.string.db_app_users))
         ref.child(id).setValue(user)
-        /*ref.child("email").setValue(email)
-        ref.child("username").setValue("")
-        ref.child("provider").setValue(provider)*/
 
         val userListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -157,23 +154,44 @@ class Enrrolato: Application() {
         return FirebaseAuth.getInstance().currentUser?.uid
     }
 
-    public fun getUsername(email: String?) : String {
-        // MEJORARLO Y VER COMO SE HACE BIEN
+    public fun getUsername() : String {
+        val ref = FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users))
+        var id: String? = getId()
+        var us = ""
 
-        return ""
+        if (id != null) {
+            ref.child("app").child("users").child(id).addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(d: DataSnapshot) {
+                    val username = d.child("username").value as String?
+                    if(username == null) {
+                        us = ""
+                    } else if(d.exists()) {
+                        us = d.child("username").value as String
+                    }
+                }
 
-        /* val auth: FirebaseAuth = FirebaseAuth.getInstance()
-         val mail = database.getReference(applicationContext.getString(R.string.db_app_users) +"/"+ email.hashCode().toString())
-         val exist = database.reference.child("" + mail).child("username").toString()
+                override fun onCancelled(d: DatabaseError) {
+                }
 
-         // BUSCANDO LAS KEY QUE SON IGUALES A ESTO, Y CUANDO LA ENCUENTRO, LA AGARRO, SINO EXISTE, DEJARLA VACÍA
+            })
+        }
+        return us
+    }
 
-         if(mail.equals(auth.currentUser?.equals(email))) {
-             if(!exist.isEmpty()) {
-                 return exist
-             }
-         }
-         return ""*/
+    public fun setUsername(u: String) {
+        val ref = FirebaseDatabase.getInstance().reference
+        var id: String? = getId()
+
+        if (id != null) {
+            ref.child(id).child("username").addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(d: DataSnapshot) {
+                   ref.setValue(u)
+                }
+
+                override fun onCancelled(d: DatabaseError) {
+                }
+            })
+        }
     }
 
     fun update() {

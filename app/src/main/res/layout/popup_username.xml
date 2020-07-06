@@ -41,7 +41,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btCancel"
+            android:id="@+id/btCancelUsername"
             android:background="@drawable/round_shape"
             android:text="Cancelar"
             android:paddingLeft="20dp"

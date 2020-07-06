@@ -65,12 +65,13 @@
             android:id="@+id/btEditUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="300dp"
+            android:layout_marginStart="280dp"
             android:layout_marginTop="165dp"
             android:backgroundTint="@color/cyan"
             android:src="@drawable/ic_edit"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtAssociatedEmail"/>
 
         <TextView
             android:id="@+id/txtUsername"

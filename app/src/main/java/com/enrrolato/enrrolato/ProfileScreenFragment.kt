@@ -123,6 +123,7 @@ class ProfileScreenFragment : Fragment() {
     }
 
     private fun updateName(hide: TextView) {
+        // HAY QUE CORREGIRLO
         var txt = "Ingrese su nuevo nombre"
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)

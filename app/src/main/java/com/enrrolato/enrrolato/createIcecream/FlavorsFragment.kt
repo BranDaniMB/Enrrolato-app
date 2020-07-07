@@ -74,7 +74,6 @@ class FlavorsFragment : Fragment() {
             errorFlavor(getString(R.string.no_flavor))
         }
         else {
-            // DIRIGIRSE A LA PANTALLA DE SELECCIÓN DE JARABES
             val fragment = FillingFragment()
             val fm = requireActivity().supportFragmentManager
             val transaction = fm.beginTransaction()

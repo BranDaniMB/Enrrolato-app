@@ -1,12 +1,9 @@
 package com.enrrolato.enrrolato
 
-import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.database.ProviderType
@@ -23,10 +20,9 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.activity_main_constrained.*
-import kotlinx.android.synthetic.main.activity_reset_password.*
+import kotlinx.android.synthetic.main.activity_login.*
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private val GOOGLE_SIGN_IN = 100;
     private val callbackManager = CallbackManager.Factory.create();
@@ -35,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         // Cambiamos al tema por defecto
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_constrained)
+        setContentView(R.layout.activity_login)
 
         // Analytics Event
         val analytics : FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -72,7 +68,8 @@ class MainActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().signInWithCredential(credential)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                showMenu(account.email ?: "", ProviderType.GOOGLE)
+                                var id: String? = FirebaseAuth.getInstance().currentUser?.uid
+                                showMenu(id, account.displayName)
                             } else if (it.isCanceled) {
 
                             } else {
@@ -88,24 +85,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        var id = prefs.getString("id", null)
         val email = prefs.getString("email", null)
-        val provider = prefs.getString("provider", null)
+        val username = prefs.getString("username", null)
+        //val provider = prefs.getString("provider", null)
 
-        if (email != null && provider != null) {
-            Enrrolato.instance.initUser(email, ProviderType.valueOf(provider))
-            showMenu(email, ProviderType.valueOf(provider))
+        if (email != null) {
+            if (id != null) {
+                Enrrolato.instance.initUser(id,  username)
+            }
+            showMenu(id, username)
         }
     }
 
     private fun setup() {
-
         // Da error si la cuenta no esta registrada
         loginBtn.setOnClickListener {
             if (!usernameField.text.isNullOrEmpty() && !passwordField.text.isNullOrEmpty()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString()
                     , passwordField.text.toString()).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        showMenu(it.result?.user?.email ?: "", ProviderType.BASIC)
+                        //var id: String? = FirebaseAuth.getInstance().currentUser?.uid
+                        showMenu(it.result?.user?.uid, it.result?.user?.displayName?: "")
                     } else {
                         showAlert();
                     }
@@ -141,7 +142,8 @@ class MainActivity : AppCompatActivity() {
                             FirebaseAuth.getInstance().signInWithCredential(credential)
                                 .addOnCompleteListener {
                                     if (it.isSuccessful) {
-                                        showMenu(it.result?.user?.email ?: "", ProviderType.FACEBOOK)
+                                        var id: String? = FirebaseAuth.getInstance().currentUser?.uid
+                                        showMenu(id, it.result?.user?.displayName?: "")
                                     } else {
                                         showAlert();
                                     }
@@ -174,13 +176,17 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showMenu(email: String, provider: ProviderType) {
+    private fun showMenu(id: String?, username: String?) {
         val menuIntent = Intent(this, PrincipalScreen::class.java)
-        Enrrolato.instance.initUser(email, provider)
+        if (id != null) {
+            Enrrolato.instance.initUser(id, username)
+        }
         // Guardando la session
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-        prefs.putString("email", email)
-        prefs.putString("provider", provider.name)
+        prefs.putString("id", id)
+        prefs.putString("username", username)
+        //prefs.putString("email", email)
+        //prefs.putString("provider", provider.name)
         prefs.apply()
         startActivity(menuIntent)
         finish()

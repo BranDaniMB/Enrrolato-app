@@ -1,5 +1,6 @@
 <resources>
     <!--************ Alerts strings ************-->
+    <!--************ Alerts strings ************-->
     <!-- General Alerts -->
     <string name="accept_action">Aceptar</string>
     <string name="alert_title">Ha ocurrido un error</string>
@@ -12,6 +13,8 @@
     <!-- Log Out message -->
     <string name="log_out_message">Usted ha cerrado sesión</string>
     <!--************ Activity Strings ************-->
+    <!-- Generic strings -->
+    <string name="continue_action">Siguiente</string>
     <!-- Log In Activity -->
     <string name="app_name" translatable="false">Enrrolato</string>
     <string name="log_in_title">Iniciar sesión</string>
@@ -51,9 +54,55 @@
     <string name="reset_password_info">Ingrese el correo electrónico asociado a la cuenta</string>
     <string name="reset_password_action">Recuperar contraseña</string>
     <string name="reset_password_tip">Recibirá un correo a está dirección con las instrucciones.</string>
+    <string name="reset_password_success">Se envió el correo correctamente</string>
+    <string name="reset_password_failure">El correo no se pudo enviar</string>
+    <string name="reset_password_empty">El campo de texto se encuentra vacío</string>
+    <string name="reset_password_auth_error">Error en la autenticación</string>
     <!-- Reset Password Fragment -->
     <string name="reset_password_fragment_title">Cambiar contraseña</string>
     <string name="reset_password_fragment_action">Cambiar contraseña</string>
+
+    <!-- Default Flavors Fragment -->
+    <string name="default_flavor_title">Sabores predefinidos</string>
+    <string name="preset_flavor_label">Predefinidos</string>
+    <string name="preset_flavor_list">Elija sabor predefinido</string>
+    <string name="season_flavor_label">Temporada</string>
+    <string name="season_flavor_list">Elija sabor de temporada</string>
+    <string name="custom_icecream">Crear helado personalizado</string>
+    <string name="no_preset">Debe seleccionar un helado</string>
+    <!-- Flavors Fragment -->
+    <string name="flavor_title">Sabores personalizados</string>
+    <string name="flavor_list">Lista de sabores</string>
+    <string name="flavor_selector">Elija sabor</string>
+    <string name="regular_flavor">Tradicional</string>
+    <string name="liquor_flavor">Licor</string>
+    <string name="no_flavor">No se han seleccionado sabores</string>
+    <string name="delete_flavor_prompt">¿Desea eliminar el sabor?</string>
+    <string name="duplicated_flavor">Ya seleccionó este sabor</string>
+    <string name="max_flavor">Usted excedió el máximo de sabores</string>
+    <!-- Filling Fragment -->
+    <string name="filling_title">Selección del jarabe</string>
+    <string name="filling_list">Lista de jarabe</string>
+    <string name="filling_selector">Elija jarabe</string>
+    <string name="no_filling">Debe seleccionar un jarabe</string>
+    <!-- Toppings Fragment -->
+    <string name="topping_title">Selección de topping</string>
+    <string name="topping_list">Lista de toppings</string>
+    <string name="topping_selector">Elija topping</string>
+    <string name="topping_alert">* Topping extra tiene un valor de 400 colones</string>
+    <string name="no_topping">Debe seleccionar algún topping</string>
+    <string name="delete_topping_prompt">¿Desea eliminar el topping?</string>
+    <string name="duplicated_topping">Ya seleccionó este topping</string>
+    <string name="max_topping">Usted excedió el máximo de toppings</string>
+    <!-- Container Fragment -->
+    <string name="container_title">Escogencia de recipiente</string>
+    <string name="container_list">Lista de contenedores</string>
+    <string name="container_selector">Elija un contenedor</string>
+    <string name="container_to_cart">Agregar helado al carrito</string>
+    <string name="container_new_icecream">Agregar un nuevo helado</string>
+
+
+    <!-- <string name="name">Sample text</string> -->
 
     <!--************ Config Strings, don´t translate and touch ************-->
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->

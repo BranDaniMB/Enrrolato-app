@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.database.ProviderType
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import kotlin.math.sign
 
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +54,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun showLogin() {
-        val loginIntent = Intent(this, MainActivity::class.java)
+        val loginIntent = Intent(this, LoginActivity::class.java)
         startActivity(loginIntent)
         Toast.makeText(baseContext, getString(R.string.sign_up_message), Toast.LENGTH_LONG).show()
         finish()

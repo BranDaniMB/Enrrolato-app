@@ -68,21 +68,21 @@ class RestorePasswordFragment : Fragment() {
 
     private fun successful(v: View) {
         val toast: Toast =
-            Toast.makeText(v.context, "Se envió el correo correctamente", Toast.LENGTH_SHORT)
+            Toast.makeText(v.context, getString(R.string.reset_password_success), Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         toast.show()
     }
 
     private fun failure(v: View) {
         val toast: Toast =
-            Toast.makeText(v.context, "El correo no se pudo enviar", Toast.LENGTH_SHORT)
+            Toast.makeText(v.context, getString(R.string.reset_password_failure), Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         toast.show()
     }
 
     private fun empty(v: View) {
         val toast: Toast =
-            Toast.makeText(v.context, "Error en la autenticación", Toast.LENGTH_SHORT)
+            Toast.makeText(v.context, getString(R.string.reset_password_auth_error), Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         toast.show()
     }

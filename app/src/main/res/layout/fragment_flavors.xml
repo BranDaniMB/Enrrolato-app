@@ -14,9 +14,7 @@
         android:id="@+id/scrollviewFlavor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout_editor_absoluteX="57dp"
-        tools:layout_editor_absoluteY="159dp">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,9 +22,7 @@
             android:layout_weight="1"
             android:background="@color/cyan"
             android:orientation="vertical"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="-43dp">
+            tools:ignore="MissingConstraints">
 
 
             <ImageButton
@@ -48,8 +44,8 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="Sabores personalizados"
-                android:textColor="#000000"
+                android:text="@string/flavor_title"
+                android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,19 +54,19 @@
 
             <Spinner
                 android:id="@+id/spFlavor"
-                style="@style/spinner_style"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="32dp"
                 android:background="@color/black"
-                android:contentDescription="Elija sabor"
+                android:contentDescription="@string/flavor_selector"
                 android:spinnerMode="dropdown"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rgFlavor" />
+            <!--        android:style="@style/spinner_style"   -->
 
             <RadioGroup
                 android:id="@+id/rgFlavor"
@@ -87,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/gotu_regular"
-                    android:text="Tradicional"
+                    android:text="@string/regular_flavor"
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -98,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/gotu_regular"
-                    android:text="Licor"
+                    android:text="@string/liquor_flavor"
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -108,34 +104,49 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/choosenFlavors"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="32dp"
                 android:layout_weight="1"
                 android:background="@color/black"
+                android:paddingLeft="30dp"
                 android:contentDescription="lista de sabores"
                 android:scrollbars="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/btContinue"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spFlavor" />
+
+            <TextView
+                android:id="@+id/txtLicourAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="64dp"
+                android:layout_marginTop="10dp"
+                android:text="* Sabor recomendado para personas +18 años"
+                android:visibility="invisible"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/choosenFlavors"/>
 
             <Button
                 android:id="@+id/btContinue"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginBottom="64dp"
                 android:background="@drawable/round_shape"
                 android:paddingLeft="50dp"
+                android:layout_marginTop="20dp"
                 android:paddingRight="50dp"
                 android:text="Siguiente"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@+id/txtLicourAlert"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,29 +8,15 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txtMessage"
         android:layout_marginTop="15dp"
         android:textColor="@color/black"
+        android:id="@+id/txtConfirmMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text=""
         android:fontFamily="@font/gotu_regular"
         android:textSize="16sp"/>
-
-    <EditText
-        android:id="@+id/eTextUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:hint="Nombre de usuario"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/text_field_shape"
-        android:ems="10" />
 
     <LinearLayout
         android:layout_marginTop="20dp"
@@ -41,22 +27,18 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btCancelUsername"
+            android:id="@+id/btCancel1"
             android:background="@drawable/round_shape"
+            android:layout_marginRight="50dp"
             android:text="Cancelar"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:layout_marginRight="30dp"
             android:fontFamily="@font/gotu_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/btOkUsername"
+            android:id="@+id/btOk1"
             android:background="@drawable/round_shape"
             android:text="Aceptar"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:fontFamily="@font/gotu_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

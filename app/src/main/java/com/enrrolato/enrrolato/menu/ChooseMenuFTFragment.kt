@@ -81,7 +81,7 @@ class ChooseMenuFTFragment : Fragment() {
         for (list in listFilling) {
             name = list.name
             exclusive = list.isExclusive
-            avaliable = list.avaliable
+            avaliable = list.available
 
             if (avaliable) {
                 fillingList.add(name)

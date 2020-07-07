@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 var id: String? = FirebaseAuth.getInstance().currentUser?.uid
-                                showMenu(id, account.email ?: "", ProviderType.GOOGLE)
+                                showMenu(id, account.displayName)
                             } else if (it.isCanceled) {
 
                             } else {
@@ -87,13 +87,14 @@ class LoginActivity : AppCompatActivity() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         var id = prefs.getString("id", null)
         val email = prefs.getString("email", null)
-        val provider = prefs.getString("provider", null)
+        val username = prefs.getString("username", null)
+        //val provider = prefs.getString("provider", null)
 
-        if (email != null && provider != null) {
+        if (email != null) {
             if (id != null) {
-                Enrrolato.instance.initUser(id, email, ProviderType.valueOf(provider))
+                Enrrolato.instance.initUser(id,  username)
             }
-            showMenu(id, email, ProviderType.valueOf(provider))
+            showMenu(id, username)
         }
     }
 
@@ -105,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
                     , passwordField.text.toString()).addOnCompleteListener {
                     if (it.isSuccessful) {
                         //var id: String? = FirebaseAuth.getInstance().currentUser?.uid
-                        showMenu(it.result?.user?.uid, it.result?.user?.email ?: "", ProviderType.BASIC)
+                        showMenu(it.result?.user?.uid, it.result?.user?.displayName?: "")
                     } else {
                         showAlert();
                     }
@@ -142,7 +143,7 @@ class LoginActivity : AppCompatActivity() {
                                 .addOnCompleteListener {
                                     if (it.isSuccessful) {
                                         var id: String? = FirebaseAuth.getInstance().currentUser?.uid
-                                        showMenu(id, it.result?.user?.email ?: "", ProviderType.FACEBOOK)
+                                        showMenu(id, it.result?.user?.displayName?: "")
                                     } else {
                                         showAlert();
                                     }
@@ -175,16 +176,17 @@ class LoginActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showMenu(id: String?, email: String, provider: ProviderType) {
+    private fun showMenu(id: String?, username: String?) {
         val menuIntent = Intent(this, PrincipalScreen::class.java)
         if (id != null) {
-            Enrrolato.instance.initUser(id, email, provider)
+            Enrrolato.instance.initUser(id, username)
         }
         // Guardando la session
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("id", id)
-        prefs.putString("email", email)
-        prefs.putString("provider", provider.name)
+        prefs.putString("username", username)
+        //prefs.putString("email", email)
+        //prefs.putString("provider", provider.name)
         prefs.apply()
         startActivity(menuIntent)
         finish()

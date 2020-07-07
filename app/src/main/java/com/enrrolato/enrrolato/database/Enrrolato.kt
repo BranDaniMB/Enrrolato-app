@@ -3,7 +3,6 @@ package com.enrrolato.enrrolato.database
 import android.app.Application
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.iceCream.*
-import com.google.android.gms.auth.api.Auth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -129,22 +128,21 @@ class Enrrolato: Application() {
         refContainer.addValueEventListener(containerListener)
     }
 
-    public fun initUser(id: String, email: String?, provider: ProviderType?) {
-        user = User(email, getUsername(), provider)
+    public fun initUser(id: String, username: String?) {
+        user = User(username)
         val ref = database.getReference(applicationContext.getString(R.string.db_app_users))
         ref.child(id).setValue(user)
 
         val userListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 user = if (dataSnapshot.exists()) {
-                    val username: String? = dataSnapshot.child("username").value as String?
-                    User(email, username, provider)
+                    val u: String? = dataSnapshot.child("username").value as String?
+                    User(u)
                 } else {
-                    User(email,null, provider)
+                    User(null)
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
             }
         }
         ref.addValueEventListener(userListener)
@@ -154,38 +152,18 @@ class Enrrolato: Application() {
         return FirebaseAuth.getInstance().currentUser?.uid
     }
 
-    public fun getUsername() : String {
-        val ref = FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users))
-        var id: String? = getId()
-        var us = ""
-
-        if (id != null) {
-            ref.child("app").child("users").child(id).addValueEventListener(object: ValueEventListener{
-                override fun onDataChange(d: DataSnapshot) {
-                    val username = d.child("username").value as String?
-                    if(username == null) {
-                        us = ""
-                    } else if(d.exists()) {
-                        us = d.child("username").value as String
-                    }
-                }
-
-                override fun onCancelled(d: DatabaseError) {
-                }
-
-            })
-        }
-        return us
+    public fun getUsername(): DatabaseReference {
+        return FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users) + "/" + getId())
     }
 
     public fun setUsername(u: String) {
-        val ref = FirebaseDatabase.getInstance().reference
         var id: String? = getId()
+        val ref = FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users) + "/" + id)
 
         if (id != null) {
-            ref.child(id).child("username").addValueEventListener(object: ValueEventListener {
+            ref.addValueEventListener(object: ValueEventListener {
                 override fun onDataChange(d: DataSnapshot) {
-                   ref.setValue(u)
+                   ref.setValue(User(u))
                 }
 
                 override fun onCancelled(d: DatabaseError) {
@@ -200,11 +178,10 @@ class Enrrolato: Application() {
         loadToppings()
         loadContainers()
     }
+
 }
 
 @IgnoreExtraProperties
 data class User(
-    var email: String?,
-    var username: String?,
-    var provider: ProviderType?
+    var username: String?
 )

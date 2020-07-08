@@ -29,7 +29,7 @@
         <Button
             android:id="@+id/btOk"
             android:background="@drawable/round_shape"
-            android:text="Aceptar"
+            android:text="@string/accept_action"
             android:fontFamily="@font/gotu_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

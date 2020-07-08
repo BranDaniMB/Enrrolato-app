@@ -79,4 +79,6 @@
     <string name="container_to_cart">Add to shopping cart</string>
     <string name="container_new_icecream">Add another ice cream</string>
     <string name="username">Username</string>
+    <string name="cancel_action">Cancel</string>
+    <string name="logout_prompt">Are you sure you want to log out?</string>
 </resources>

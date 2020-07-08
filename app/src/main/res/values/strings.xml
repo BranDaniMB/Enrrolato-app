@@ -2,7 +2,6 @@
     <!--************ Alerts strings ************-->
     <!--************ Alerts strings ************-->
     <!-- General Alerts -->
-    <string name="accept_action">Aceptar</string>
     <string name="alert_title">Ha ocurrido un error</string>
     <!-- Different Passwords Alert -->
     <string name="different_passwords">Las contraseñas no coinciden</string>
@@ -15,6 +14,8 @@
     <!--************ Activity Strings ************-->
     <!-- Generic strings -->
     <string name="continue_action">Siguiente</string>
+    <string name="accept_action">Aceptar</string>
+    <string name="cancel_action">Cancelar</string>
     <!-- Log In Activity -->
     <string name="app_name" translatable="false">Enrrolato</string>
     <string name="log_in_title">Iniciar sesión</string>
@@ -101,6 +102,12 @@
     <string name="container_to_cart">Agregar helado al carrito</string>
     <string name="container_new_icecream">Agregar un nuevo helado</string>
 
+    <!-- Profile screen Fragment -->
+    <string name="username">Nombre de usuario</string>
+
+    <!-- Logout popup -->
+    <string name="logout_prompt">¿Está seguro que quiere cerrar sesión?</string>
+
 
     <!-- <string name="name">Sample text</string> -->
 
@@ -122,5 +129,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Texto de ejemplo</string>
-    <string name="username">Nombre de usuario</string>
+
 </resources>

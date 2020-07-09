@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/logout_prompt"
+        android:text="¿Está seguro que quiere cerrar sesión?"
         android:fontFamily="@font/gotu_regular"
         android:textSize="16sp"/>
 
@@ -30,7 +30,7 @@
             android:id="@+id/btCancel"
             android:background="@drawable/round_shape"
             android:layout_marginRight="50dp"
-            android:text="@string/cancel_action"
+            android:text="Cancelar"
             android:fontFamily="@font/gotu_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -38,7 +38,7 @@
         <Button
             android:id="@+id/btOk"
             android:background="@drawable/round_shape"
-            android:text="@string/accept_action"
+            android:text="Aceptar"
             android:fontFamily="@font/gotu_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

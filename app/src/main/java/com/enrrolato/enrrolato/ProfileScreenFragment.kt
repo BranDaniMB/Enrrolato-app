@@ -34,7 +34,7 @@ class ProfileScreenFragment : Fragment() {
         val btRestore = view.findViewById<View>(R.id.btChangePassword) as Button
         val username = view.findViewById<View>(R.id.txtAssociatedUsername) as TextView
         val editUsername = view.findViewById<View>(R.id.btEditUsername) as ImageButton
-        val hide = view.findViewById<View>(R.id.txtHidden) as TextView
+        //val hide = view.findViewById<View>(R.id.txtHidden) as TextView
 
         showEmail(view)
         enrrolato.getUsername().addValueEventListener(object : ValueEventListener{
@@ -60,7 +60,7 @@ class ProfileScreenFragment : Fragment() {
         }
 
         editUsername.setOnClickListener {
-            updateName(hide)
+            updateName()
         }
 
         return view
@@ -122,7 +122,7 @@ class ProfileScreenFragment : Fragment() {
         }
     }
 
-    private fun updateName(hide: TextView) {
+    private fun updateName() {
         // HAY QUE CORREGIRLO
         var txt = "Ingrese su nuevo nombre"
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
@@ -139,8 +139,8 @@ class ProfileScreenFragment : Fragment() {
         alertDialog.show()
 
         bt_ok.setOnClickListener {
-            hide.text = u.text.toString().trim()
-            enrrolato.setUsername(hide.text.toString())
+            //hide.text = u.text.toString().trim()
+            enrrolato.setUsername(u.text.toString().trim())
             alertDialog.cancel()
         }
 

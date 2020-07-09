@@ -23,6 +23,7 @@ class FlavorsFragment : Fragment() {
     private var enrrolato = Enrrolato.instance
     private lateinit var flavorSelected: String
     private var listToRecycler: ArrayList<String> = ArrayList()
+    private var listLiquour: ArrayList<String> = ArrayList()
     private var count: Int = 0
     private lateinit var mLayoutManager: LinearLayoutManager
 
@@ -70,7 +71,7 @@ class FlavorsFragment : Fragment() {
     }
 
     private fun nextStep(rf: RecyclerView) {
-        if(rf == null || flavorSelected.equals(getString(R.string.flavor_selector)) || flavorSelected.isEmpty()) {
+        if(rf == null || flavorSelected.equals(getString(R.string.flavor_selector)) || flavorSelected.isEmpty() || count == 0) {
             errorFlavor(getString(R.string.no_flavor))
         }
         else {
@@ -94,6 +95,10 @@ class FlavorsFragment : Fragment() {
 
             if (!list.isSpecial || (list.isSpecial && list.isLiqueur) && !list.isExclusive && list.avaliable) {
                 flavorList.add(list.name)
+            }
+
+            if ((list.isSpecial && list.isLiqueur) && !list.isExclusive && list.avaliable) {
+                listLiquour.add(list.name)
             }
         }
 
@@ -145,6 +150,10 @@ class FlavorsFragment : Fragment() {
 
             if ((list.isSpecial && list.isLiqueur) && !list.isExclusive && list.avaliable) {
                 flavorList.add(list.name)
+
+                if(!listLiquour.contains(list.name)) {
+                    listLiquour.add(list.name)
+                }
             }
         }
         fillSpinner(f, rv)
@@ -160,6 +169,7 @@ class FlavorsFragment : Fragment() {
         recyclerFlavors.itemAnimator = DefaultItemAnimator()
         recyclerFlavors.layoutManager = mLayoutManager
         recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        var alert = view?.findViewById<View>(R.id.txtLicourAlert)
 
         if(count < 3) {
             recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -167,9 +177,12 @@ class FlavorsFragment : Fragment() {
 
             if(!listToRecycler.contains(flavorSelected)) {
 
-                //txtLicourAlert.visibility = 1
-
                 listToRecycler.add(flavorSelected)
+
+                if(listLiquour.contains(flavorSelected)) {
+                    alert?.visibility = View.VISIBLE
+                }
+
                 af = AdapterIceCream(listToRecycler)
 
                 af.setOnClickListener(object: View.OnClickListener {
@@ -178,6 +191,8 @@ class FlavorsFragment : Fragment() {
                         //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
                         popupMessage(recyclerFlavors.getChildAdapterPosition(v), af, m)
                         count -= 1
+                        alert?.visibility = View.INVISIBLE
+
                     }
                 })
 

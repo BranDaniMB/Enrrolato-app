@@ -83,7 +83,7 @@ class UITest1 {
             )
         )
         appCompatButton.perform(click())
-        Thread.sleep(3000) // No es lo recomendado pero sirve para las partes que se retresan por operar con la BD
+
         val appCompatButton2 = onView(
             allOf(
                 withId(R.id.btCreateIceCream), withText("Crear helado"),
@@ -161,11 +161,12 @@ class UITest1 {
             )
         )
         checkedTextView.check(matches(isDisplayed()))
-        Thread.sleep(1000)
+
         val appCompatCheckedTextView = onData(anything())
             .inAdapterView(
                 childAtPosition(
-                        withClassName(`is`("android.widget.PopupWindow\$PopupBackgroundView")),
+                        withClassName(`is`("android.widget.PopupWindow")),
+                        //withClassName(`is`("android.widget.PopupWindow$PopupBackgroundView")),
                     0
                 )
             )
@@ -190,7 +191,8 @@ class UITest1 {
         val appCompatCheckedTextView2 = onData(anything())
             .inAdapterView(
                 childAtPosition(
-                        withClassName(`is`("android.widget.PopupWindow\$PopupBackgroundView")),
+                        withClassName(`is`("android.widget.PopupWindow")),
+                        //withClassName(`is`("android.widget.PopupWindow$PopupBackgroundView")),
                     0
                 )
             )
@@ -215,7 +217,8 @@ class UITest1 {
         val appCompatCheckedTextView3 = onData(anything())
             .inAdapterView(
                 childAtPosition(
-                    withClassName(`is`("android.widget.PopupWindow\$PopupBackgroundView")),
+                        withClassName(`is`("android.widget.PopupWindow")),
+                        //withClassName(`is`("android.widget.PopupWindow$PopupBackgroundView")),
                     0
                 )
             )
@@ -237,7 +240,6 @@ class UITest1 {
         )
         appCompatButton4.perform(click())
 
-        Thread.sleep(1000) // No es lo recomendado pero sirve para las partes que se retresan por operar con la BD
         val appCompatSpinner4 = onView(
             allOf(
                 withId(R.id.spFilling), withContentDescription("Elija jarabe"),
@@ -256,7 +258,8 @@ class UITest1 {
         val appCompatCheckedTextView4 = onData(anything())
             .inAdapterView(
                 childAtPosition(
-                    withClassName(`is`("android.widget.PopupWindow\$PopupBackgroundView")),
+                        withClassName(`is`("android.widget.PopupWindow")),
+                        //withClassName(`is`("android.widget.PopupWindow$PopupBackgroundView")),
                     0
                 )
             )
@@ -277,7 +280,7 @@ class UITest1 {
             )
         )
         appCompatButton5.perform(click())
-        Thread.sleep(1000) // No es lo recomendado pero sirve para las partes que se retresan por operar con la BD
+
         val appCompatSpinner5 = onView(
             allOf(
                 withId(R.id.spTopping), withContentDescription("Elija topping"),
@@ -296,7 +299,8 @@ class UITest1 {
         val appCompatCheckedTextView5 = onData(anything())
             .inAdapterView(
                 childAtPosition(
-                    withClassName(`is`("android.widget.PopupWindow\$PopupBackgroundView")),
+                        withClassName(`is`("android.widget.PopupWindow")),
+                        //withClassName(`is`("android.widget.PopupWindow$PopupBackgroundView")),
                     0
                 )
             )
@@ -321,7 +325,8 @@ class UITest1 {
         val appCompatCheckedTextView6 = onData(anything())
             .inAdapterView(
                 childAtPosition(
-                    withClassName(`is`("android.widget.PopupWindow\$PopupBackgroundView")),
+                        withClassName(`is`("android.widget.PopupWindow")),
+                        //withClassName(`is`("android.widget.PopupWindow$PopupBackgroundView")),
                     0
                 )
             )
@@ -346,7 +351,8 @@ class UITest1 {
         val appCompatCheckedTextView7 = onData(anything())
             .inAdapterView(
                 childAtPosition(
-                    withClassName(`is`("android.widget.PopupWindow\$PopupBackgroundView")),
+                        withClassName(`is`("android.widget.PopupWindow")),
+                    //withClassName(`is`("android.widget.PopupWindow$PopupBackgroundView")),
                     0
                 )
             )
@@ -402,7 +408,6 @@ class UITest1 {
         )
         appCompatButton6.perform(click())
 
-        Thread.sleep(1000) // No es lo recomendado pero sirve para las partes que se retresan por operar con la BD
         val appCompatSpinner8 = onView(
             allOf(
                 withId(R.id.spContainer), withContentDescription("Elija el envase de preferencia"),
@@ -421,7 +426,8 @@ class UITest1 {
         val appCompatCheckedTextView8 = onData(anything())
             .inAdapterView(
                 childAtPosition(
-                    withClassName(`is`("android.widget.PopupWindow\$PopupBackgroundView")),
+                        withClassName(`is`("android.widget.PopupWindow")),
+                        //withClassName(`is`("android.widget.PopupWindow$PopupBackgroundView")),
                     0
                 )
             )
@@ -492,7 +498,7 @@ class UITest1 {
         )
         appCompatButton7.perform(click())
 
-        /*val textView4 = onView(
+        val textView4 = onView(
             allOf(
                 withId(R.id.txtDescription),
                 withText("Cafetería, bowls saludables y heladería artesanal con helados de rollo a la plancha en Sarchí"),
@@ -509,8 +515,7 @@ class UITest1 {
                 isDisplayed()
             )
         )
-        textView4.check(matches(withText("Cafetería, bowls saludables y heladería artesanal con helados de rollo a la plancha en Sarchí"))) // Por alguna razón este assert falla
-        */
+        textView4.check(matches(withText("Cafetería, bowls saludables y heladería artesanal con helados de rollo a la plancha en Sarchí")))
 
         val appCompatImageButton = onView(
             allOf(
@@ -530,7 +535,6 @@ class UITest1 {
         )
         appCompatImageButton.perform(click())
 
-        // Aquí falla porque disque coincide con múltiples vistas
         val textView5 = onView(
             allOf(
                 withId(R.id.txtAccount), withText("Cuenta"),
@@ -546,8 +550,6 @@ class UITest1 {
         )
         textView5.check(matches(withText("Cuenta")))
 
-
-        // Aquí también. Por alguna razón los fragmentos se "duplican" en tiempo de ejecución si se regresa con la flechita
         val appCompatButton8 = onView(
             allOf(
                 withId(R.id.btLogout),

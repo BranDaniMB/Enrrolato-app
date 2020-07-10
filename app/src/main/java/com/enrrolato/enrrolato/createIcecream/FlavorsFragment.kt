@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.AdapterIceCream
 import com.enrrolato.enrrolato.R
+import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 
@@ -26,6 +27,7 @@ class FlavorsFragment : Fragment() {
     private var listLiquour: ArrayList<String> = ArrayList()
     private var count: Int = 0
     private lateinit var mLayoutManager: LinearLayoutManager
+    private var manager: IcecreamManager = IcecreamManager()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_flavors, container, false)
@@ -105,24 +107,6 @@ class FlavorsFragment : Fragment() {
         fillSpinner(f, rv)
     }
 
-    private fun fillSpinner(flavor: Spinner, rv: RecyclerView) {
-        val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, flavorList)
-        flavor.adapter = array
-        flavor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
-                flavorSelected = av?.getItemAtPosition(i).toString()
-
-                if(!flavorSelected.equals(getString(R.string.flavor_selector))) {
-                    chooseFlavor(rv)
-                }
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-    }
-
     private fun filtrerTrad(f: Spinner, rv: RecyclerView) {
         listFlavor = enrrolato.listFlavors
         var list: ArrayList<Flavor>
@@ -159,10 +143,47 @@ class FlavorsFragment : Fragment() {
         fillSpinner(f, rv)
     }
 
-    private fun flavorProcess() {
-        // CODE HERE
+    private fun fillSpinner(flavor: Spinner, rv: RecyclerView) {
+        val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, flavorList)
+        flavor.adapter = array
+        flavor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
+                flavorSelected = av?.getItemAtPosition(i).toString()
+
+                if(!flavorSelected.equals(getString(R.string.flavor_selector))) {
+                    chooseFlavor(rv)
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
     }
 
+    private fun flavorProcess(f: String) {
+        listFlavor = ArrayList()
+        var l: ArrayList<Flavor> = ArrayList()
+
+        for(l in listFlavor) {
+            if(l.name.equals(f)) {
+                manager.addFlavor(l)
+            }
+        }
+    }
+
+    private fun flavorProcessRemove(f: String) {
+        listFlavor = ArrayList()
+        var l: ArrayList<Flavor> = ArrayList()
+
+        for(l in listFlavor) {
+            if(l.name.equals(f)) {
+                manager.removeFlavor(l)
+            }
+        }
+    }
+
+    // Este es el recycler view que manda los sabores a la lista y los muestra
     private fun chooseFlavor(recyclerFlavors: RecyclerView) {
         mLayoutManager = LinearLayoutManager(context)
         recyclerFlavors.setHasFixedSize(true)
@@ -176,8 +197,10 @@ class FlavorsFragment : Fragment() {
             var  af: AdapterIceCream
 
             if(!listToRecycler.contains(flavorSelected)) {
-
                 listToRecycler.add(flavorSelected)
+
+                // AQUI VA A BUSCAR DE LA LISTA GRANDE Y MANDARLA AL MANAGER PARA AGREGARLA
+                flavorProcess(flavorSelected)
 
                 if(listLiquour.contains(flavorSelected)) {
                     alert?.visibility = View.VISIBLE
@@ -190,6 +213,10 @@ class FlavorsFragment : Fragment() {
                         var m: String = getString(R.string.delete_flavor_prompt)
                         //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
                         popupMessage(recyclerFlavors.getChildAdapterPosition(v), af, m)
+
+                        // AQUI VA A BUSCAR DE LA LISTA GRANDE Y MANDARLA AL MANAGER PARA ELIMINARLA
+                        flavorProcessRemove(af.list.get(recyclerFlavors.getChildAdapterPosition(v)))
+
                         count -= 1
                         alert?.visibility = View.INVISIBLE
 

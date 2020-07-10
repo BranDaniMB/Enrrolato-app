@@ -8,11 +8,15 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.R
+import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Filling
 
 class FillingFragment : Fragment() {
 
+    private lateinit var nameList: ArrayList<String>
+    private lateinit var fillingSelected: String
+    private var manager: IcecreamManager = IcecreamManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,8 @@ class FillingFragment : Fragment() {
             if (selected == null || selected.equals(getString(R.string.filling_selector))) { // Si es que debe
                 errorPopup(getString(R.string.no_filling))
             } else {
+                manager.addFilling(fillingSelected)
+
                 val fragment = ToppingFragment()
                 val fm = requireActivity().supportFragmentManager
                 val transaction = fm.beginTransaction()
@@ -48,13 +54,12 @@ class FillingFragment : Fragment() {
                 transaction.commit()
             }
         }
-
         return view
     }
 
     private fun loadFillings(s: Spinner) {
         val fillings = Enrrolato.instance.listFillings
-        val nameList = ArrayList<String>()
+        nameList = ArrayList<String>()
 
         nameList.add(getString(R.string.filling_selector))
 
@@ -64,7 +69,22 @@ class FillingFragment : Fragment() {
                 nameList.add(filling.name)
             }
         }
-        s.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
+        fillFilling(s)
+    }
+
+    private fun fillFilling(f: Spinner) {
+        val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
+        f.adapter = array
+        f.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
+                fillingSelected = av?.getItemAtPosition(i).toString()
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
     }
 
     private fun errorPopup(msg: String) {

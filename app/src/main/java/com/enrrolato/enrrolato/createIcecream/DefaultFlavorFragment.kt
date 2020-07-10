@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.PrincipalMenuFragment
 import com.enrrolato.enrrolato.R
+import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 
@@ -18,6 +19,7 @@ class DefaultFlavorFragment : Fragment() {
     private lateinit var listFlavor: ArrayList<Flavor>
     private var enrrolato = Enrrolato.instance
     private lateinit var flavorSelected: String
+    private var manager: IcecreamManager = IcecreamManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +99,17 @@ class DefaultFlavorFragment : Fragment() {
             }
         }
 
+    private fun flavorProcessAdd(f: String) {
+        listFlavor = enrrolato.listFlavors
+        var list: ArrayList<Flavor> = ArrayList()
+
+        for(list in listFlavor) {
+            if(list.name.equals(f)) {
+                manager.addFlavor(list)
+            }
+        }
+    }
+
     private fun chargeSeason(flavor: Spinner) {
 
     }
@@ -109,6 +122,9 @@ class DefaultFlavorFragment : Fragment() {
         else {
             // BRINCA DIRECTAMENTE A ESCOGER EL TOPPING
             // TIENE QUE LLEVARSE EL SABOR / HELADO YA DEFINIDO
+            flavorProcessAdd(flavorSelected)
+
+
             val fragment = ToppingFragment()
             val fm = requireActivity().supportFragmentManager
             val transaction = fm.beginTransaction()

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.R
+import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,6 +18,9 @@ class SelectContainerFragment : Fragment() {
 
     private var enrrolato = Enrrolato.instance
     private var flag: Boolean = true
+    private lateinit var containerSelected: String
+    private lateinit var nameList: ArrayList<String>
+    private var manager: IcecreamManager = IcecreamManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +50,7 @@ class SelectContainerFragment : Fragment() {
 
     private fun loadContainers(s: Spinner) {
         val containers = Enrrolato.instance.listContainers
-        val nameList = ArrayList<String>()
+        nameList = ArrayList<String>()
 
         nameList.add(getString(R.string.container_selector))
 
@@ -56,7 +60,21 @@ class SelectContainerFragment : Fragment() {
                 nameList.add(container.name)
             }
         }
-        s.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
+        fillContainer(s)
+    }
+
+    private fun fillContainer(c: Spinner) {
+        val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
+        c.adapter = array
+        c.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
+                containerSelected = av?.getItemAtPosition(i).toString()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
     }
 
     private fun backToTopping() {
@@ -73,11 +91,13 @@ class SelectContainerFragment : Fragment() {
         if(hide.text.equals("")) {
             enterUsername(hide)
     } else {
+            // MANDARLO AL CARRITO (ESCRIBIR EL PEDIDO A LA BASE DE DATOS )
+            // DEBE IR INCLUIDO EL NOMBRE = USERNAME
+
+            manager.addContainer(containerSelected)
+            var id = enrrolato.getId()
 
         }
-        // MANDARLO AL CARRITO (ESCRIBIR EL PEDIDO A LA BASE DE DATOS )
-        // DEBE IR INCLUIDO EL NOMBRE = USERNAME
-        var id = enrrolato.getId()
     }
 
     private fun catchUsername(hide: TextView) {

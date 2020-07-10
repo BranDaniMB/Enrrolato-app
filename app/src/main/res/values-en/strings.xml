@@ -76,7 +76,7 @@
     <string name="container_title">Container chioce</string>
     <string name="container_list">Container list</string>
     <string name="container_selector">Choose a container</string>
-    <string name="container_to_cart">Add to shopping cart</string>
+    <string name="container_to_cart">Add to shopping cart \nand send the order</string>
     <string name="container_new_icecream">Add another ice cream</string>
     <string name="username">Username</string>
 </resources>

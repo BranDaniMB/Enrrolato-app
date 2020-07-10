@@ -28,11 +28,11 @@ class ToppingFragment : Fragment() {
     private var enrrolato = Enrrolato.instance
     private var listToRecycler: ArrayList<String> = ArrayList()
     private lateinit var toppingSelected: String
-
     private var count: Int = 0
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var af: AdapterIceCream
-    private var manager: IcecreamManager = IcecreamManager()
+
+    private var listAux: ArrayList<Topping> = enrrolato.listToppings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,23 +103,17 @@ class ToppingFragment : Fragment() {
     }
 
     private fun addToppingProcess(t: String) {
-        listTopping = ArrayList()
-        var l: ArrayList<Flavor> = ArrayList()
-
-        for(l in listTopping) {
+        for(l in listAux) {
             if(l.name.equals(t)) {
-                manager.addTopping(l)
+                enrrolato.createIceCream().addTopping(l)
             }
         }
     }
 
     private fun removeToppingProcess(t: String) {
-        listTopping = ArrayList()
-        var l: ArrayList<Flavor> = ArrayList()
-
         for(l in listTopping) {
             if(l.name.equals(t)) {
-                manager.removeTopping(l)
+                //enrrolato.createIceCream().removeTopping(l)
             }
         }
     }

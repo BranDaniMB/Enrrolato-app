@@ -16,7 +16,7 @@ class FillingFragment : Fragment() {
 
     private lateinit var nameList: ArrayList<String>
     private lateinit var fillingSelected: String
-    private var manager: IcecreamManager = IcecreamManager()
+    private var enrrolato = Enrrolato.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class FillingFragment : Fragment() {
             if (selected == null || selected.equals(getString(R.string.filling_selector))) { // Si es que debe
                 errorPopup(getString(R.string.no_filling))
             } else {
-                manager.addFilling(fillingSelected)
+                enrrolato.createIceCream().addFilling(fillingSelected)
 
                 val fragment = ToppingFragment()
                 val fm = requireActivity().supportFragmentManager
@@ -79,7 +79,6 @@ class FillingFragment : Fragment() {
 
             override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
                 fillingSelected = av?.getItemAtPosition(i).toString()
-
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {

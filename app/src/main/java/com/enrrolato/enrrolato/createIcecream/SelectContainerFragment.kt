@@ -1,11 +1,13 @@
 package com.enrrolato.enrrolato.createIcecream
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
@@ -20,7 +22,6 @@ class SelectContainerFragment : Fragment() {
     private var flag: Boolean = true
     private lateinit var containerSelected: String
     private lateinit var nameList: ArrayList<String>
-    private var manager: IcecreamManager = IcecreamManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +35,10 @@ class SelectContainerFragment : Fragment() {
         val sp = view.findViewById<View>(R.id.spContainer) as Spinner
         val hide = view.findViewById<View>(R.id.hiddenUsername) as TextView
 
+        //addNewIceCream.isEnabled = true
+
         loadContainers(sp)
-        catchUsername(hide)
+        catchUsername(hide).toString()
 
         back.setOnClickListener {
             backToTopping()
@@ -69,6 +72,7 @@ class SelectContainerFragment : Fragment() {
         c.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
+
                 containerSelected = av?.getItemAtPosition(i).toString()
             }
 
@@ -94,10 +98,25 @@ class SelectContainerFragment : Fragment() {
             // MANDARLO AL CARRITO (ESCRIBIR EL PEDIDO A LA BASE DE DATOS )
             // DEBE IR INCLUIDO EL NOMBRE = USERNAME
 
-            manager.addContainer(containerSelected)
+            enrrolato.createIceCream().addContainer(containerSelected)
             var id = enrrolato.getId()
+            enrrolato.createIceCream().setUsername(name())
 
+            // VA EL ÚLTIMO PASO DE LA ORDEN
+            enrrolato.createOrders()
         }
+    }
+
+    private fun name(): String {
+        var name = ""
+        enrrolato.getUsername().addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(d: DataSnapshot) {
+                name = d.child("username").value.toString()
+            }
+            override fun onCancelled(p0: DatabaseError) {
+            }
+        })
+        return name
     }
 
     private fun catchUsername(hide: TextView) {
@@ -130,6 +149,7 @@ class SelectContainerFragment : Fragment() {
         bt_ok.setOnClickListener {
             hide.text = u.text.toString().trim()
             enrrolato.setUsername(hide.text.toString())
+            enrrolato.createIceCream().setUsername(hide.text.toString())
             alertDialog.cancel()
         }
 

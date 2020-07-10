@@ -19,7 +19,6 @@ class DefaultFlavorFragment : Fragment() {
     private lateinit var listFlavor: ArrayList<Flavor>
     private var enrrolato = Enrrolato.instance
     private lateinit var flavorSelected: String
-    private var manager: IcecreamManager = IcecreamManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +104,7 @@ class DefaultFlavorFragment : Fragment() {
 
         for(list in listFlavor) {
             if(list.name.equals(f)) {
-                manager.addFlavor(list)
+                enrrolato.createIceCream().addFlavor(list)
             }
         }
     }
@@ -123,7 +122,7 @@ class DefaultFlavorFragment : Fragment() {
             // BRINCA DIRECTAMENTE A ESCOGER EL TOPPING
             // TIENE QUE LLEVARSE EL SABOR / HELADO YA DEFINIDO
             flavorProcessAdd(flavorSelected)
-
+            //enrrolato.createOrders()
 
             val fragment = ToppingFragment()
             val fm = requireActivity().supportFragmentManager

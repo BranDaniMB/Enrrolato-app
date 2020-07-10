@@ -27,7 +27,8 @@ class FlavorsFragment : Fragment() {
     private var listLiquour: ArrayList<String> = ArrayList()
     private var count: Int = 0
     private lateinit var mLayoutManager: LinearLayoutManager
-    private var manager: IcecreamManager = IcecreamManager()
+
+    private var listAux: ArrayList<Flavor> = enrrolato.listFlavors
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_flavors, container, false)
@@ -162,23 +163,17 @@ class FlavorsFragment : Fragment() {
     }
 
     private fun flavorProcess(f: String) {
-        listFlavor = ArrayList()
-        var l: ArrayList<Flavor> = ArrayList()
-
-        for(l in listFlavor) {
+        for(l in listAux) {
             if(l.name.equals(f)) {
-                manager.addFlavor(l)
+                enrrolato.createIceCream().addFlavor(l)
             }
         }
     }
 
     private fun flavorProcessRemove(f: String) {
-        listFlavor = ArrayList()
-        var l: ArrayList<Flavor> = ArrayList()
-
-        for(l in listFlavor) {
+        for(l in listAux) {
             if(l.name.equals(f)) {
-                manager.removeFlavor(l)
+                //enrrolato.createIceCream().removeFlavor(l)
             }
         }
     }

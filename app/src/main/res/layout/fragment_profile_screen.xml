@@ -15,9 +15,7 @@
         android:layout_weight="1"
         android:background="@color/cyan"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="-43dp">
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/txtAccount"

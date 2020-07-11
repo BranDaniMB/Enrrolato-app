@@ -7,6 +7,7 @@ import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -495,7 +496,7 @@ class UITest1 {
         /*val textView4 = onView(
             allOf(
                 withId(R.id.txtDescription),
-                withText("Cafetería, bowls saludables y heladería artesanal con helados de rollo a la plancha en Sarchí"),
+                withText(R.string.enrrolato_description),
                 childAtPosition(
                     allOf(
                         withId(R.id.ly_aboutUs),
@@ -509,8 +510,9 @@ class UITest1 {
                 isDisplayed()
             )
         )
-        textView4.check(matches(withText("Cafetería, bowls saludables y heladería artesanal con helados de rollo a la plancha en Sarchí"))) // Por alguna razón este assert falla
+        textView4.check(matches(withText(R.string.enrrolato_description))) // Por alguna razón este assert falla
         */
+
 
         val appCompatImageButton = onView(
             allOf(

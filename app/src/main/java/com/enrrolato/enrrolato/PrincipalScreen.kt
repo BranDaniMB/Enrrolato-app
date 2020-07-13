@@ -44,9 +44,4 @@ class PrincipalScreen : AppCompatActivity() {
         }
     }
 
-
-
 }
-
-//getWindow().setNavigationBarColor(Color.parseColor("@colors/backgroundColor")
-//window.statusBarColor = Color.parseColor("@colors/backgroundColor")

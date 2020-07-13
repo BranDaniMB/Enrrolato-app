@@ -1,13 +1,16 @@
 package com.enrrolato.enrrolato.createIcecream
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.R
+import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,6 +20,8 @@ class SelectContainerFragment : Fragment() {
 
     private var enrrolato = Enrrolato.instance
     private var flag: Boolean = true
+    private lateinit var containerSelected: String
+    private lateinit var nameList: ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +35,10 @@ class SelectContainerFragment : Fragment() {
         val sp = view.findViewById<View>(R.id.spContainer) as Spinner
         val hide = view.findViewById<View>(R.id.hiddenUsername) as TextView
 
+        //addNewIceCream.isEnabled = true
+
         loadContainers(sp)
-        catchUsername(hide)
+        catchUsername(hide).toString()
 
         back.setOnClickListener {
             backToTopping()
@@ -46,7 +53,7 @@ class SelectContainerFragment : Fragment() {
 
     private fun loadContainers(s: Spinner) {
         val containers = Enrrolato.instance.listContainers
-        val nameList = ArrayList<String>()
+        nameList = ArrayList<String>()
 
         nameList.add(getString(R.string.container_selector))
 
@@ -56,7 +63,22 @@ class SelectContainerFragment : Fragment() {
                 nameList.add(container.name)
             }
         }
-        s.adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
+        fillContainer(s)
+    }
+
+    private fun fillContainer(c: Spinner) {
+        val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
+        c.adapter = array
+        c.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
+
+                containerSelected = av?.getItemAtPosition(i).toString()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
     }
 
     private fun backToTopping() {
@@ -73,11 +95,28 @@ class SelectContainerFragment : Fragment() {
         if(hide.text.equals("")) {
             enterUsername(hide)
     } else {
+            // MANDARLO AL CARRITO (ESCRIBIR EL PEDIDO A LA BASE DE DATOS )
+            // DEBE IR INCLUIDO EL NOMBRE = USERNAME
 
+            enrrolato.createIceCream().addContainer(containerSelected)
+            var id = enrrolato.getId()
+            enrrolato.createIceCream().setUsername(name())
+
+            // VA EL ÚLTIMO PASO DE LA ORDEN
+            enrrolato.createOrders()
         }
-        // MANDARLO AL CARRITO (ESCRIBIR EL PEDIDO A LA BASE DE DATOS )
-        // DEBE IR INCLUIDO EL NOMBRE = USERNAME
-        var id = enrrolato.getId()
+    }
+
+    private fun name(): String {
+        var name = ""
+        enrrolato.getUsername().addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(d: DataSnapshot) {
+                name = d.child("username").value.toString()
+            }
+            override fun onCancelled(p0: DatabaseError) {
+            }
+        })
+        return name
     }
 
     private fun catchUsername(hide: TextView) {
@@ -110,6 +149,7 @@ class SelectContainerFragment : Fragment() {
         bt_ok.setOnClickListener {
             hide.text = u.text.toString().trim()
             enrrolato.setUsername(hide.text.toString())
+            enrrolato.createIceCream().setUsername(hide.text.toString())
             alertDialog.cancel()
         }
 

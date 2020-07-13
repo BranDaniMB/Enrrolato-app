@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.AdapterIceCream
 import com.enrrolato.enrrolato.PrincipalMenuFragment
 import com.enrrolato.enrrolato.R
+import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 import com.enrrolato.enrrolato.iceCream.Topping
@@ -27,11 +28,11 @@ class ToppingFragment : Fragment() {
     private var enrrolato = Enrrolato.instance
     private var listToRecycler: ArrayList<String> = ArrayList()
     private lateinit var toppingSelected: String
-
     private var count: Int = 0
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var af: AdapterIceCream
 
+    private var listAux: ArrayList<Topping> = enrrolato.listToppings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,10 +80,6 @@ class ToppingFragment : Fragment() {
 
                 if(!toppingSelected.equals(getString(R.string.topping_selector))) {
                     chooseTopping(msg, rv)
-                    //}
-                    //else {
-                    //    errorTopping("Debe seleccionar algún topping")
-                    //}
                 }
             }
 
@@ -105,6 +102,22 @@ class ToppingFragment : Fragment() {
         }
     }
 
+    private fun addToppingProcess(t: String) {
+        for(l in listAux) {
+            if(l.name.equals(t)) {
+                enrrolato.createIceCream().addTopping(l)
+            }
+        }
+    }
+
+    private fun removeToppingProcess(t: String) {
+        for(l in listTopping) {
+            if(l.name.equals(t)) {
+                //enrrolato.createIceCream().removeTopping(l)
+            }
+        }
+    }
+
     private fun chooseTopping(msg:TextView, recyclerToppings: RecyclerView) {
         mLayoutManager = LinearLayoutManager(context)
         recyclerToppings.setHasFixedSize(true)
@@ -113,8 +126,11 @@ class ToppingFragment : Fragment() {
         recyclerToppings.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         if (!listToRecycler.contains(toppingSelected)) {
-
             listToRecycler.add(toppingSelected)
+
+            // AGREGARLO AL MANAGER
+            addToppingProcess(toppingSelected)
+
             af = AdapterIceCream(listToRecycler)
             count += 1
 
@@ -123,6 +139,10 @@ class ToppingFragment : Fragment() {
                         var m: String = getString(R.string.delete_topping_prompt)
                         //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
                         popupMessage(recyclerToppings.getChildAdapterPosition(v), af, m)
+
+                        // AQUI VA EL ELIMINAR TOPPING
+                        removeToppingProcess(af.list.get(recyclerToppings.getChildAdapterPosition(v)))
+
                         count -= 1
                     }
                 })

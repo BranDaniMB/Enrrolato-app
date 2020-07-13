@@ -18,7 +18,7 @@
     <!-- Log In Activity -->
     <string name="app_name" translatable="false">Enrrolato</string>
     <string name="log_in_title">Iniciar sesión</string>
-    <string name="username">Correo electrónico</string>
+    <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="reset_password">Recupérala</string>
@@ -98,7 +98,7 @@
     <string name="container_title">Escogencia de recipiente</string>
     <string name="container_list">Lista de contenedores</string>
     <string name="container_selector">Elija un contenedor</string>
-    <string name="container_to_cart">Agregar helado al carrito</string>
+    <string name="container_to_cart">Agregar el helado al carrito\n y enviar la orden</string>
     <string name="container_new_icecream">Agregar un nuevo helado</string>
 
 
@@ -122,4 +122,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Texto de ejemplo</string>
+    <string name="username">Nombre de usuario</string>
 </resources>

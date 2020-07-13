@@ -6,7 +6,7 @@
     <string name="sign_up_alert">An error has occurred during registration</string>
     <string name="log_in_alert">An error has occurred while authenticating</string>
     <string name="log_in_title">Log in</string>
-    <string name="username">Email</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="reset_password">Reset it!</string>
@@ -76,6 +76,7 @@
     <string name="container_title">Container chioce</string>
     <string name="container_list">Container list</string>
     <string name="container_selector">Choose a container</string>
-    <string name="container_to_cart">Add to shopping cart</string>
+    <string name="container_to_cart">Add to shopping cart \nand send the order</string>
     <string name="container_new_icecream">Add another ice cream</string>
+    <string name="username">Username</string>
 </resources>

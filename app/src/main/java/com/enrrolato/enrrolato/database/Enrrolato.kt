@@ -1,7 +1,10 @@
 package com.enrrolato.enrrolato.database
 
 import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.enrrolato.enrrolato.R
+import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.iceCream.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -13,6 +16,9 @@ enum class ProviderType {
 }
 
 class Enrrolato: Application() {
+
+    private var manager: IcecreamManager = IcecreamManager()
+
     private val database: FirebaseDatabase
             get() = FirebaseDatabase.getInstance()
     private var user: User? = null
@@ -179,7 +185,55 @@ class Enrrolato: Application() {
         loadContainers()
     }
 
+    public fun createIceCream(): IcecreamManager {
+        return manager
+    }
+
+
+    //PROCESO IR SUBIENDO POCO A POCO
+    // COGER EL ID
+    // CREAR UN ID NUEVO PARA LAS ORDERS
+    // A PARTIR DE AHI, IR AGREGANDO LOS SABORES / TOPPINGS / JARABES
+    // AL FINAL SE COGE EL NOMBRE Y LA FECHA EN LA QUE SE ENVI
+
+    public fun createOrders() {
+        val ref = FirebaseDatabase.getInstance().getReference("app/orders")
+        var id = getId()
+
+        ref.child(createIceCream().getDate()).child("id").setValue(id)
+        ref.child(createIceCream().getDate()).child("name").setValue(createIceCream().getUsername())
+
+        var listF = createIceCream().getFlavor()
+        for(array in listF) {
+            ref.child(createIceCream().getDate()).child("flavors").setValue(array.name)  //createIceCream().getFlavor())
+            //ref.child(createIceCream().getDate()).child("flavors").child(array.name).setValue(array)
+        }
+
+        ref.child(createIceCream().getDate()).child("filling").setValue(createIceCream().getFilling())
+
+        var listT = createIceCream().getTopping()
+        for(array in listT) {
+            ref.child(createIceCream().getDate()).child("toppings").setValue(array.name)   //createIceCream().getTopping())
+            //ref.child(createIceCream().getDate()).child("toppings").child(array.name).setValue(array)
+        }
+
+        ref.child(createIceCream().getDate()).child("container").setValue(createIceCream().getContainer())
+        ref.child(createIceCream().getDate()).child("price").setValue(createIceCream().getPrice())
+    }
+
+
 }
+
+@IgnoreExtraProperties
+data class Icecream(
+    var id: String?,
+    var username: String,
+    var listF: ArrayList<Flavor>,
+    var filling:String,
+    var listT: ArrayList<Topping>,
+    var container: String,
+    var price: Int
+)
 
 @IgnoreExtraProperties
 data class User(

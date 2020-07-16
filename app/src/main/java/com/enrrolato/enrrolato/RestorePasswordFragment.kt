@@ -17,13 +17,9 @@ import kotlinx.android.synthetic.main.fragment_restore_password.*
 
 class RestorePasswordFragment : Fragment() {
 
-    val auth = FirebaseAuth.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_restore_password, container, false)
         val btProfile = view.findViewById<View>(R.id.btBackToProfile) as ImageButton
         val btChange = view.findViewById<View>(R.id.btRestore) as Button
@@ -35,7 +31,6 @@ class RestorePasswordFragment : Fragment() {
         btChange.setOnClickListener {
             sendEmail(view)
         }
-
         return view
     }
 

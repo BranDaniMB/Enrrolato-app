@@ -89,7 +89,6 @@ class FlavorsFragment : Fragment() {
 
     private fun loadFlavors(f: Spinner, rv: RecyclerView) {
         listFlavor = enrrolato.listFlavors
-        var list: ArrayList<Flavor> = ArrayList()
         flavorList = ArrayList()
 
         flavorList.add(getString(R.string.flavor_selector))
@@ -104,13 +103,11 @@ class FlavorsFragment : Fragment() {
                 listLiquour.add(list.name)
             }
         }
-
         fillSpinner(f, rv)
     }
 
     private fun filtrerTrad(f: Spinner, rv: RecyclerView) {
         listFlavor = enrrolato.listFlavors
-        var list: ArrayList<Flavor>
         flavorList = ArrayList()
         flavorList.add(getString(R.string.flavor_selector))
 
@@ -120,13 +117,11 @@ class FlavorsFragment : Fragment() {
                 flavorList.add(list.name)
             }
         }
-
         fillSpinner(f, rv)
     }
 
     private fun filtrerLic(f: Spinner, rv: RecyclerView) {
         listFlavor = enrrolato.listFlavors
-        var list: ArrayList<Flavor>
         flavorList = ArrayList()
 
         flavorList.add(getString(R.string.flavor_selector))
@@ -173,7 +168,7 @@ class FlavorsFragment : Fragment() {
     private fun flavorProcessRemove(f: String) {
         for(l in listAux) {
             if(l.name.equals(f)) {
-                //enrrolato.createIceCream().removeFlavor(l)
+                enrrolato.createIceCream().removeFlavor(l)
             }
         }
     }
@@ -214,7 +209,6 @@ class FlavorsFragment : Fragment() {
 
                         count -= 1
                         alert?.visibility = View.INVISIBLE
-
                     }
                 })
 
@@ -264,7 +258,6 @@ class FlavorsFragment : Fragment() {
             alertDialog.cancel()
             listToRecycler.removeAt(i)
             a.notifyItemRemoved(i)
-            //Toast.makeText(context, "Usted ha eliminado " + n, Toast.LENGTH_SHORT).show()
         }
 
         bt_cancel.setOnClickListener {
@@ -272,31 +265,4 @@ class FlavorsFragment : Fragment() {
         }
     }
 
-
 }
-
-/* database.child("business").child("ingredients").child("flavors").addValueEventListener(object: ValueEventListener {
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if(dataSnapshot.exists()) {
-                    for (data: DataSnapshot in dataSnapshot.children) {
-                        var id: String = data.key.toString()
-                        var name: String = data.child("name").getValue().toString()
-                        var licour: String = data.child("isLiqueur").getValue().toString()
-                        var special: String = data.child("isSpecial").getValue().toString()
-                        var exclusive: String = data.child("isExclusive").getValue().toString()
-                        var avaliable: String = data.child("avaliable").getValue().toString()
-
-                        if(special.equals("0") || (special.equals("1") && licour.equals("1")) && exclusive.equals("0")) {
-                            flavorList = ArrayList()
-                            flavorList.add(name)
-
-                            // VAN LOS FILTROS
-                        }
-                    }
-                    fillSpinner(f)
-                }
-            }
-            override fun onCancelled(ds: DatabaseError) {
-            }
-        })  */

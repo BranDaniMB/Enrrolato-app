@@ -27,15 +27,17 @@ class SelectContainerFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view: View =  inflater.inflate(R.layout.fragment_select_container, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        var view: View = inflater.inflate(R.layout.fragment_select_container, container, false)
         var back = view.findViewById<View>(R.id.backBtn) as ImageButton
         var addCart = view.findViewById<View>(R.id.btAddToShopCart) as Button
         var addNewIceCream = view.findViewById<View>(R.id.btAddNewIceCream) as Button
         val sp = view.findViewById<View>(R.id.spContainer) as Spinner
         val hide = view.findViewById<View>(R.id.hiddenUsername) as TextView
-
-        //addNewIceCream.isEnabled = true
 
         loadContainers(sp)
         catchUsername(hide).toString()
@@ -47,7 +49,6 @@ class SelectContainerFragment : Fragment() {
         addCart.setOnClickListener {
             addToCart(hide)
         }
-
         return view
     }
 
@@ -67,12 +68,12 @@ class SelectContainerFragment : Fragment() {
     }
 
     private fun fillContainer(c: Spinner) {
-        val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
+        val array: ArrayAdapter<String> =
+            ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
         c.adapter = array
         c.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
-
                 containerSelected = av?.getItemAtPosition(i).toString()
             }
 
@@ -87,37 +88,35 @@ class SelectContainerFragment : Fragment() {
         val transaction = fm.beginTransaction()
         transaction.replace(R.id.ly_container, fragment)
         transaction.addToBackStack(null)
-       transaction.commit()
-   }
+        transaction.commit()
+    }
 
     private fun addToCart(hide: TextView) {
-        // ANTES DE AGREGARLA AL CARRITO DEBE MOSTRARSE UN MENSAJE EN DONDE SE LE SOLICITA EL NOMBRE DE USUARIO (SI NO LO TIENE)
-        if(hide.text.equals("")) {
-            enterUsername(hide)
-    } else {
-            // MANDARLO AL CARRITO (ESCRIBIR EL PEDIDO A LA BASE DE DATOS )
-            // DEBE IR INCLUIDO EL NOMBRE = USERNAME
+        if (containerSelected.equals(getString(R.string.container_selector))) {
+            errorContainer(getString(R.string.no_container))
+        } else {
 
             enrrolato.createIceCream().addContainer(containerSelected)
-            var id = enrrolato.getId()
-            enrrolato.createIceCream().setUsername(name())
 
-            // VA EL ÚLTIMO PASO DE LA ORDEN
-            enrrolato.createOrders()
+            // ANTES DE AGREGARLA AL CARRITO DEBE MOSTRARSE UN MENSAJE EN DONDE SE LE SOLICITA EL NOMBRE DE USUARIO (SI NO LO TIENE)
+            if (hide.text.equals("")) {
+                enterUsername(hide)
+
+                enrrolato.createIceCream().setUsername(hide.text.toString())
+
+                // ANTES DE MANDARLO, MANDAR UN MENSAJE DICIENDO QUE SE MANDÓ AL CARRITO O ENVIADO AL LOCAL
+                enrrolato.createOrders()
+
+            } else {
+                // MANDARLO AL CARRITO O TENERLE UNA OPCIÓN PARA MANDARLO DE UNA VEZ ?
+                enrrolato.createIceCream().setUsername(hide.text.toString())
+
+                // ANTES DE MANDARLO, MANDAR UN MENSAJE DICIENDO QUE SE MANDÓ AL CARRITO O ENVIADO AL LOCAL
+                enrrolato.createOrders()
+            }
         }
     }
 
-    private fun name(): String {
-        var name = ""
-        enrrolato.getUsername().addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(d: DataSnapshot) {
-                name = d.child("username").value.toString()
-            }
-            override fun onCancelled(p0: DatabaseError) {
-            }
-        })
-        return name
-    }
 
     private fun catchUsername(hide: TextView) {
         enrrolato.getUsername().addValueEventListener(object : ValueEventListener {
@@ -132,7 +131,7 @@ class SelectContainerFragment : Fragment() {
     }
 
     private fun enterUsername(hide: TextView) {
-        var txt = "Ingrese su nombre"
+        var txt = getString(R.string.enter_name)
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
         val popupUsername = layoutInflater.inflate(R.layout.popup_username, null)
@@ -154,6 +153,23 @@ class SelectContainerFragment : Fragment() {
         }
 
         bt_cancel.setOnClickListener {
+            alertDialog.cancel()
+        }
+    }
+
+    private fun errorContainer(msg: String) {
+        val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
+        val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+        val popup = layoutInflater.inflate(R.layout.popup_choose_flavor, null)
+        val message = popup.findViewById<View>(R.id.txtMessage) as TextView
+        message.text = msg
+        val bt_ok: Button = popup.findViewById(R.id.btOk);
+        alertDialogBuilder?.setView(popup)
+        val alertDialog: AlertDialog = alertDialogBuilder!!.create()
+        alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog
+        alertDialog.show()
+
+        bt_ok.setOnClickListener {
             alertDialog.cancel()
         }
     }

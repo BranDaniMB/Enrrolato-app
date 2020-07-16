@@ -11,7 +11,7 @@
     <string name="forgot_password">Forgot your password?</string>
     <string name="reset_password">Reset it!</string>
     <string name="log_in_action">Log in</string>
-    <string name="sign_up">Don\'t have an account? Create one</string>
+    <string name="sign_up">Don\'t have an account?\nCreate one</string>
     <string name="sign_up_title">Sign up</string>
     <string name="new_password">Enter your password</string>
     <string name="repeat_password">Repeat your password</string>
@@ -79,4 +79,25 @@
     <string name="container_to_cart">Add to shopping cart \nand send the order</string>
     <string name="container_new_icecream">Add another ice cream</string>
     <string name="username">Username</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="flavor_menu">Flavor menú</string>
+    <string name="traditional_flavor">Traditional flavors</string>
+    <string name="liqueur_flavor">Liqueur flavors</string>
+    <string name="special_flavor">Special flavors</string>
+    <string name="menu">Menu</string>
+    <string name="show_flavors">Show flavors</string>
+    <string name="show_fillings">Show fillings</string>
+    <string name="show_topping">Show toppings</string>
+    <string name="alert_18">* Recommended flavor for people + 18 years old</string>
+    <string name="flavor">Flavor</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="logout_confirmation">Are you sure you want to logout?</string>
+    <string name="no_container">You must select a container</string>
+    <string name="enter_name">Enter your name</string>
+    <string name="topping_menu">Topping menu</string>
+    <string name="filling_menu">Filling menu</string>
+    <string name="new_name">Enter your new name</string>
 </resources>

@@ -30,7 +30,9 @@
             android:id="@+id/btCancel1"
             android:background="@drawable/round_shape"
             android:layout_marginRight="50dp"
-            android:text="Cancelar"
+            android:text="@string/cancel"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:fontFamily="@font/gotu_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -38,7 +40,9 @@
         <Button
             android:id="@+id/btOk1"
             android:background="@drawable/round_shape"
-            android:text="Aceptar"
+            android:text="@string/ok"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:fontFamily="@font/gotu_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

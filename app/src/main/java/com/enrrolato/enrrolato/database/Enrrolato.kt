@@ -164,17 +164,19 @@ class Enrrolato: Application() {
 
     public fun setUsername(u: String) {
         var id: String? = getId()
-        val ref = FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users) + "/" + id)
+        val ref = FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users)  + "/" + id)
 
         if (id != null) {
-            ref.addValueEventListener(object: ValueEventListener {
-                override fun onDataChange(d: DataSnapshot) {
-                   ref.setValue(User(u))
-                }
+            //ref.addValueEventListener(object: ValueEventListener {
+               // override fun onDataChange(d: DataSnapshot) {
+                    //ref.removeValue()
 
-                override fun onCancelled(d: DatabaseError) {
-                }
-            })
+                   ref.setValue(User(u))
+                //}
+
+                //override fun onCancelled(d: DatabaseError) {
+                //}
+            //})
         }
     }
 
@@ -189,37 +191,28 @@ class Enrrolato: Application() {
         return manager
     }
 
-
     //PROCESO IR SUBIENDO POCO A POCO
     // COGER EL ID
     // CREAR UN ID NUEVO PARA LAS ORDERS
     // A PARTIR DE AHI, IR AGREGANDO LOS SABORES / TOPPINGS / JARABES
-    // AL FINAL SE COGE EL NOMBRE Y LA FECHA EN LA QUE SE ENVI
-
-    public fun createOrders() {
+    // AL FINAL SE COGE EL NOMBRE Y LA FECHA EN LA QUE SE ENVIA
+    fun createOrders() {
         val ref = FirebaseDatabase.getInstance().getReference("app/orders")
         var id = getId()
+        var date = createIceCream().getDate()
 
-        ref.child(createIceCream().getDate()).child("id").setValue(id)
-        ref.child(createIceCream().getDate()).child("name").setValue(createIceCream().getUsername())
+        ref.child(date).setValue(Icecream(id,
+                                createIceCream().getUsername(),
+                                createIceCream().gFlavor(),
+                                createIceCream().getFilling(),
+                                createIceCream().gTopping(),
+                                createIceCream().getContainer(),
+                                createIceCream().getPrice(),
+                                false))
 
-        var listF = createIceCream().getFlavor()
-        for(array in listF) {
-            ref.child(createIceCream().getDate()).child("flavors").setValue(array.name)  //createIceCream().getFlavor())
-            //ref.child(createIceCream().getDate()).child("flavors").child(array.name).setValue(array)
-        }
-
-        ref.child(createIceCream().getDate()).child("filling").setValue(createIceCream().getFilling())
-
-        var listT = createIceCream().getTopping()
-        for(array in listT) {
-            ref.child(createIceCream().getDate()).child("toppings").setValue(array.name)   //createIceCream().getTopping())
-            //ref.child(createIceCream().getDate()).child("toppings").child(array.name).setValue(array)
-        }
-
-        ref.child(createIceCream().getDate()).child("container").setValue(createIceCream().getContainer())
-        ref.child(createIceCream().getDate()).child("price").setValue(createIceCream().getPrice())
+        createIceCream().cleanData()
     }
+
 
 
 }
@@ -228,11 +221,12 @@ class Enrrolato: Application() {
 data class Icecream(
     var id: String?,
     var username: String,
-    var listF: ArrayList<Flavor>,
+    var flavor: String,
     var filling:String,
-    var listT: ArrayList<Topping>,
+    var topping: String,
     var container: String,
-    var price: Int
+    var price: Int,
+    var delivered: Boolean
 )
 
 @IgnoreExtraProperties

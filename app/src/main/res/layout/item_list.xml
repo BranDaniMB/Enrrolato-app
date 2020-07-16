@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/item"
-        android:text="Sabor"
+        android:text="@string/flavor"
         android:textSize="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -31,7 +31,6 @@ class PrincipalMenuFragment : Fragment() {
         season.setOnClickListener {
             seasonIceCream()
         }
-
         return view
     }
 
@@ -40,8 +39,7 @@ class PrincipalMenuFragment : Fragment() {
     }
 
     private fun createIceCream() {
-        val fragment =
-            DefaultFlavorFragment()
+        val fragment = DefaultFlavorFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()
         transaction. replace(R.id.ly_principal, fragment)

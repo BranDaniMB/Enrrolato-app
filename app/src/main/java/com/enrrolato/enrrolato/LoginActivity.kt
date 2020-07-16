@@ -20,30 +20,32 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
-    private val GOOGLE_SIGN_IN = 100;
-    private val callbackManager = CallbackManager.Factory.create();
+    private val GOOGLE_SIGN_IN = 100
+    private val callbackManager = CallbackManager.Factory.create()
+    private var enrrolato = Enrrolato.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Cambiamos al tema por defecto
+        // CAMBIAMOS AL TEMA POR DEFECTO
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Analytics Event
-        val analytics : FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        // ANALYTICS EVNT
+        val analytics : FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         val bundle = Bundle()
         bundle.putString("message", "Pantalla de inicio de sesión lanzada")
         analytics.logEvent("LoginScreen", bundle)
 
-        // Setup
         setup()
-        // Session Verifica si ya se inicio sesión
+        // SESSION = VERIFICA SI YA SE INICIÓ SESIÓN
         session()
-
         recoverPassword()
     }
 
@@ -53,9 +55,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         callbackManager.onActivityResult(requestCode, resultCode, data)
-
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == GOOGLE_SIGN_IN) {
@@ -105,8 +105,18 @@ class LoginActivity : AppCompatActivity() {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString()
                     , passwordField.text.toString()).addOnCompleteListener {
                     if (it.isSuccessful) {
+
+                        var name = ""
+                        enrrolato.getUsername().addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(d: DataSnapshot) {
+                                name = d.child("username").value.toString()
+                            }
+                            override fun onCancelled(d: DatabaseError) {
+                            }
+                        })
+
                         //var id: String? = FirebaseAuth.getInstance().currentUser?.uid
-                        showMenu(it.result?.user?.uid, it.result?.user?.displayName?: "")
+                        showMenu(it.result?.user?.uid, it.result?.user?.displayName?: name)
                     } else {
                         showAlert();
                     }

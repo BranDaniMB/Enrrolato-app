@@ -50,13 +50,11 @@ class ToppingFragment : Fragment() {
         next.setOnClickListener {
           selectContainer(fill)
         }
-
         return view
     }
 
     private fun loadToppings(msg: TextView, spT: Spinner, rv: RecyclerView) {
         listTopping = enrrolato.listToppings
-        var list: ArrayList<Flavor> = ArrayList()
         toppingList = ArrayList()
 
         toppingList.add(getString(R.string.topping_selector))
@@ -91,8 +89,8 @@ class ToppingFragment : Fragment() {
     private fun selectContainer(rv: RecyclerView) {
         if (rv == null || toppingSelected.equals(getString(R.string.topping_selector)) || toppingSelected.isEmpty()) {
             errorTopping(getString(R.string.no_topping))
-        } else {
-
+        }
+        else {
             val fragment = SelectContainerFragment()
             val fm = requireActivity().supportFragmentManager
             val transaction = fm.beginTransaction()
@@ -113,7 +111,7 @@ class ToppingFragment : Fragment() {
     private fun removeToppingProcess(t: String) {
         for(l in listTopping) {
             if(l.name.equals(t)) {
-                //enrrolato.createIceCream().removeTopping(l)
+                enrrolato.createIceCream().removeTopping(l)
             }
         }
     }
@@ -142,7 +140,6 @@ class ToppingFragment : Fragment() {
 
                         // AQUI VA EL ELIMINAR TOPPING
                         removeToppingProcess(af.list.get(recyclerToppings.getChildAdapterPosition(v)))
-
                         count -= 1
                     }
                 })
@@ -200,7 +197,6 @@ class ToppingFragment : Fragment() {
             alertDialog.cancel()
             listToRecycler.removeAt(i)
             a.notifyItemRemoved(i)
-            //Toast.makeText(context, "Usted ha eliminado " + n, Toast.LENGTH_SHORT).show()
         }
 
         bt_cancel.setOnClickListener {

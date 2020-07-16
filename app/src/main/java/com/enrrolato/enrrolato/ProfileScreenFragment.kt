@@ -18,10 +18,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-/**
- * A simple [Fragment] subclass.
- */
-
 class ProfileScreenFragment : Fragment() {
 
     private var enrrolato = Enrrolato.instance
@@ -34,7 +30,6 @@ class ProfileScreenFragment : Fragment() {
         val btRestore = view.findViewById<View>(R.id.btChangePassword) as Button
         val username = view.findViewById<View>(R.id.txtAssociatedUsername) as TextView
         val editUsername = view.findViewById<View>(R.id.btEditUsername) as ImageButton
-        //val hide = view.findViewById<View>(R.id.txtHidden) as TextView
 
         showEmail(view)
         enrrolato.getUsername().addValueEventListener(object : ValueEventListener{
@@ -44,7 +39,6 @@ class ProfileScreenFragment : Fragment() {
 
             override fun onCancelled(d: DatabaseError) {
             }
-
         })
 
         btAbout.setOnClickListener {
@@ -109,7 +103,7 @@ class ProfileScreenFragment : Fragment() {
             fragmentManager!!.beginTransaction().remove(this).commit();
             alertDialog.cancel()
 
-            val int: Intent = Intent(activity, LoginActivity::class.java)
+            val int = Intent(activity, LoginActivity::class.java)
             startActivity(int)
             Toast.makeText(context, getString(R.string.log_out_message), Toast.LENGTH_SHORT).show()
             val prefs = activity!!.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
@@ -123,8 +117,7 @@ class ProfileScreenFragment : Fragment() {
     }
 
     private fun updateName() {
-        // HAY QUE CORREGIRLO
-        var txt = "Ingrese su nuevo nombre"
+        var txt = getString(R.string.new_name)
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
         val popupUsername = layoutInflater.inflate(R.layout.popup_username, null)
@@ -139,7 +132,6 @@ class ProfileScreenFragment : Fragment() {
         alertDialog.show()
 
         bt_ok.setOnClickListener {
-            //hide.text = u.text.toString().trim()
             enrrolato.setUsername(u.text.toString().trim())
             alertDialog.cancel()
         }

@@ -3,21 +3,21 @@
 
     <item
         android:id="@+id/home"
-        android:title="Inicio"
+        android:title="@string/home"
         android:fontFamily="@font/gotu_regular"
         android:icon="@drawable/ic_home">
     </item>
 
     <item
         android:id="@+id/shop"
-        android:title="Carrito"
+        android:title="@string/cart"
         android:fontFamily="@font/gotu_regular"
         android:icon="@drawable/ic_shop">
     </item>
 
     <item
         android:id="@+id/profile"
-        android:title="Cuenta"
+        android:title="@string/profile"
         android:fontFamily="@font/gotu_regular"
         android:icon="@drawable/ic_profile">
     </item>

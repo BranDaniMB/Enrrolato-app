@@ -29,8 +29,10 @@
         <Button
             android:id="@+id/btOk"
             android:background="@drawable/round_shape"
-            android:text="Aceptar"
+            android:text="@string/ok"
             android:fontFamily="@font/gotu_regular"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

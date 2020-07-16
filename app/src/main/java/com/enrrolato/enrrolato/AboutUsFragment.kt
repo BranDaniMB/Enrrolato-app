@@ -19,8 +19,6 @@ public class AboutUsFragment : Fragment() {
     private val urlPageIG: Uri = Uri.parse("http://instagram.com/_u/enrrolato")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_about_us, container, false)
         val btProfile = view.findViewById<View>(R.id.btBackToProfile) as ImageButton
         val btFace = view.findViewById<View>(R.id.btFB) as ImageButton
@@ -60,8 +58,7 @@ public class AboutUsFragment : Fragment() {
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(facebookId)))
         } catch (e: Exception) {
-            Log.e(TAG, "Aplicación no instalada.")
-            //Abre url de pagina.
+            // ABRE URL DE PÁGINA
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlPageFB)))
         }
     }
@@ -73,7 +70,7 @@ public class AboutUsFragment : Fragment() {
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            //No encontró la aplicación, abre la versión web.
+            // NO ENCONTRÓ LA APLICACIÓN, ABR EN NAVEGADOR WEB
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,

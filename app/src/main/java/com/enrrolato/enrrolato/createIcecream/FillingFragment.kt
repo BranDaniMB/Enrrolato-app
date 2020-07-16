@@ -41,9 +41,10 @@ class FillingFragment : Fragment() {
 
         next.setOnClickListener {
             val selected = sp.selectedItem as String
-            if (selected == null || selected.equals(getString(R.string.filling_selector))) { // Si es que debe
+            if (selected == null || selected.equals(getString(R.string.filling_selector))) {
                 errorPopup(getString(R.string.no_filling))
-            } else {
+            }
+            else {
                 enrrolato.createIceCream().addFilling(fillingSelected)
 
                 val fragment = ToppingFragment()
@@ -64,7 +65,6 @@ class FillingFragment : Fragment() {
         nameList.add(getString(R.string.filling_selector))
 
         for (filling in fillings) {
-
             if (filling.available && !filling.isExclusive) {
                 nameList.add(filling.name)
             }

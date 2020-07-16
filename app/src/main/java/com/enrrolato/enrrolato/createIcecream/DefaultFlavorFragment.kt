@@ -46,7 +46,6 @@ class DefaultFlavorFragment : Fragment() {
         next.setOnClickListener {
             nextStepTopping()
         }
-
         return view
     }
 
@@ -70,13 +69,11 @@ class DefaultFlavorFragment : Fragment() {
 
     private fun loadSpecial(f: Spinner) {
             listFlavor = enrrolato.listFlavors
-            var list: ArrayList<Flavor> = ArrayList()
             flavorList = ArrayList()
 
             flavorList.add(getString(R.string.preset_flavor_list))
 
             for (list in listFlavor) {
-
                 if (list.isSpecial  && !list.isLiqueur && list.avaliable) {
                     flavorList.add(list.name)
                 }
@@ -100,7 +97,6 @@ class DefaultFlavorFragment : Fragment() {
 
     private fun flavorProcessAdd(f: String) {
         listFlavor = enrrolato.listFlavors
-        var list: ArrayList<Flavor> = ArrayList()
 
         for(list in listFlavor) {
             if(list.name.equals(f)) {
@@ -114,13 +110,11 @@ class DefaultFlavorFragment : Fragment() {
     }
 
     private fun nextStepTopping() {
-
         if(flavorSelected.equals(getString(R.string.preset_flavor_list)) || flavorSelected.isEmpty()) {
             errorFlavor(getString(R.string.no_preset))
         }
         else {
-            // BRINCA DIRECTAMENTE A ESCOGER EL TOPPING
-            // TIENE QUE LLEVARSE EL SABOR / HELADO YA DEFINIDO
+            // BRINCA DIRECTAMENTE A ESCOGER EL TOPPING --> TIENE QUE LLEVARSE EL SABOR / HELADO YA DEFINIDO
             flavorProcessAdd(flavorSelected)
             //enrrolato.createOrders()
 

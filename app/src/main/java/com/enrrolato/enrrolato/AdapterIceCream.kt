@@ -47,9 +47,6 @@ private lateinit var listener: View.OnClickListener
         fun asignData(eData: String) {
             data.setText(eData)
         }
-
-
-
     }
 
 }

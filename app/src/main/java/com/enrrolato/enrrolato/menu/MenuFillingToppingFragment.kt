@@ -10,13 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.AdapterIceCream
+import com.enrrolato.enrrolato.adapter.AdapterMenu
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Filling
-import com.enrrolato.enrrolato.iceCream.Flavor
 import com.enrrolato.enrrolato.iceCream.Topping
 
-class ChooseMenuFTFragment : Fragment() {
+class MenuFillingToppingFragment : Fragment() {
 
     private var selection: Boolean = false
 
@@ -95,7 +94,7 @@ class ChooseMenuFTFragment : Fragment() {
     private fun choose(recycler: RecyclerView, fs:String) {
         recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listToRecycler.add(fs)
-        var af = AdapterIceCream(listToRecycler)
+        var af = AdapterMenu(listToRecycler)
         recycler.adapter = af
     }
 

@@ -10,7 +10,6 @@ class IcecreamManager {
 
     private var listFlavor: ArrayList<Flavor> = ArrayList()
     private var listTopping: ArrayList<Topping> = ArrayList()
-    private var username: String = ""
     private var filling: String = ""
     private var container: String = ""
     private var price: Int = 2000
@@ -34,14 +33,14 @@ class IcecreamManager {
 
     fun gFlavor(): String {
         for (l in listFlavor) {
-            flavor += l.name + " - "
+            flavor += l.name + ", "
         }
         return flavor
     }
 
     fun gTopping(): String {
         for (t in listTopping) {
-            topping += t.name + " - "
+            topping += t.name + ", "
         }
         return topping
     }
@@ -63,10 +62,6 @@ class IcecreamManager {
         if (listTopping.size > 2) {
             price += 400
         }
-    }
-
-    fun setUsername(username: String) {
-        this.username = username
     }
 
     fun addContainer(container: String) {
@@ -98,8 +93,11 @@ class IcecreamManager {
         return container
     }
 
-    fun getUsername(): String {
-        return username
+    fun isEmpty(): Boolean {
+        if(flavor.equals("") && listFlavor.isEmpty() && filling.equals("") && topping.equals("") && listTopping.isEmpty() && container.equals("")) {
+            return true
+        }
+        return false
     }
 
     fun cleanData() {
@@ -110,7 +108,6 @@ class IcecreamManager {
         topping = ""
         container = ""
         price = 2000
-        username = ""
         count = 0
     }
 

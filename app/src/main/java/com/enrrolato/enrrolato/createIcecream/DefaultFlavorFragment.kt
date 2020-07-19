@@ -9,7 +9,6 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.PrincipalMenuFragment
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 
@@ -131,7 +130,7 @@ class DefaultFlavorFragment : Fragment() {
     private fun errorFlavor(msg: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_choose_flavor, null)
+        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_alert_message, null)
         val message = popupMaxFlavor.findViewById<View>(R.id.txtMessage) as TextView
         message.text = msg
         val bt_ok: Button = popupMaxFlavor.findViewById(R.id.btOk);

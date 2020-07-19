@@ -56,7 +56,7 @@ class MenuFragment : Fragment() {
     }
 
     private fun chargeMFlavors() {
-        val fragment = ChooseFlavorFragment()
+        val fragment = MenuFlavorFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()
         transaction.replace(R.id.ly_choose_menu, fragment)
@@ -65,7 +65,7 @@ class MenuFragment : Fragment() {
     }
 
     private fun chargeMFillingTopping(flag: Boolean) {
-        val fragment = ChooseMenuFTFragment()
+        val fragment = MenuFillingToppingFragment()
         fragment.selector(flag)
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()

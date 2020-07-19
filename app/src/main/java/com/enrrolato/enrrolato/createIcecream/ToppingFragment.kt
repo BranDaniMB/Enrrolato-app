@@ -6,19 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.enrrolato.enrrolato.AdapterIceCream
-import com.enrrolato.enrrolato.PrincipalMenuFragment
+import com.enrrolato.enrrolato.adapter.AdapterIceCream
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.Flavor
 import com.enrrolato.enrrolato.iceCream.Topping
-import org.w3c.dom.Text
 
 
 class ToppingFragment : Fragment() {
@@ -31,7 +26,6 @@ class ToppingFragment : Fragment() {
     private var count: Int = 0
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var af: AdapterIceCream
-
     private var listAux: ArrayList<Topping> = enrrolato.listToppings
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +39,7 @@ class ToppingFragment : Fragment() {
         val next = view.findViewById<View>(R.id.btCotinueToContainer) as Button
         val msg = view.findViewById<View>(R.id.txtToppingAlert) as TextView
 
+        ll(fill)
         loadToppings(msg, spinner, fill)
 
         next.setOnClickListener {
@@ -117,12 +112,6 @@ class ToppingFragment : Fragment() {
     }
 
     private fun chooseTopping(msg:TextView, recyclerToppings: RecyclerView) {
-        mLayoutManager = LinearLayoutManager(context)
-        recyclerToppings.setHasFixedSize(true)
-        recyclerToppings.itemAnimator = DefaultItemAnimator()
-        recyclerToppings.layoutManager = mLayoutManager
-        recyclerToppings.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
         if (!listToRecycler.contains(toppingSelected)) {
             listToRecycler.add(toppingSelected)
 
@@ -132,15 +121,17 @@ class ToppingFragment : Fragment() {
             af = AdapterIceCream(listToRecycler)
             count += 1
 
-                af.setOnClickListener(object: View.OnClickListener {
-                    override fun onClick(v: View) {
-                        var m: String = getString(R.string.delete_topping_prompt)
-                        //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
-                        popupMessage(recyclerToppings.getChildAdapterPosition(v), af, m)
+                af.setOnClickListener(View.OnClickListener { v ->
+                    var m: String = getString(R.string.delete_topping_prompt)
+                    //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
+                    popupMessage(recyclerToppings.getChildAdapterPosition(v), af, m)
 
-                        // AQUI VA EL ELIMINAR TOPPING
-                        removeToppingProcess(af.list.get(recyclerToppings.getChildAdapterPosition(v)))
-                        count -= 1
+                    // AQUI VA EL ELIMINAR TOPPING
+                    removeToppingProcess(af.list.get(recyclerToppings.getChildAdapterPosition(v)))
+                    count -= 1
+
+                    if (count < 2 || msg.visibility == View.VISIBLE) {
+                        msg.visibility = View.INVISIBLE
                     }
                 })
                 recyclerToppings.adapter = af
@@ -156,16 +147,18 @@ class ToppingFragment : Fragment() {
         }
     }
 
-    private fun remove(p:Int) {
-        listToRecycler.removeAt(p)
-        af.notifyItemRemoved(p)
+    private fun ll(rf: RecyclerView) {
+        mLayoutManager = LinearLayoutManager(context)
+        rf.setHasFixedSize(true)
+        rf.itemAnimator = DefaultItemAnimator()
+        rf.layoutManager = mLayoutManager
+        rf.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
-
 
     private fun errorTopping(msg: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_choose_flavor, null)
+        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_alert_message, null)
         val message = popupMaxFlavor.findViewById<View>(R.id.txtMessage) as TextView
         message.text = msg
         val bt_ok: Button = popupMaxFlavor.findViewById(R.id.btOk);

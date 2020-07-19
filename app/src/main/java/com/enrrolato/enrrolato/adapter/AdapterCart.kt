@@ -1,4 +1,4 @@
-package com.enrrolato.enrrolato
+package com.enrrolato.enrrolato.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,19 +6,20 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
+import com.enrrolato.enrrolato.R
 
 
-class AdapterIceCream(): Adapter<AdapterIceCream.ViewHolder>(), View.OnClickListener {
+class AdapterCart(): Adapter<AdapterCart.ViewHolder>(), View.OnClickListener {
 
-lateinit var list: ArrayList<String>
-private lateinit var listener: View.OnClickListener
+    lateinit var list: ArrayList<String>
+    private lateinit var listener: View.OnClickListener
 
     constructor(list: ArrayList<String>): this() {
         this.list = list
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list, null,false)
+        var view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list_cart, null,false)
         view.setOnClickListener(this)
         return ViewHolder(view)
     }
@@ -42,7 +43,7 @@ private lateinit var listener: View.OnClickListener
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var data : TextView = itemView.findViewById(R.id.item)
+        var data : TextView = itemView.findViewById(R.id.itemCart)
 
         fun asignData(eData: String) {
             data.setText(eData)

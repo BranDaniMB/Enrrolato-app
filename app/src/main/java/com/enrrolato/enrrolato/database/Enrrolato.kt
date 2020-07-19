@@ -18,6 +18,7 @@ enum class ProviderType {
 class Enrrolato: Application() {
 
     private var manager: IcecreamManager = IcecreamManager()
+    private var list: ArrayList<Icecream> = ArrayList()
 
     private val database: FirebaseDatabase
             get() = FirebaseDatabase.getInstance()
@@ -134,7 +135,7 @@ class Enrrolato: Application() {
         refContainer.addValueEventListener(containerListener)
     }
 
-    public fun initUser(id: String, username: String?) {
+     fun initUser(id: String, username: String?) {
         user = User(username)
         val ref = database.getReference(applicationContext.getString(R.string.db_app_users))
         ref.child(id).setValue(user)
@@ -198,21 +199,33 @@ class Enrrolato: Application() {
     // AL FINAL SE COGE EL NOMBRE Y LA FECHA EN LA QUE SE ENVIA
     fun createOrders() {
         val ref = FirebaseDatabase.getInstance().getReference("app/orders")
-        var id = getId()
         var date = createIceCream().getDate()
 
-        ref.child(date).setValue(Icecream(id,
-                                createIceCream().getUsername(),
-                                createIceCream().gFlavor(),
-                                createIceCream().getFilling(),
-                                createIceCream().gTopping(),
-                                createIceCream().getContainer(),
-                                createIceCream().getPrice(),
-                                false))
+
+        // fecha --> helado y username
+
+        ref.child(date).child("username").setValue(getUsername())
+        ref.child(date).child("icecream").setValue(create())
 
         createIceCream().cleanData()
     }
 
+    // UNA LISTA DE MANAGER PARA METER SI SE PIDEN + DE UN HELADO, Y CUANDO YA SE HAYAN PEDIDO TODOS, ENVIAR LA ORDEN. PERO
+    // MANTENER TODOS EN ALGUN LADO ALMACENANDOSE
+
+    fun create(): Icecream {
+        var id = getId()
+        return Icecream(id, createIceCream().gFlavor(), createIceCream().getFilling(),
+            createIceCream().gTopping(),  createIceCream().getContainer(), createIceCream().getPrice(), false)
+    }
+
+    fun addList() {
+        list.add(create())
+    }
+
+    fun getList(): ArrayList<Icecream> {
+        return list
+    }
 
 
 }
@@ -220,7 +233,6 @@ class Enrrolato: Application() {
 @IgnoreExtraProperties
 data class Icecream(
     var id: String?,
-    var username: String,
     var flavor: String,
     var filling:String,
     var topping: String,

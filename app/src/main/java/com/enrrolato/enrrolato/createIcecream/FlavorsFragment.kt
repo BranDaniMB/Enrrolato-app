@@ -10,9 +10,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.enrrolato.enrrolato.AdapterIceCream
+import com.enrrolato.enrrolato.adapter.AdapterIceCream
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 
@@ -27,7 +26,6 @@ class FlavorsFragment : Fragment() {
     private var listLiquour: ArrayList<String> = ArrayList()
     private var count: Int = 0
     private lateinit var mLayoutManager: LinearLayoutManager
-
     private var listAux: ArrayList<Flavor> = enrrolato.listFlavors
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -40,6 +38,7 @@ class FlavorsFragment : Fragment() {
         val next = view.findViewById<View>(R.id.btContinue) as Button
 
         loadFlavors(flavor, recyclerFlavors)
+        ll(recyclerFlavors)
 
         trad.setOnClickListener {
           filtrerTrad(flavor, recyclerFlavors)
@@ -175,11 +174,6 @@ class FlavorsFragment : Fragment() {
 
     // Este es el recycler view que manda los sabores a la lista y los muestra
     private fun chooseFlavor(recyclerFlavors: RecyclerView) {
-        mLayoutManager = LinearLayoutManager(context)
-        recyclerFlavors.setHasFixedSize(true)
-        recyclerFlavors.itemAnimator = DefaultItemAnimator()
-        recyclerFlavors.layoutManager = mLayoutManager
-        recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         var alert = view?.findViewById<View>(R.id.txtLicourAlert)
 
         if(count < 3) {
@@ -196,20 +190,19 @@ class FlavorsFragment : Fragment() {
                     alert?.visibility = View.VISIBLE
                 }
 
-                af = AdapterIceCream(listToRecycler)
+                af = AdapterIceCream(
+                    listToRecycler
+                )
 
-                af.setOnClickListener(object: View.OnClickListener {
-                    override fun onClick(v: View) {
-                        var m: String = getString(R.string.delete_flavor_prompt)
-                        //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
-                        popupMessage(recyclerFlavors.getChildAdapterPosition(v), af, m)
+                af.setOnClickListener(View.OnClickListener { v ->
+                    //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
+                    popupMessage(recyclerFlavors.getChildAdapterPosition(v), af, getString(R.string.delete_flavor_prompt))
 
-                        // AQUI VA A BUSCAR DE LA LISTA GRANDE Y MANDARLA AL MANAGER PARA ELIMINARLA
-                        flavorProcessRemove(af.list.get(recyclerFlavors.getChildAdapterPosition(v)))
+                    // AQUI VA A BUSCAR DE LA LISTA GRANDE Y MANDARLA AL MANAGER PARA ELIMINARLA
+                    flavorProcessRemove(af.list.get(recyclerFlavors.getChildAdapterPosition(v)))
 
-                        count -= 1
-                        alert?.visibility = View.INVISIBLE
-                    }
+                    count -= 1
+                    alert?.visibility = View.INVISIBLE
                 })
 
                 recyclerFlavors.adapter = af
@@ -224,10 +217,18 @@ class FlavorsFragment : Fragment() {
         }
     }
 
+    private fun ll(rf: RecyclerView) {
+        mLayoutManager = LinearLayoutManager(context)
+        rf.setHasFixedSize(true)
+        rf.itemAnimator = DefaultItemAnimator()
+        rf.layoutManager = mLayoutManager
+        rf.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    }
+
     private fun errorFlavor(msg: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_choose_flavor, null)
+        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_alert_message, null)
         val message = popupMaxFlavor.findViewById<View>(R.id.txtMessage) as TextView
         message.text = msg
         val bt_ok: Button = popupMaxFlavor.findViewById(R.id.btOk);

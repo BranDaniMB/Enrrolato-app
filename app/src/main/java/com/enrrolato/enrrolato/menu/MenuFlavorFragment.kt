@@ -9,16 +9,15 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.AdapterIceCream
+import com.enrrolato.enrrolato.adapter.AdapterMenu
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 
-class ChooseFlavorFragment : Fragment() {
+class MenuFlavorFragment : Fragment() {
 
     private lateinit var flavorList: ArrayList<String>
     private lateinit var listFlavor: ArrayList<Flavor>
     private var enrrolato = Enrrolato.instance
-
     private var traditional: ArrayList<String> = ArrayList()
     private var licour: ArrayList<String> = ArrayList()
     private var specialF: ArrayList<String> = ArrayList()
@@ -28,7 +27,7 @@ class ChooseFlavorFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view: View = inflater.inflate(R.layout.fragment_choose_flavor, container, false)
+        var view: View = inflater.inflate(R.layout.fragment_menu_flavor, container, false)
         var back = view.findViewById<View>(R.id.btBackToMenu2) as ImageButton
         var trad = view.findViewById<View>(R.id.rvTrad) as RecyclerView
         var lic = view.findViewById<View>(R.id.rvLic) as RecyclerView
@@ -37,11 +36,9 @@ class ChooseFlavorFragment : Fragment() {
         back.setOnClickListener {
             back()
         }
-
         chargeTrad(trad, traditional)
         chargeLic(lic, licour)
         chargeSpecial(spec, specialF)
-
         return view
     }
 
@@ -93,7 +90,7 @@ class ChooseFlavorFragment : Fragment() {
     private fun chooseFlavor(recyclerFlavors: RecyclerView, f: Flavor, listToRecycler: ArrayList<String>) {
         recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listToRecycler.add(f.name)
-        var af = AdapterIceCream(listToRecycler)
+        var af = AdapterMenu(listToRecycler)
         recyclerFlavors.adapter = af
         }
 

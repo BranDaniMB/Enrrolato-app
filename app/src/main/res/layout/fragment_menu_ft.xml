@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/cyan"
     android:orientation="vertical"
-    tools:context=".menu.ChooseMenuFTFragment"
+    tools:context=".menu.MenuFillingToppingFragment"
     android:id="@+id/ly_ft_menu">
 
     <androidx.core.widget.NestedScrollView
@@ -61,12 +61,11 @@
                 android:id="@+id/menuFT"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="25dp"
                 android:layout_weight="1"
                 android:background="@color/black"
-                android:paddingLeft="30dp"
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -97,12 +97,6 @@ class SelectContainerFragment : Fragment() {
     }
 
     private fun addToCart() {
-
-        // ESTA VERIFICACION VA AL OTRO LADO
-        //if (enrrolato.createIceCream().isEmpty()) {
-        //  errorContainer("No se ha realizado ninguna orden de helado")
-        //}
-
         if (containerSelected.equals(getString(R.string.container_selector))) {
             errorContainer(getString(R.string.no_container))
         } else {

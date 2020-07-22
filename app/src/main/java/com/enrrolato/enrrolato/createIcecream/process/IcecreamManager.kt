@@ -47,10 +47,24 @@ class IcecreamManager {
 
     fun removeFlavor(flavor: Flavor) {
         listFlavor.remove(flavor)
+
+        if ((flavor.isSpecial && flavor.isLiqueur) && !flavor.isExclusive && flavor.avaliable) { // LICOR
+            price -= 1000
+        }
+
     }
 
     fun removeTopping(topping: Topping) {
         listTopping.remove(topping)
+
+        if(listTopping.size >= 2) {
+            price -= 400
+        }
+
+    }
+
+    fun seasonIcecream() {
+
     }
 
     fun addTopping(topping: Topping) {

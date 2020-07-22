@@ -42,7 +42,7 @@
         android:textColor="@color/black"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="30dp"
         android:text="Enviar"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"

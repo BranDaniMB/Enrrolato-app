@@ -30,10 +30,6 @@ class CartScreenFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        // PASAR TODO ESTO COMO ATRIBUTOS PARA NO ESTAR LLAMANDOLOS EN METODOS
-        // TAMBIEN EN LAS OTRAS COSAS
-
         var view = inflater.inflate(R.layout.fragment_cart_screen, container, false)
         var price = view.findViewById<View>(R.id.txtTotalPrice) as TextView
         var recyclerCart = view.findViewById<View>(R.id.rvCart) as RecyclerView
@@ -47,7 +43,6 @@ class CartScreenFragment : Fragment() {
             }
 
             override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
             }
         })
 
@@ -68,6 +63,11 @@ class CartScreenFragment : Fragment() {
 
         return view
     }
+
+    // ESTA VERIFICACION VA AL OTRO LADO
+    //if (enrrolato.createIceCream().isEmpty()) {
+    //  errorContainer("No se ha realizado ninguna orden de helado")
+    //}
 
     /*
     // ESTA CREO QUE NO SE USA
@@ -120,8 +120,7 @@ class CartScreenFragment : Fragment() {
         }
     }
 
-    /*
-    // ESTO VA AL OTRO LADO
+    /* ESTO CREO QUE NO ES NECESARIO
     private fun enterUsername() {
         var txt = getString(R.string.enter_name)
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }

@@ -119,8 +119,34 @@ class ToppingFragment : Fragment() {
             addToppingProcess(toppingSelected)
 
             af = AdapterIceCream(listToRecycler)
-            count += 1
 
+            af.setOnItemClickListener(object: AdapterIceCream.OnItemClickListener {
+                override fun onDeleteClick(position: Int) {
+
+                    // SE CAE CUANDO SOLO QUEDA UN SABOR EN LA LISTA
+                    removeToppingProcess(af.list[position])
+
+                    if(listToRecycler.size == 1 || listToRecycler.size == 0) {
+                        listToRecycler.removeAt(0)
+                        af.notifyItemRemoved(0)
+                    }
+                    else {
+                        listToRecycler.removeAt(position)
+                        af.notifyItemRemoved(position)
+                        af.itemCount - 1
+                    }
+
+                    Toast.makeText(context, "HOLA " + af.itemCount, Toast.LENGTH_SHORT).show()
+                    recyclerToppings.setItemViewCacheSize(listToRecycler.size)
+                    count -= 1
+
+                    if (count < 2 || msg.visibility == View.VISIBLE) {
+                        msg.visibility = View.INVISIBLE
+                    }
+                }
+            })
+
+            /*
                 af.setOnClickListener(View.OnClickListener { v ->
                     var m: String = getString(R.string.delete_topping_prompt)
                     //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
@@ -134,10 +160,13 @@ class ToppingFragment : Fragment() {
                         msg.visibility = View.INVISIBLE
                     }
                 })
-                recyclerToppings.adapter = af
 
-            if(count > 2) {
-                if(msg.visibility == View.INVISIBLE) {
+            */
+            count += 1
+            recyclerToppings.adapter = af
+
+            if (count > 2) {
+                if (msg.visibility == View.INVISIBLE) {
                     msg.visibility = View.VISIBLE
                 }
             }

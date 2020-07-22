@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.get
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -190,13 +191,41 @@ class FlavorsFragment : Fragment() {
                     alert?.visibility = View.VISIBLE
                 }
 
-                af = AdapterIceCream(
-                    listToRecycler
-                )
+                af = AdapterIceCream(listToRecycler)
 
+                af.setOnItemClickListener(object: AdapterIceCream.OnItemClickListener {
+                    override fun onDeleteClick(position: Int) {
+
+                        // SE CAE CUANDO SOLO QUEDA UN SABOR EN LA LISTA
+                        flavorProcessRemove(af.list[position])
+
+                        if(listToRecycler.size == 1 || listToRecycler.size == 0) {
+                            listToRecycler.removeAt(0)
+                            af.notifyItemRemoved(0)
+                        }
+                        else {
+                            listToRecycler.removeAt(position)
+                            af.notifyItemRemoved(position)
+                            af.itemCount - 1
+                        }
+
+                        Toast.makeText(context, "HOLA " + af.itemCount, Toast.LENGTH_SHORT).show()
+                        recyclerFlavors.setItemViewCacheSize(listToRecycler.size)
+                        count -= 1
+                        alert?.visibility = View.INVISIBLE
+                    }
+                })
+
+               /*
                 af.setOnClickListener(View.OnClickListener { v ->
                     //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
-                    popupMessage(recyclerFlavors.getChildAdapterPosition(v), af, getString(R.string.delete_flavor_prompt))
+                    var i = recyclerFlavors.getChildAdapterPosition(v)
+                    //popupMessage(i, af, getString(R.string.delete_flavor_prompt))
+
+                    //listToRecycler.removeAt(i)
+                    //af.notifyItemRemoved(i)
+
+                      recyclerFlavors.setItemViewCacheSize(listToRecycler.size)
 
                     // AQUI VA A BUSCAR DE LA LISTA GRANDE Y MANDARLA AL MANAGER PARA ELIMINARLA
                     flavorProcessRemove(af.list.get(recyclerFlavors.getChildAdapterPosition(v)))
@@ -204,6 +233,8 @@ class FlavorsFragment : Fragment() {
                     count -= 1
                     alert?.visibility = View.INVISIBLE
                 })
+
+                */
 
                 recyclerFlavors.adapter = af
                 count += 1

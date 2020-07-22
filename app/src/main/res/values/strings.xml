@@ -98,7 +98,7 @@
     <string name="container_title">Escogencia de envases</string>
     <string name="container_list">Lista de envases</string>
     <string name="container_selector">Elija un envase</string>
-    <string name="container_to_cart">Agregar el helado al carrito\n y enviar la orden</string>
+    <string name="container_to_cart">Agregar el helado al carrito</string>
     <string name="container_new_icecream">Agregar un nuevo helado</string>
 
 

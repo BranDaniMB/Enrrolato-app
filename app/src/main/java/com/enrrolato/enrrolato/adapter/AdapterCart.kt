@@ -3,16 +3,16 @@ package com.enrrolato.enrrolato.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import com.enrrolato.enrrolato.R
 
 
-class AdapterCart(): Adapter<AdapterCart.ViewHolder>(), View.OnClickListener {
+class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
 
     lateinit var list: ArrayList<String>
-    private lateinit var listener: View.OnClickListener
 
     constructor(list: ArrayList<String>): this() {
         this.list = list
@@ -20,7 +20,6 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>(), View.OnClickListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list_cart, null,false)
-        view.setOnClickListener(this)
         return ViewHolder(view)
     }
 
@@ -32,22 +31,27 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>(), View.OnClickListener {
         holder.asignData(list.get(position))
     }
 
-    fun setOnClickListener(listener: View.OnClickListener) {
-        this.listener = listener
-    }
-
-    override fun onClick(v: View?) {
-        if(listener != null) {
-            listener.onClick(v)
-        }
-    }
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var data : TextView = itemView.findViewById(R.id.itemCart)
+        var sendOne: Button = itemView.findViewById(R.id.btSend)
+        var details: Button = itemView.findViewById(R.id.btDetails)
 
         fun asignData(eData: String) {
             data.setText(eData)
         }
+
+        fun sendOne(p: Int) {
+            sendOne.setOnClickListener {
+
+            }
+        }
+
+        fun details(p: Int) {
+            details.setOnClickListener {
+
+            }
+        }
+
     }
 
 }

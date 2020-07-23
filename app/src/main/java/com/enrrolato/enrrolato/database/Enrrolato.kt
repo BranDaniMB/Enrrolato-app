@@ -27,6 +27,7 @@ class Enrrolato: Application() {
     var listFillings: ArrayList<Filling> = ArrayList()
     var listToppings: ArrayList<Topping> = ArrayList()
     var listContainers: ArrayList<Container> = ArrayList()
+    var listSeasonIcecream: ArrayList<SeasonIcecream> = ArrayList()
     val String.toBoolean
         get() = this == "1"
 
@@ -135,10 +136,33 @@ class Enrrolato: Application() {
         refContainer.addValueEventListener(containerListener)
     }
 
-     fun initUser(id: String, username: String?) {
+    private fun loadSeason() {
+        // Acceder a la base de datos e inicializar las variables necesarias
+        val refSeason = database.getReference("business/ice_creams")
+
+        val seasonListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val temp: HashMap<String, HashMap<String, String>> = dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
+                listSeasonIcecream.clear()
+                for ((key, value) in temp) {
+                    listSeasonIcecream.add(SeasonIcecream(value["name"]!!, value["flavor"]!!, value["filling"]!!, value["topping"]!!, value["container"]!!,
+                            value["isSpecial"]!!.toBoolean, value["isLiqueur"]!!.toBoolean, value["avaliable"]!!.toBoolean))
+                }
+                println("Container: " + listSeasonIcecream.size)
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        }
+        refSeason.addValueEventListener(seasonListener)
+    }
+
+
+     fun initUser(id: String?, username: String?) {
         user = User(username)
         val ref = database.getReference(applicationContext.getString(R.string.db_app_users))
-        ref.child(id).setValue(user)
+         if (id != null) {
+             ref.child(id).setValue(user)
+         }
 
         val userListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -155,29 +179,20 @@ class Enrrolato: Application() {
         ref.addValueEventListener(userListener)
     }
 
-    public fun getId(): String? {
+    fun getId(): String? {
         return FirebaseAuth.getInstance().currentUser?.uid
     }
 
-    public fun getUsername(): DatabaseReference {
+    fun getUsername(): DatabaseReference {
         return FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users) + "/" + getId())
     }
 
-    public fun setUsername(u: String) {
+    fun setUsername(u: String) {
         var id: String? = getId()
         val ref = FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users)  + "/" + id)
 
         if (id != null) {
-            //ref.addValueEventListener(object: ValueEventListener {
-               // override fun onDataChange(d: DataSnapshot) {
-                    //ref.removeValue()
-
-                   ref.setValue(User(u))
-                //}
-
-                //override fun onCancelled(d: DatabaseError) {
-                //}
-            //})
+            ref.setValue(User(u))
         }
     }
 
@@ -186,9 +201,10 @@ class Enrrolato: Application() {
         loadFillings()
         loadToppings()
         loadContainers()
+        loadSeason()
     }
 
-    public fun createIceCream(): IcecreamManager {
+    fun createIceCream(): IcecreamManager {
         return manager
     }
 
@@ -204,8 +220,11 @@ class Enrrolato: Application() {
 
         // fecha --> helado y username
 
-        ref.child(date).child("username").setValue(getUsername())
-        ref.child(date).child("icecream").setValue(create())
+        ref.child(date).child("username").setValue(getUsername()) // ESTA HAY QUE TRAERLO DESDE DONDE EL CARRITO
+
+        for (l in getList()) {
+            ref.child(date).child("icecream").setValue(l)
+        }
 
         createIceCream().cleanData()
     }
@@ -216,7 +235,7 @@ class Enrrolato: Application() {
     fun create(): Icecream {
         var id = getId()
         return Icecream(id, createIceCream().gFlavor(), createIceCream().getFilling(),
-            createIceCream().gTopping(),  createIceCream().getContainer(), createIceCream().getPrice(), false)
+            createIceCream().gTopping(),  createIceCream().getContainer(), createIceCream().getPrice(), false, false)
     }
 
     fun addList() {
@@ -238,7 +257,8 @@ data class Icecream(
     var topping: String,
     var container: String,
     var price: Int,
-    var delivered: Boolean
+    var delivered: Boolean,
+    var favorite: Boolean
 )
 
 @IgnoreExtraProperties

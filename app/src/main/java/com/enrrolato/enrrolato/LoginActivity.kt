@@ -4,9 +4,15 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.database.ProviderType
+import com.enrrolato.enrrolato.database.User
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -24,6 +30,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_login.*
+import java.util.*
+import kotlin.collections.HashMap
 
 class LoginActivity : AppCompatActivity() {
 
@@ -99,14 +107,16 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setup() {
+
         // Da error si la cuenta no esta registrada
         loginBtn.setOnClickListener {
-            if (!usernameField.text.isNullOrEmpty() && !passwordField.text.isNullOrEmpty()) {
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString()
+            if (!emailField2.text.isNullOrEmpty() && !passwordField.text.isNullOrEmpty()) {
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(emailField2.text.toString()
                     , passwordField.text.toString()).addOnCompleteListener {
-                    if (it.isSuccessful) {
 
-                        var name = ""
+                    var name = ""
+
+                    if (it.isSuccessful) {
                         enrrolato.getUsername().addValueEventListener(object : ValueEventListener {
                             override fun onDataChange(d: DataSnapshot) {
                                 name = d.child("username").value.toString()
@@ -114,13 +124,16 @@ class LoginActivity : AppCompatActivity() {
                             override fun onCancelled(d: DatabaseError) {
                             }
                         })
-
                         //var id: String? = FirebaseAuth.getInstance().currentUser?.uid
+
                         showMenu(it.result?.user?.uid, it.result?.user?.displayName?: name)
                     } else {
                         showAlert();
                     }
                 }
+            } else {
+                Toast.makeText(this, "Campos incompletos", Toast.LENGTH_SHORT).show()
+                //errorMessage("El email y/o contraseña están vacíos")
             }
         }
 
@@ -153,7 +166,7 @@ class LoginActivity : AppCompatActivity() {
                                 .addOnCompleteListener {
                                     if (it.isSuccessful) {
                                         var id: String? = FirebaseAuth.getInstance().currentUser?.uid
-                                        showMenu(id, it.result?.user?.displayName?: "")
+                                        showMenu(id, it.result?.user?.displayName)
                                     } else {
                                         showAlert();
                                     }
@@ -188,9 +201,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showMenu(id: String?, username: String?) {
         val menuIntent = Intent(this, PrincipalScreen::class.java)
-        if (id != null) {
-            Enrrolato.instance.initUser(id, username)
-        }
+
         // Guardando la session
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("id", id)
@@ -208,5 +219,25 @@ class LoginActivity : AppCompatActivity() {
             startActivity(recovery)
         }
     }
+
+    /*
+    private fun errorMessage(msg: String) {
+        val alertDialogBuilder = this?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
+        val layoutInflater: LayoutInflater = LayoutInflater.from(this)
+        val popup = layoutInflater.inflate(R.layout.popup_alert_message, null)
+        val message = popup.findViewById<View>(R.id.txtMessage) as TextView
+        message.text = msg
+        val bt_ok: Button = popup.findViewById(R.id.btOk);
+        alertDialogBuilder?.setView(popup)
+        val alertDialog: AlertDialog = alertDialogBuilder!!.create()
+        alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog
+        alertDialog.show()
+
+        bt_ok.setOnClickListener {
+            alertDialog.cancel()
+        }
+    }
+     */
+
 }
 

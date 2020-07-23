@@ -25,7 +25,6 @@
     <string name="phones_title">Phone numbers:</string>
     <string name="create_ice_cream">Create ice cream</string>
     <string name="show_menu">Show menu</string>
-    <string name="season_ice_cream">Season ice creams</string>
     <string name="account">Account</string>
     <string name="email_text">Linked email</string>
     <string name="change_password">Change password</string>
@@ -100,4 +99,8 @@
     <string name="topping_menu">Topping menu</string>
     <string name="filling_menu">Filling menu</string>
     <string name="new_name">Enter your new name</string>
+    <string name="choose_season">Choose the season ice cream</string>
+    <string name="no_season">"There isn't season ice cream\nat the moment "</string>
+    <string name="season_menu">Season ice cream menu</string>
+    <string name="show_season_menu">Show season ice cream menu</string>
 </resources>

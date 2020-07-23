@@ -7,15 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import com.enrrolato.enrrolato.CartScreenFragment
 import com.enrrolato.enrrolato.PrincipalMenuFragment
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
+import com.enrrolato.enrrolato.iceCream.SeasonIcecream
 
 class DefaultFlavorFragment : Fragment() {
 
     private lateinit var flavorList: ArrayList<String>
     private lateinit var listFlavor: ArrayList<Flavor>
+    private lateinit var listSeason: ArrayList<SeasonIcecream>
     private var enrrolato = Enrrolato.instance
     private lateinit var flavorSelected: String
 
@@ -33,6 +36,7 @@ class DefaultFlavorFragment : Fragment() {
         val next = view.findViewById<View>(R.id.btNext) as Button
 
         loadSpecial(spSpecial)
+        loadSeason(spSeason)
 
         backPrincipal.setOnClickListener {
             backToPrincipal()
@@ -69,7 +73,6 @@ class DefaultFlavorFragment : Fragment() {
     private fun loadSpecial(f: Spinner) {
             listFlavor = enrrolato.listFlavors
             flavorList = ArrayList()
-
             flavorList.add(getString(R.string.preset_flavor_list))
 
             for (list in listFlavor) {
@@ -79,6 +82,19 @@ class DefaultFlavorFragment : Fragment() {
             }
             fillSpinner(f)
         }
+
+    private fun loadSeason(f: Spinner) {
+        listSeason = enrrolato.listSeasonIcecream
+        flavorList = ArrayList()
+        flavorList.add(getString(R.string.choose_season))
+
+        for (list in listSeason) {
+            if(list.avaliable) {
+                flavorList.add(list.name)
+            }
+        }
+        fillSpinner(f)
+    }
 
         private fun fillSpinner(flavor: Spinner) {
             val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, flavorList)
@@ -104,8 +120,21 @@ class DefaultFlavorFragment : Fragment() {
         }
     }
 
-    private fun chargeSeason(flavor: Spinner) {
+    private fun nextStepSeason() {
+        if(flavorSelected.equals(getString(R.string.choose_season)) || flavorSelected.isEmpty()) {
+            errorFlavor(getString(R.string.no_preset))
+        }
+        else {
+            // AQUI BRINCA DIRECTAMENTE AL CARRITO YA QUE TODO ESTÁ PREDEFINIDO
+            // TIENE QUE TENER UN MÉTODO QUE LOS CAPTURE Y LOS MANDE AL OTRO LADO
 
+            val fragment = CartScreenFragment()
+            val fm = requireActivity().supportFragmentManager
+            val transaction = fm.beginTransaction()
+            transaction.replace(R.id.ly_default, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
     }
 
     private fun nextStepTopping() {
@@ -115,7 +144,6 @@ class DefaultFlavorFragment : Fragment() {
         else {
             // BRINCA DIRECTAMENTE A ESCOGER EL TOPPING --> TIENE QUE LLEVARSE EL SABOR / HELADO YA DEFINIDO
             flavorProcessAdd(flavorSelected)
-            //enrrolato.createOrders()
 
             val fragment = ToppingFragment()
             val fm = requireActivity().supportFragmentManager
@@ -126,15 +154,14 @@ class DefaultFlavorFragment : Fragment() {
         }
     }
 
-
     private fun errorFlavor(msg: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_alert_message, null)
-        val message = popupMaxFlavor.findViewById<View>(R.id.txtMessage) as TextView
+        val popupF = layoutInflater.inflate(R.layout.popup_alert_message, null)
+        val message = popupF.findViewById<View>(R.id.txtMessage) as TextView
         message.text = msg
-        val bt_ok: Button = popupMaxFlavor.findViewById(R.id.btOk);
-        alertDialogBuilder?.setView(popupMaxFlavor)
+        val bt_ok: Button = popupF.findViewById(R.id.btOk);
+        alertDialogBuilder?.setView(popupF)
         val alertDialog: AlertDialog = alertDialogBuilder!!.create()
         alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog
         alertDialog.show()

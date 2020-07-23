@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.enrrolato.enrrolato.createIcecream.DefaultFlavorFragment
 import com.enrrolato.enrrolato.menu.MenuFragment
+import com.enrrolato.enrrolato.menu.MenuSeasonFragment
 
-/**
- * A simple [Fragment] subclass.
- */
 class PrincipalMenuFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,7 +55,12 @@ class PrincipalMenuFragment : Fragment() {
     }
 
     fun seasonIceCream() {
-        // CODE HERE
+        val fragment = MenuSeasonFragment()
+        val fm = requireActivity().supportFragmentManager
+        val transaction = fm.beginTransaction()
+        transaction. replace(R.id.ly_principal, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 }

@@ -42,7 +42,6 @@
     <!-- Principal Menú -->
     <string name="create_ice_cream">Crear helado</string>
     <string name="show_menu">Ver menú</string>
-    <string name="season_ice_cream">Helados de temporada</string>
     <!-- Profile Fragment -->
     <string name="account">Cuenta</string>
     <string name="email_text">Correo electrónico asociado</string>
@@ -144,4 +143,8 @@
     <string name="topping_menu">Menú de topping</string>
     <string name="filling_menu">Menú de jarabes</string>
     <string name="new_name">Ingrese su nuevo nombre</string>
+    <string name="choose_season">Escoja el helado de temporada</string>
+    <string name="no_season">No hay helados de temporada\npor el momento</string>
+    <string name="season_menu">Menú de helados\nde temporada</string>
+    <string name="show_season_menu">Ver menú de helados\nde temporada</string>
 </resources>

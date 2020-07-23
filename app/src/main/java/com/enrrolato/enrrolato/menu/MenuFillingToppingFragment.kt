@@ -18,7 +18,6 @@ import com.enrrolato.enrrolato.iceCream.Topping
 class MenuFillingToppingFragment : Fragment() {
 
     private var selection: Boolean = false
-
     private lateinit var fillingList: ArrayList<String>
     private lateinit var toppingList: ArrayList<String>
     private lateinit var listFilling: ArrayList<Filling>

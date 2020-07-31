@@ -88,11 +88,10 @@ class MenuFlavorFragment : Fragment() {
     }
 
     private fun chooseFlavor(recyclerFlavors: RecyclerView, f: Flavor, listToRecycler: ArrayList<String>) {
-        recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerFlavors.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listToRecycler.add(f.name)
         var af = AdapterMenu(listToRecycler)
         recyclerFlavors.adapter = af
-        }
-
-
+    }
 }

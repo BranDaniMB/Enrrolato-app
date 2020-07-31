@@ -22,7 +22,6 @@ class AdapterMenu(): Adapter<AdapterMenu.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list_icecream, null,false)
         var trash = view.findViewById<View>(R.id.imgDelete) as ImageButton
-        //view.setOnClickListener(this)
         trash.visibility = View.INVISIBLE
         return ViewHolder(view)
     }
@@ -38,14 +37,6 @@ class AdapterMenu(): Adapter<AdapterMenu.ViewHolder>() {
     fun setOnClickListener(listener: View.OnClickListener) {
         this.listener = listener
     }
-
-    /*
-    override fun onClick(v: View?) {
-        if(listener != null) {
-            listener.onClick(v)
-        }
-    }
-     */
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var data : TextView = itemView.findViewById(R.id.item)

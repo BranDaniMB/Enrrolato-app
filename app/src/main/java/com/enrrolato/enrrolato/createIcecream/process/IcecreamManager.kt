@@ -1,5 +1,6 @@
 package com.enrrolato.enrrolato.createIcecream.process
 
+import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.iceCream.Flavor
 import com.enrrolato.enrrolato.iceCream.Topping
 import java.text.SimpleDateFormat
@@ -13,7 +14,6 @@ class IcecreamManager {
     private var filling: String = ""
     private var container: String = ""
     private var price: Int = 2000
-
     private var flavor: String = ""
     private var topping: String = ""
     private var count: Int = 0
@@ -23,6 +23,7 @@ class IcecreamManager {
 
         if (flavor.isSpecial && !flavor.isLiqueur && flavor.avaliable) { // DEFAULT
             addFilling("leche condensada")
+            //enrrolato.listPrices
             price += 900
         }
 
@@ -64,7 +65,8 @@ class IcecreamManager {
     }
 
     fun seasonIcecream() {
-
+        // ESTE SE COGE DE ENRROLATO, NADA MAS SE CAPTURA EL NOMBRE Y SE LLEVA LO QUE TIENE DENTRO
+        // OJO -> SE DEBE BRINCAR TODOS LOS PASOS
     }
 
     fun addTopping(topping: Topping) {

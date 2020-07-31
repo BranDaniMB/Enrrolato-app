@@ -125,6 +125,7 @@ class ToppingFragment : Fragment() {
 
                     // SE CAE CUANDO SOLO QUEDA UN SABOR EN LA LISTA
                     removeToppingProcess(af.list[position])
+                    Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
 
                     if(listToRecycler.size == 1 || listToRecycler.size == 0) {
                         listToRecycler.removeAt(0)
@@ -136,7 +137,6 @@ class ToppingFragment : Fragment() {
                         af.itemCount - 1
                     }
 
-                    Toast.makeText(context, "HOLA " + af.itemCount, Toast.LENGTH_SHORT).show()
                     recyclerToppings.setItemViewCacheSize(listToRecycler.size)
                     count -= 1
 

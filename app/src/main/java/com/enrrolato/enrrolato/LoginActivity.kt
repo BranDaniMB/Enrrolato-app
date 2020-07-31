@@ -147,14 +147,12 @@ class LoginActivity : AppCompatActivity() {
                 .build()
             val googleClient = GoogleSignIn.getClient(this, googleConfig)
             googleClient.signOut()
-
             startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
         }
 
         facebookLoginBtn.setOnClickListener{
 
             LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
-
             LoginManager.getInstance().registerCallback(callbackManager,
                 object: FacebookCallback<LoginResult> {
                     override fun onSuccess(result: LoginResult?) {
@@ -174,9 +172,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
 
-                    override fun onCancel() {
-
-                    }
+                    override fun onCancel() {}
 
                     override fun onError(error: FacebookException?) {
                         showAlert()
@@ -219,25 +215,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(recovery)
         }
     }
-
-    /*
-    private fun errorMessage(msg: String) {
-        val alertDialogBuilder = this?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
-        val layoutInflater: LayoutInflater = LayoutInflater.from(this)
-        val popup = layoutInflater.inflate(R.layout.popup_alert_message, null)
-        val message = popup.findViewById<View>(R.id.txtMessage) as TextView
-        message.text = msg
-        val bt_ok: Button = popup.findViewById(R.id.btOk);
-        alertDialogBuilder?.setView(popup)
-        val alertDialog: AlertDialog = alertDialogBuilder!!.create()
-        alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog
-        alertDialog.show()
-
-        bt_ok.setOnClickListener {
-            alertDialog.cancel()
-        }
-    }
-     */
 
 }
 

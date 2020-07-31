@@ -45,7 +45,6 @@ class MenuSeasonFragment : Fragment() {
         back.setOnClickListener {
             back()
         }
-
         return view
     }
 
@@ -53,7 +52,7 @@ class MenuSeasonFragment : Fragment() {
         val fragment = PrincipalMenuFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()
-        transaction.replace(R.id.ly_container, fragment)
+        transaction.replace(R.id.ly_menu_season, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
@@ -76,6 +75,4 @@ class MenuSeasonFragment : Fragment() {
         var af = AdapterMenu(listToRecycler)
         recycler.adapter = af
     }
-
-
 }

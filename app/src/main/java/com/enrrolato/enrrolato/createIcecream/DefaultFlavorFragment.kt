@@ -105,8 +105,7 @@ class DefaultFlavorFragment : Fragment() {
                     flavorSelected = av?.getItemAtPosition(i).toString()
                 }
 
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
         }
 
@@ -125,9 +124,6 @@ class DefaultFlavorFragment : Fragment() {
             errorFlavor(getString(R.string.no_preset))
         }
         else {
-            // AQUI BRINCA DIRECTAMENTE AL CARRITO YA QUE TODO ESTÁ PREDEFINIDO
-            // TIENE QUE TENER UN MÉTODO QUE LOS CAPTURE Y LOS MANDE AL OTRO LADO
-
             val fragment = CartScreenFragment()
             val fm = requireActivity().supportFragmentManager
             val transaction = fm.beginTransaction()
@@ -144,7 +140,6 @@ class DefaultFlavorFragment : Fragment() {
         else {
             // BRINCA DIRECTAMENTE A ESCOGER EL TOPPING --> TIENE QUE LLEVARSE EL SABOR / HELADO YA DEFINIDO
             flavorProcessAdd(flavorSelected)
-
             val fragment = ToppingFragment()
             val fm = requireActivity().supportFragmentManager
             val transaction = fm.beginTransaction()

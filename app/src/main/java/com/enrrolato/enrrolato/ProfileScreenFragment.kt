@@ -37,8 +37,7 @@ class ProfileScreenFragment : Fragment() {
                 username.text = d.child("username").value.toString()
             }
 
-            override fun onCancelled(d: DatabaseError) {
-            }
+            override fun onCancelled(d: DatabaseError) {}
         })
 
         btAbout.setOnClickListener {

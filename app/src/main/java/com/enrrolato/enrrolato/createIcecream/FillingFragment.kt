@@ -59,7 +59,6 @@ class FillingFragment : Fragment() {
     private fun loadFillings(s: Spinner) {
         val fillings = Enrrolato.instance.listFillings
         nameList = ArrayList<String>()
-
         nameList.add(getString(R.string.filling_selector))
 
         for (filling in fillings) {
@@ -79,8 +78,7 @@ class FillingFragment : Fragment() {
                 fillingSelected = av?.getItemAtPosition(i).toString()
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
     }
 

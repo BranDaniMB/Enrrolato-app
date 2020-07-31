@@ -21,8 +21,6 @@ lateinit var listener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list_icecream, null,false)
-
-        //view.setOnClickListener(this)
         return ViewHolder(view, listener)
     }
 
@@ -39,24 +37,11 @@ lateinit var listener: OnItemClickListener
         this.listener = listener
     }
 
-    /*
-    fun setOnClickListener(listener: View.OnClickListener) {
-        this.listener = listener
-    }
-
-    override fun onClick(v: View?) {
-        if(listener != null) {
-            listener.onClick(v)
-        }
-    }
-     */
-
     interface OnItemClickListener {
         fun onDeleteClick(position: Int)
     }
 
     class ViewHolder(itemView: View, listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
-
         var listener = listener
         var data: TextView = itemView.findViewById(R.id.item)
         var delete: ImageButton = itemView.findViewById(R.id.imgDelete)

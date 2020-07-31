@@ -26,7 +26,6 @@ public class AboutUsFragment : Fragment() {
         val whatsapp = view.findViewById<View>(R.id.btWhatsapp) as ImageButton
 
         btProfile.setOnClickListener {
-            //nav.visibility = View.VISIBLE
             showProfileFragment()
         }
 
@@ -70,13 +69,10 @@ public class AboutUsFragment : Fragment() {
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            // NO ENCONTRÓ LA APLICACIÓN, ABR EN NAVEGADOR WEB
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("https://www.instagram.com/enrrolato/?hl=es-la")
-                )
-            )
+                    Uri.parse("https://www.instagram.com/enrrolato/?hl=es-la")))
         }
     }
 

@@ -21,11 +21,7 @@ class SelectContainerFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view: View = inflater.inflate(R.layout.fragment_select_container, container, false)
         var back = view.findViewById<View>(R.id.backBtn) as ImageButton
         var addCart = view.findViewById<View>(R.id.btAddToShopCart) as Button
@@ -72,8 +68,7 @@ class SelectContainerFragment : Fragment() {
                 containerSelected = av?.getItemAtPosition(i).toString()
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
     }
 
@@ -107,21 +102,6 @@ class SelectContainerFragment : Fragment() {
             goToCart()
             enrrolato.createIceCream().cleanData()
         }
-
-        /*
-        // ANTES DE AGREGARLA AL CARRITO DEBE MOSTRARSE UN MENSAJE EN DONDE SE LE SOLICITA EL NOMBRE DE USUARIO (SI NO LO TIENE)
-
-        // ESTO HAY QUE MEJORARLO PARA QUE NO EL NOMBRE LO SOLICITE EN OTRA PARTE
-        if (hide.text.equals("")) {
-            enterUsername(hide)
-        } else {
-            // MANDARLO AL CARRITO O TENERLE UNA OPCIÓN PARA MANDARLO DE UNA VEZ ?
-            //enrrolato.createIceCream().setUsername(hide.text.toString())
-
-            // ANTES DE MANDARLO, MANDAR UN MENSAJE DICIENDO QUE SE MANDÓ AL CARRITO O ENVIADO AL LOCAL
-            enrrolato.createOrders()
-        }
-         */
     }
 
     private fun goToCart() {

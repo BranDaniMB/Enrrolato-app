@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.PrincipalMenuFragment
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.adapter.AdapterMenu
-import com.enrrolato.enrrolato.createIcecream.ToppingFragment
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.SeasonIcecream
+import com.enrrolato.enrrolato.objects.SeasonIcecream
 
 class MenuSeasonFragment : Fragment() {
 

@@ -1,12 +1,9 @@
 package com.enrrolato.enrrolato.database
 
 import android.app.Application
-import android.os.Build
-import androidx.annotation.RequiresApi
-import bolts.Bolts
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
-import com.enrrolato.enrrolato.iceCream.*
+import com.enrrolato.enrrolato.objects.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -168,9 +165,7 @@ class Enrrolato: Application() {
                             value["container"]!!,
                             value["isSpecial"]!!.toBoolean,
                             value["isLiqueur"]!!.toBoolean,
-                            value["avaliable"]!!.toBoolean
-                        )
-                    )
+                            value["avaliable"]!!.toBoolean))
                 }
                 println("Season: " + listSeasonIcecream.size)
             }
@@ -266,6 +261,25 @@ class Enrrolato: Application() {
         )
     }
 
+    fun createSeasonIceCream(): Icecream {
+        var id = getId()
+        return Icecream(
+            id,
+            createIceCream().getSeasonIcecream().flavor,
+            createIceCream().getSeasonIcecream().filling,
+            createIceCream().getSeasonIcecream().topping,
+            createIceCream().getSeasonIcecream().container,
+            2900,  //createIceCream().getPrice(), // ESTO HAY QUE CAMBIARLO PERO CON EL AGREGADO DE PRECIOS QUE ESTÁ PRESENTE
+            false,
+            false,
+            false
+        )
+    }
+
+    fun addListSeason() {
+        list.add(createSeasonIceCream())
+    }
+
     fun addList() {
         list.add(create())
     }
@@ -288,7 +302,7 @@ class Enrrolato: Application() {
         list[i].sent = true
     }
 
-    fun deleteFromList(p: Int) { // MODIFICARLO -- REVISARLO
+    fun deleteFromList(p: Int) {
         if(list.isNotEmpty()) {
             list.removeAt(p)
         }
@@ -296,25 +310,3 @@ class Enrrolato: Application() {
 
 }
 
-@IgnoreExtraProperties
-data class Icecream(
-    var id: String?,
-    var flavor: String,
-    var filling:String,
-    var topping: String,
-    var container: String,
-    var price: Int,
-    var delivered: Boolean,
-    var favorite: Boolean,
-    var sent: Boolean
-)
-
-data class Price(
-    var type: String,
-    var price: Int
-)
-
-@IgnoreExtraProperties
-data class User(
-    var username: String?
-)

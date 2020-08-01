@@ -1,8 +1,8 @@
 package com.enrrolato.enrrolato.createIcecream.process
 
-import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.Flavor
-import com.enrrolato.enrrolato.iceCream.Topping
+import com.enrrolato.enrrolato.objects.Flavor
+import com.enrrolato.enrrolato.objects.SeasonIcecream
+import com.enrrolato.enrrolato.objects.Topping
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -16,6 +16,7 @@ class IcecreamManager {
     private var price: Int = 2000
     private var flavor: String = ""
     private var topping: String = ""
+    private lateinit var season: SeasonIcecream
     private var count: Int = 0
 
     fun addFlavor(flavor: Flavor) {
@@ -23,7 +24,6 @@ class IcecreamManager {
 
         if (flavor.isSpecial && !flavor.isLiqueur && flavor.avaliable) { // DEFAULT
             addFilling("leche condensada")
-            //enrrolato.listPrices
             price += 900
         }
 
@@ -64,9 +64,14 @@ class IcecreamManager {
 
     }
 
-    fun seasonIcecream() {
+    fun addSeasonIcecream(season: SeasonIcecream) {
         // ESTE SE COGE DE ENRROLATO, NADA MAS SE CAPTURA EL NOMBRE Y SE LLEVA LO QUE TIENE DENTRO
         // OJO -> SE DEBE BRINCAR TODOS LOS PASOS
+        this.season = season
+    }
+
+    fun getSeasonIcecream(): SeasonIcecream {
+        return season
     }
 
     fun addTopping(topping: Topping) {

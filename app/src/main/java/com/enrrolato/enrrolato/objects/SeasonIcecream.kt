@@ -1,7 +1,6 @@
-package com.enrrolato.enrrolato.iceCream
+package com.enrrolato.enrrolato.objects
 
 class SeasonIcecream constructor(
-
     public val name: String,
     public val flavor: String,
     public val filling: String,
@@ -10,9 +9,4 @@ class SeasonIcecream constructor(
     public val isSpecial: Boolean,
     public val isLiqueur: Boolean,
     public val avaliable: Boolean
-
-): IceCreamElement {
-
-
-
-}
+) {}

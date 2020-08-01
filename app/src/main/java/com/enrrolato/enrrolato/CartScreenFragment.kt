@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.size
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.adapter.AdapterCart
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.database.Icecream
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -25,6 +22,7 @@ class CartScreenFragment : Fragment() {
     private var listToRecycler: ArrayList<String> = ArrayList()
     private var txtPrice = "Precio: "
     private var priceT = 0
+
     private lateinit var noIcecream: TextView
     private lateinit var name: TextView
     private lateinit var sendAll: Button
@@ -69,7 +67,6 @@ class CartScreenFragment : Fragment() {
         sendAll.setOnClickListener {
             sendAllOrders()
         }
-
         return view
     }
 

@@ -16,17 +16,21 @@ class FillingFragment : Fragment() {
     private lateinit var fillingSelected: String
     private var enrrolato = Enrrolato.instance
 
+    private lateinit var sp: Spinner
+    private lateinit var back: ImageButton
+    private lateinit var next: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View =  inflater.inflate(R.layout.fragment_filling, container, false)
-        val sp = view.findViewById<View>(R.id.spFilling) as Spinner
-        val back = view.findViewById<View>(R.id.backBtn) as ImageButton
-        val next = view.findViewById<View>(R.id.btContinue) as Button
+        sp = view.findViewById(R.id.spFilling)
+        back = view.findViewById(R.id.backBtn)
+        next = view.findViewById(R.id.btContinue)
 
-        loadFillings(sp)
+        loadFillings()
 
         back.setOnClickListener {
             val fragment = FlavorsFragment()
@@ -56,7 +60,7 @@ class FillingFragment : Fragment() {
         return view
     }
 
-    private fun loadFillings(s: Spinner) {
+    private fun loadFillings() {
         val fillings = Enrrolato.instance.listFillings
         nameList = ArrayList<String>()
         nameList.add(getString(R.string.filling_selector))
@@ -66,7 +70,7 @@ class FillingFragment : Fragment() {
                 nameList.add(filling.name)
             }
         }
-        fillFilling(s)
+        fillFilling(sp)
     }
 
     private fun fillFilling(f: Spinner) {

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import com.enrrolato.enrrolato.R
 
-
 class AdapterMenu(): Adapter<AdapterMenu.ViewHolder>() {
 
     lateinit var list: ArrayList<String>

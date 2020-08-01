@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.adapter.AdapterMenu
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.Flavor
+import com.enrrolato.enrrolato.objects.Flavor
 
 class MenuFlavorFragment : Fragment() {
 

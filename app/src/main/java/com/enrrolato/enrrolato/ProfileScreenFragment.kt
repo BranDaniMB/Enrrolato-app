@@ -23,13 +23,19 @@ class ProfileScreenFragment : Fragment() {
     private var enrrolato = Enrrolato.instance
     private var auth = FirebaseAuth.getInstance()
 
+    private lateinit var about: Button
+    private lateinit var out: Button
+    private lateinit var restore: Button
+    private lateinit var username: TextView
+    private lateinit var editUsername: ImageButton
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile_screen, container, false)
-        val btAbout = view.findViewById<View>(R.id.btAboutUs) as Button
-        val btOut = view.findViewById<View>(R.id.btLogout) as Button
-        val btRestore = view.findViewById<View>(R.id.btChangePassword) as Button
-        val username = view.findViewById<View>(R.id.txtAssociatedUsername) as TextView
-        val editUsername = view.findViewById<View>(R.id.btEditUsername) as ImageButton
+        about = view.findViewById(R.id.btAboutUs)
+        out = view.findViewById(R.id.btLogout)
+        restore = view.findViewById(R.id.btChangePassword)
+        username = view.findViewById(R.id.txtAssociatedUsername)
+        editUsername = view.findViewById(R.id.btEditUsername)
 
         showEmail(view)
         enrrolato.getUsername().addValueEventListener(object : ValueEventListener{
@@ -40,22 +46,21 @@ class ProfileScreenFragment : Fragment() {
             override fun onCancelled(d: DatabaseError) {}
         })
 
-        btAbout.setOnClickListener {
+        about.setOnClickListener {
             showAboutUsFragment()
         }
 
-        btRestore.setOnClickListener {
+        restore.setOnClickListener {
             showRestoreFragment()
         }
 
-        btOut.setOnClickListener {
+        out.setOnClickListener {
             logOut()
         }
 
         editUsername.setOnClickListener {
             updateName()
         }
-
         return view
     }
 

@@ -10,7 +10,6 @@ class PrincipalScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal_menu)
-
         loadFragment(PrincipalMenuFragment());
 
         nav.setOnNavigationItemSelectedListener { menuItem ->

@@ -11,8 +11,8 @@ import com.enrrolato.enrrolato.CartScreenFragment
 import com.enrrolato.enrrolato.PrincipalMenuFragment
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.Flavor
-import com.enrrolato.enrrolato.iceCream.SeasonIcecream
+import com.enrrolato.enrrolato.objects.Flavor
+import com.enrrolato.enrrolato.objects.SeasonIcecream
 
 class DefaultFlavorFragment : Fragment() {
 
@@ -21,6 +21,13 @@ class DefaultFlavorFragment : Fragment() {
     private lateinit var listSeason: ArrayList<SeasonIcecream>
     private var enrrolato = Enrrolato.instance
     private lateinit var flavorSelected: String
+    private var isSeason: Boolean = false
+
+    private lateinit var backPrincipal: ImageButton
+    private lateinit var makeIcecream: Button
+    private lateinit var spSpecial: Spinner
+    private lateinit var spSeason: Spinner
+    private lateinit var next: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,15 +35,14 @@ class DefaultFlavorFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view =  inflater.inflate(R.layout.fragment_default_flavor, container, false)
+        backPrincipal = view.findViewById(R.id.btBackToPrincipal)
+        makeIcecream = view.findViewById(R.id.btCreateOurIcecream)
+        spSpecial = view.findViewById(R.id.spDefaultFlavor)
+        spSeason = view.findViewById(R.id.spSeasonFlavor)
+        next = view.findViewById(R.id.btNext)
 
-        val backPrincipal = view.findViewById<View>(R.id.btBackToPrincipal) as ImageButton
-        val makeIcecream = view.findViewById<View>(R.id.btCreateOurIcecream) as Button
-        val spSpecial = view.findViewById<View>(R.id.spDefaultFlavor) as Spinner
-        val spSeason = view.findViewById<View>(R.id.spSeasonFlavor) as Spinner
-        val next = view.findViewById<View>(R.id.btNext) as Button
-
-        loadSpecial(spSpecial)
-        loadSeason(spSeason)
+        loadSpecial()
+        loadSeason()
 
         backPrincipal.setOnClickListener {
             backToPrincipal()
@@ -47,7 +53,11 @@ class DefaultFlavorFragment : Fragment() {
         }
 
         next.setOnClickListener {
-            nextStepTopping()
+            if(!isSeason) {
+                nextStepTopping()
+            } else {
+                nextStepSeason()
+            }
         }
         return view
     }
@@ -70,7 +80,7 @@ class DefaultFlavorFragment : Fragment() {
         transaction.commit()
     }
 
-    private fun loadSpecial(f: Spinner) {
+    private fun loadSpecial() {
             listFlavor = enrrolato.listFlavors
             flavorList = ArrayList()
             flavorList.add(getString(R.string.preset_flavor_list))
@@ -80,10 +90,10 @@ class DefaultFlavorFragment : Fragment() {
                     flavorList.add(list.name)
                 }
             }
-            fillSpinner(f)
+            fillSpinner(spSpecial)
         }
 
-    private fun loadSeason(f: Spinner) {
+    private fun loadSeason() {
         listSeason = enrrolato.listSeasonIcecream
         flavorList = ArrayList()
         flavorList.add(getString(R.string.choose_season))
@@ -93,7 +103,7 @@ class DefaultFlavorFragment : Fragment() {
                 flavorList.add(list.name)
             }
         }
-        fillSpinner(f)
+        fillSpinner(spSeason)
     }
 
         private fun fillSpinner(flavor: Spinner) {
@@ -111,12 +121,22 @@ class DefaultFlavorFragment : Fragment() {
 
     private fun flavorProcessAdd(f: String) {
         listFlavor = enrrolato.listFlavors
+        listSeason = enrrolato.listSeasonIcecream
 
         for(list in listFlavor) {
             if(list.name.equals(f)) {
                 enrrolato.createIceCream().addFlavor(list)
+                isSeason = false
             }
         }
+
+        for(list in listSeason) {
+            if(list.name.equals(f)) {
+                enrrolato.createIceCream().addSeasonIcecream(list)
+                isSeason = true
+            }
+        }
+
     }
 
     private fun nextStepSeason() {
@@ -124,6 +144,8 @@ class DefaultFlavorFragment : Fragment() {
             errorFlavor(getString(R.string.no_preset))
         }
         else {
+            flavorProcessAdd(flavorSelected)
+            enrrolato.addListSeason()
             val fragment = CartScreenFragment()
             val fm = requireActivity().supportFragmentManager
             val transaction = fm.beginTransaction()
@@ -138,7 +160,6 @@ class DefaultFlavorFragment : Fragment() {
             errorFlavor(getString(R.string.no_preset))
         }
         else {
-            // BRINCA DIRECTAMENTE A ESCOGER EL TOPPING --> TIENE QUE LLEVARSE EL SABOR / HELADO YA DEFINIDO
             flavorProcessAdd(flavorSelected)
             val fragment = ToppingFragment()
             val fm = requireActivity().supportFragmentManager

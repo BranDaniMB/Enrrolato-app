@@ -12,11 +12,15 @@ import com.enrrolato.enrrolato.menu.MenuSeasonFragment
 
 class PrincipalMenuFragment : Fragment() {
 
+    private lateinit var create: Button
+    private lateinit var show: Button
+    private lateinit var season: Button
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_principal_menu, container, false)
-        val create = view.findViewById<View>(R.id.btCreateIceCream) as Button
-        val show = view.findViewById<View>(R.id.btShowMenu) as Button
-        val season = view.findViewById<View>(R.id.btShowSeasonIcecream) as Button
+        create = view.findViewById(R.id.btCreateIceCream)
+        show = view.findViewById(R.id.btShowMenu)
+        season = view.findViewById(R.id.btShowSeasonIcecream)
 
         create.setOnClickListener {
             createIceCream()

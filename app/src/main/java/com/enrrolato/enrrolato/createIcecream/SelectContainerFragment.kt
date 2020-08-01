@@ -17,18 +17,23 @@ class SelectContainerFragment : Fragment() {
     private lateinit var containerSelected: String
     private lateinit var nameList: ArrayList<String>
 
+    private lateinit var back: ImageButton
+    private lateinit var addCart: Button
+    private lateinit var addNewIceCream: Button
+    private lateinit var sp: Spinner
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view: View = inflater.inflate(R.layout.fragment_select_container, container, false)
-        var back = view.findViewById<View>(R.id.backBtn) as ImageButton
-        var addCart = view.findViewById<View>(R.id.btAddToShopCart) as Button
-        var addNewIceCream = view.findViewById<View>(R.id.btAddNewIceCream) as Button
-        val sp = view.findViewById<View>(R.id.spContainer) as Spinner
+        back = view.findViewById(R.id.backBtn)
+        addCart = view.findViewById(R.id.btAddToShopCart)
+        addNewIceCream = view.findViewById(R.id.btAddNewIceCream)
+        sp = view.findViewById(R.id.spContainer)
 
-        loadContainers(sp)
+        loadContainers()
 
         back.setOnClickListener {
             backToTopping()
@@ -41,11 +46,10 @@ class SelectContainerFragment : Fragment() {
         addNewIceCream.setOnClickListener {
             newIC()
         }
-
         return view
     }
 
-    private fun loadContainers(s: Spinner) {
+    private fun loadContainers() {
         val containers = Enrrolato.instance.listContainers
         nameList = ArrayList()
         nameList.add(getString(R.string.container_selector))
@@ -55,14 +59,14 @@ class SelectContainerFragment : Fragment() {
                 nameList.add(container.name)
             }
         }
-        fillContainer(s)
+        fillContainer()
     }
 
-    private fun fillContainer(c: Spinner) {
+    private fun fillContainer() {
         val array: ArrayAdapter<String> =
             ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, nameList)
-        c.adapter = array
-        c.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        sp.adapter = array
+        sp.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
                 containerSelected = av?.getItemAtPosition(i).toString()
@@ -97,8 +101,6 @@ class SelectContainerFragment : Fragment() {
         } else {
             enrrolato.createIceCream().addContainer(containerSelected)
             enrrolato.addList()
-
-            // SE DIRIGE AL CARRITO DE COMPRAS
             goToCart()
             enrrolato.createIceCream().cleanData()
         }

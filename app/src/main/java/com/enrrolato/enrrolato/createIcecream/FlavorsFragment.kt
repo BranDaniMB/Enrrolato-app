@@ -7,15 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.get
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.adapter.AdapterIceCream
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.Flavor
-
+import com.enrrolato.enrrolato.objects.Flavor
 
 class FlavorsFragment : Fragment() {
 
@@ -29,24 +27,31 @@ class FlavorsFragment : Fragment() {
     private lateinit var mLayoutManager: LinearLayoutManager
     private var listAux: ArrayList<Flavor> = enrrolato.listFlavors
 
+    private lateinit var backDefault: ImageButton
+    private lateinit var flavor: Spinner
+    private lateinit var trad: RadioButton
+    private lateinit var lic: RadioButton
+    private lateinit var recyclerFlavors: RecyclerView
+    private lateinit var next: Button
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_flavors, container, false)
-        val backDefault = view.findViewById<View>(R.id.btBackToDefault) as ImageButton
-        val flavor = view.findViewById<View>(R.id.spFlavor) as Spinner
-        val trad = view.findViewById<View>(R.id.rbTradicional) as RadioButton
-        val lic = view.findViewById<View>(R.id.rbLicour) as RadioButton
-        val recyclerFlavors = view.findViewById<View>(R.id.choosenFlavors) as RecyclerView
-        val next = view.findViewById<View>(R.id.btContinue) as Button
+        backDefault = view.findViewById(R.id.btBackToDefault)
+        flavor = view.findViewById(R.id.spFlavor)
+        trad = view.findViewById(R.id.rbTradicional)
+        lic = view.findViewById(R.id.rbLicour)
+        recyclerFlavors = view.findViewById(R.id.choosenFlavors)
+        next = view.findViewById(R.id.btContinue)
 
-        loadFlavors(flavor, recyclerFlavors)
-        ll(recyclerFlavors)
+        loadFlavors()
+        chargeStyle()
 
         trad.setOnClickListener {
-          filtrerTrad(flavor, recyclerFlavors)
+          filtrerTrad()
         }
 
         lic.setOnClickListener {
-            filtrerLic(flavor, recyclerFlavors)
+            filtrerLic()
         }
 
         backDefault.setOnClickListener {
@@ -54,7 +59,7 @@ class FlavorsFragment : Fragment() {
         }
 
         next.setOnClickListener {
-            nextStep(recyclerFlavors)
+            nextStep()
         }
         return view
     }
@@ -72,8 +77,8 @@ class FlavorsFragment : Fragment() {
         transaction.commit()
     }
 
-    private fun nextStep(rf: RecyclerView) {
-        if(rf == null || flavorSelected.equals(getString(R.string.flavor_selector)) || flavorSelected.isEmpty() || count == 0) {
+    private fun nextStep() {
+        if(recyclerFlavors == null || flavorSelected.equals(getString(R.string.flavor_selector)) || flavorSelected.isEmpty() || count == 0) {
             errorFlavor(getString(R.string.no_flavor))
         }
         else {
@@ -86,7 +91,7 @@ class FlavorsFragment : Fragment() {
         }
     }
 
-    private fun loadFlavors(f: Spinner, rv: RecyclerView) {
+    private fun loadFlavors() {
         listFlavor = enrrolato.listFlavors
         flavorList = ArrayList()
 
@@ -102,10 +107,10 @@ class FlavorsFragment : Fragment() {
                 listLiquour.add(list.name)
             }
         }
-        fillSpinner(f, rv)
+        fillSpinner()
     }
 
-    private fun filtrerTrad(f: Spinner, rv: RecyclerView) {
+    private fun filtrerTrad() {
         listFlavor = enrrolato.listFlavors
         flavorList = ArrayList()
         flavorList.add(getString(R.string.flavor_selector))
@@ -116,10 +121,10 @@ class FlavorsFragment : Fragment() {
                 flavorList.add(list.name)
             }
         }
-        fillSpinner(f, rv)
+        fillSpinner()
     }
 
-    private fun filtrerLic(f: Spinner, rv: RecyclerView) {
+    private fun filtrerLic() {
         listFlavor = enrrolato.listFlavors
         flavorList = ArrayList()
 
@@ -135,10 +140,10 @@ class FlavorsFragment : Fragment() {
                 }
             }
         }
-        fillSpinner(f, rv)
+        fillSpinner()
     }
 
-    private fun fillSpinner(flavor: Spinner, rv: RecyclerView) {
+    private fun fillSpinner() {
         val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, flavorList)
         flavor.adapter = array
         flavor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -147,7 +152,7 @@ class FlavorsFragment : Fragment() {
                 flavorSelected = av?.getItemAtPosition(i).toString()
 
                 if(!flavorSelected.equals(getString(R.string.flavor_selector))) {
-                    chooseFlavor(rv)
+                    chooseFlavor()
                 }
             }
 
@@ -172,7 +177,7 @@ class FlavorsFragment : Fragment() {
     }
 
     // Este es el recycler view que manda los sabores a la lista y los muestra
-    private fun chooseFlavor(recyclerFlavors: RecyclerView) {
+    private fun chooseFlavor() {
         var alert = view?.findViewById<View>(R.id.txtLicourAlert)
 
         if(count < 3) {
@@ -226,12 +231,12 @@ class FlavorsFragment : Fragment() {
         }
     }
 
-    private fun ll(rf: RecyclerView) {
+    private fun chargeStyle() {
         mLayoutManager = LinearLayoutManager(context)
-        rf.setHasFixedSize(true)
-        rf.itemAnimator = DefaultItemAnimator()
-        rf.layoutManager = mLayoutManager
-        rf.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerFlavors.setHasFixedSize(true)
+        recyclerFlavors.itemAnimator = DefaultItemAnimator()
+        recyclerFlavors.layoutManager = mLayoutManager
+        recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun errorFlavor(msg: String) {
@@ -251,6 +256,7 @@ class FlavorsFragment : Fragment() {
         }
     }
 
+    /*
     private fun popupMessage(i: Int, a: AdapterIceCream, m: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
@@ -274,5 +280,6 @@ class FlavorsFragment : Fragment() {
             alertDialog.cancel()
         }
     }
+     */
 
 }

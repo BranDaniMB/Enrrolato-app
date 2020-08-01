@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.database.Icecream
 
 class DetailFragment : Fragment() {
 

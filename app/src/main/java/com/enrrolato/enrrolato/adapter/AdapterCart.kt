@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -53,9 +52,9 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
         private var enrrolato = Enrrolato.instance
         var listener = listener
         var context = itemView.context
-        var data : TextView = itemView.findViewById(R.id.itemCart)
+        var data: TextView = itemView.findViewById(R.id.itemCart)
         var details: Button = itemView.findViewById(R.id.btDetails)
-        var delete : Button = itemView.findViewById(R.id.btDelete)
+        var delete: Button = itemView.findViewById(R.id.btDelete)
         var id: Int = 0
         var uName = ""
 
@@ -77,7 +76,7 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
         }
 
         override fun onClick(v: View?) {
-            when(v?.id) {
+            when (v?.id) {
                 R.id.btDetails -> {
                     goToDetail(id)
                 }
@@ -86,7 +85,7 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
 
         fun deleteData(p: Int) {
             delete.setOnClickListener {
-                if(p != RecyclerView.NO_POSITION) {
+                if (p != RecyclerView.NO_POSITION) {
                     listener.onDeleteClick(p)
                 }
             }
@@ -102,6 +101,7 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
             transaction.commit()
         }
 
+        /*
         private fun confirmation(msg: String) {
             val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
             val layoutInflater: LayoutInflater = LayoutInflater.from(context)
@@ -118,6 +118,7 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
                 alertDialog.cancel()
             }
         }
-    }
+       */
 
+    }
 }

@@ -83,7 +83,8 @@ class Enrrolato: Application() {
                         Filling(
                             value["name"]!!,
                             value["avaliable"]!!.toBoolean,
-                            value["isExclusive"]!!.toBoolean
+                            value["isExclusive"]!!.toBoolean,
+                            value["isLiqueur"]!!.toBoolean
                         )
                     )
                 }
@@ -108,6 +109,7 @@ class Enrrolato: Application() {
                     listToppings.add(
                         Topping(
                             value["name"]!!,
+                            value["isExclusive"]!!.toBoolean,
                             value["avaliable"]!!.toBoolean
                         )
                     )
@@ -134,7 +136,8 @@ class Enrrolato: Application() {
                     listContainers.add(
                         Container(
                             value["name"]!!,
-                            value["avaliable"]!!.toBoolean
+                            value["avaliable"]!!.toBoolean,
+                            value["isExclusive"]!!.toBoolean
                         )
                     )
                 }
@@ -265,10 +268,10 @@ class Enrrolato: Application() {
         var id = getId()
         return Icecream(
             id,
-            createIceCream().getSeasonIcecream().flavor,
+            createIceCream().getSeasonIcecream().flavor + ",",
             createIceCream().getSeasonIcecream().filling,
-            createIceCream().getSeasonIcecream().topping,
-            createIceCream().getSeasonIcecream().container,
+            createIceCream().getSeasonIcecream().topping + ",",
+            createIceCream().getContainer(),
             2900,  //createIceCream().getPrice(), // ESTO HAY QUE CAMBIARLO PERO CON EL AGREGADO DE PRECIOS QUE ESTÁ PRESENTE
             false,
             false,

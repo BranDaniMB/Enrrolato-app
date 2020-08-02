@@ -16,6 +16,7 @@ class SelectContainerFragment : Fragment() {
     private var enrrolato = Enrrolato.instance
     private lateinit var containerSelected: String
     private lateinit var nameList: ArrayList<String>
+    private var flag: Boolean = false
 
     private lateinit var back: ImageButton
     private lateinit var addCart: Button
@@ -55,7 +56,7 @@ class SelectContainerFragment : Fragment() {
         nameList.add(getString(R.string.container_selector))
 
         for (container in containers) {
-            if (container.available) {
+            if (container.available && !container.isExclusive) {
                 nameList.add(container.name)
             }
         }
@@ -74,6 +75,10 @@ class SelectContainerFragment : Fragment() {
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
+    }
+
+    fun isSeason(flag: Boolean) {
+        this.flag = flag
     }
 
     private fun newIcecream() {
@@ -98,12 +103,19 @@ class SelectContainerFragment : Fragment() {
     private fun addToCart() {
         if (containerSelected.equals(getString(R.string.container_selector))) {
             errorContainer(getString(R.string.no_container))
-        } else {
-            enrrolato.createIceCream().addContainer(containerSelected)
-            enrrolato.addList()
-            goToCart()
-            enrrolato.createIceCream().cleanData()
         }
+        else {
+            enrrolato.createIceCream().addContainer(containerSelected)
+
+            if(flag) {
+                enrrolato.addListSeason()
+            }
+            else {
+                enrrolato.addList()
+            }
+        }
+        enrrolato.createIceCream().cleanData()
+        goToCart()
     }
 
     private fun goToCart() {
@@ -120,7 +132,13 @@ class SelectContainerFragment : Fragment() {
             errorContainer(getString(R.string.no_container))
         } else {
             enrrolato.createIceCream().addContainer(containerSelected)
-            enrrolato.addList()
+
+            if(flag) {
+                enrrolato.addListSeason()
+            }
+            else {
+                enrrolato.addList()
+            }
             newIcecream()
         }
     }

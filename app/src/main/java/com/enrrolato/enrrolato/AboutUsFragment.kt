@@ -1,11 +1,9 @@
 package com.enrrolato.enrrolato
 
 import android.content.ActivityNotFoundException
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,29 +16,33 @@ public class AboutUsFragment : Fragment() {
     private val urlPageFB: String = "https://www.facebook.com/Enrrolato"
     private val urlPageIG: Uri = Uri.parse("http://instagram.com/_u/enrrolato")
 
+    private lateinit var profile: ImageButton
+    private lateinit var facebook: ImageButton
+    private lateinit var instagram: ImageButton
+    private lateinit var whatsapp: ImageButton
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_about_us, container, false)
-        val btProfile = view.findViewById<View>(R.id.btBackToProfile) as ImageButton
-        val btFace = view.findViewById<View>(R.id.btFB) as ImageButton
-        val btInstagram = view.findViewById<View>(R.id.btIG) as ImageButton
-        val whatsapp = view.findViewById<View>(R.id.btWhatsapp) as ImageButton
+        profile = view.findViewById(R.id.btBackToProfile)
+        facebook = view.findViewById(R.id.btFB)
+        instagram = view.findViewById(R.id.btIG)
+        whatsapp = view.findViewById(R.id.btWhatsapp)
 
-        btProfile.setOnClickListener {
+        profile.setOnClickListener {
             showProfileFragment()
         }
 
-        btFace.setOnClickListener {
+        facebook.setOnClickListener {
             fbLink()
         }
 
-        btInstagram.setOnClickListener {
+        instagram.setOnClickListener {
             igLink()
         }
 
         whatsapp.setOnClickListener {
             whatsappLink()
         }
-
         return view
     }
 
@@ -57,7 +59,6 @@ public class AboutUsFragment : Fragment() {
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(facebookId)))
         } catch (e: Exception) {
-            // ABRE URL DE PÁGINA
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlPageFB)))
         }
     }
@@ -70,9 +71,7 @@ public class AboutUsFragment : Fragment() {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
             startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://www.instagram.com/enrrolato/?hl=es-la")))
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/enrrolato/?hl=es-la")))
         }
     }
 

@@ -61,7 +61,7 @@ class ToppingFragment : Fragment() {
 
         for(list in listTopping) {
 
-            if(list.available) {
+            if(list.available && !list.isExclusive) {
                 toppingList.add(list.name)
             }
         }

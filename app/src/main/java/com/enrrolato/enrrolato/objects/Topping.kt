@@ -1,5 +1,5 @@
 package com.enrrolato.enrrolato.objects
 
 class Topping
-constructor(public val name: String, public val available: Boolean) {
+constructor(public val name: String, public val isExclusive: Boolean, public val available: Boolean) {
 }

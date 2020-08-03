@@ -200,14 +200,18 @@ class FlavorsFragment : Fragment() {
                 af.setOnItemClickListener(object: AdapterIceCream.OnItemClickListener {
                     override fun onDeleteClick(position: Int) {
 
-                        flavorProcessRemove(af.list[position])
-                        Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
+                        //flavorProcessRemove(af.list[position])
+                        //Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
 
                         if(listToRecycler.size == 1 || listToRecycler.size == 0) {
+                            flavorProcessRemove(af.list[0])
+                            Toast.makeText(context, "Se eliminó " + af.list[0], Toast.LENGTH_SHORT).show()
                             listToRecycler.removeAt(0)
                             af.notifyItemRemoved(0)
                         }
                         else {
+                            flavorProcessRemove(af.list[position])
+                            Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
                             listToRecycler.removeAt(position)
                             af.notifyItemRemoved(position)
                             af.itemCount - 1

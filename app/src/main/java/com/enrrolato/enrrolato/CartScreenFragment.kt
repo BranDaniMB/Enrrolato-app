@@ -106,9 +106,9 @@ class CartScreenFragment : Fragment() {
                 //Toast.makeText(context, "Se eliminó $position", Toast.LENGTH_SHORT).show()
 
                 if(listToRecycler.size == 1 || listToRecycler.size == 0) {
-                    enrrolato.deleteFromList(position)
-                    listToRecycler.removeAt(position)
-                    af.notifyItemRemoved(position)
+                    enrrolato.deleteFromList(0)
+                    listToRecycler.removeAt(0)
+                    af.notifyItemRemoved(0)
                 }
                 else {
                     enrrolato.deleteFromList(position)

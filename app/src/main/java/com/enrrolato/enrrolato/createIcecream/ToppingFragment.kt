@@ -128,14 +128,18 @@ class ToppingFragment : Fragment() {
                 override fun onDeleteClick(position: Int) {
 
                     // SE CAE CUANDO SOLO QUEDA UN SABOR EN LA LISTA
-                    removeToppingProcess(af.list[position])
-                    Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
+                    //removeToppingProcess(af.list[position])
+                    //Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
 
                     if(listToRecycler.size == 1 || listToRecycler.size == 0) {
+                        removeToppingProcess(af.list[0])
+                        Toast.makeText(context, "Se eliminó " + af.list[0], Toast.LENGTH_SHORT).show()
                         listToRecycler.removeAt(0)
                         af.notifyItemRemoved(0)
                     }
                     else {
+                        removeToppingProcess(af.list[position])
+                        Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
                         listToRecycler.removeAt(position)
                         af.notifyItemRemoved(position)
                         af.itemCount - 1

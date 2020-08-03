@@ -233,7 +233,7 @@ class Enrrolato: Application() {
     }
 
     fun sendAllOrders(username: String?) {
-        var count = 1
+        var count = 0
         val ref = FirebaseDatabase.getInstance().getReference("app/orders")
         var date = createIceCream().getDate()
 
@@ -242,9 +242,9 @@ class Enrrolato: Application() {
         for (l in getList()) {
             if (!l.sent) {
                 setSent(count)
+                count ++
                 ref.child(date).child("icecream_$count").setValue(l)
             }
-            count++
         }
         createIceCream().cleanData()
     }

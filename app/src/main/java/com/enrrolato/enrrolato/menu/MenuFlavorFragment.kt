@@ -9,24 +9,17 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.AdapterIceCream
+import com.enrrolato.enrrolato.adapter.AdapterMenu
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.Flavor
+import com.enrrolato.enrrolato.objects.Flavor
 
-class ChooseFlavorFragment : Fragment() {
+class MenuFlavorFragment : Fragment() {
 
     private lateinit var flavorList: ArrayList<String>
     private lateinit var listFlavor: ArrayList<Flavor>
     private var enrrolato = Enrrolato.instance
-
-    private lateinit var name: String
-    private var licour: Boolean = true
-    private var special: Boolean = true
-    private var exclusive: Boolean = true
-    private var avaliable: Boolean = true
-
     private var traditional: ArrayList<String> = ArrayList()
-    private var liqour: ArrayList<String> = ArrayList()
+    private var licour: ArrayList<String> = ArrayList()
     private var specialF: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +27,7 @@ class ChooseFlavorFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view: View = inflater.inflate(R.layout.fragment_choose_flavor, container, false)
+        var view: View = inflater.inflate(R.layout.fragment_menu_flavor, container, false)
         var back = view.findViewById<View>(R.id.btBackToMenu2) as ImageButton
         var trad = view.findViewById<View>(R.id.rvTrad) as RecyclerView
         var lic = view.findViewById<View>(R.id.rvLic) as RecyclerView
@@ -43,11 +36,9 @@ class ChooseFlavorFragment : Fragment() {
         back.setOnClickListener {
             back()
         }
-
         chargeTrad(trad, traditional)
-        chargeLic(lic, liqour)
+        chargeLic(lic, licour)
         chargeSpecial(spec, specialF)
-
         return view
     }
 
@@ -62,18 +53,11 @@ class ChooseFlavorFragment : Fragment() {
 
     private fun chargeTrad(rv: RecyclerView, a: ArrayList<String>) {
         listFlavor = enrrolato.listFlavors
-        var list: ArrayList<Flavor> = ArrayList()
         flavorList = ArrayList()
 
         for (list in listFlavor) {
-            name = list.name
-            licour = list.isLiqueur
-            special = list.isSpecial
-            exclusive = list.isExclusive
-            avaliable = list.avaliable
-
-            if (!special && !exclusive && avaliable) {
-                flavorList.add(name)
+            if (!list.isSpecial && !list.isExclusive && list.avaliable) {
+                flavorList.add(list.name)
                 chooseFlavor(rv, list, a)
             }
         }
@@ -81,18 +65,11 @@ class ChooseFlavorFragment : Fragment() {
 
     private fun chargeLic(rv: RecyclerView, a: ArrayList<String>) {
         listFlavor = enrrolato.listFlavors
-        var list: ArrayList<Flavor> = ArrayList()
         flavorList = ArrayList()
 
         for (list in listFlavor) {
-            name = list.name
-            licour = list.isLiqueur
-            special = list.isSpecial
-            exclusive = list.isExclusive
-            avaliable = list.avaliable
-
-            if((special && licour) && !exclusive && avaliable) {
-                flavorList.add(name)
+            if((list.isSpecial && list.isLiqueur) && !list.isExclusive && list.avaliable) {
+                flavorList.add(list.name)
                 chooseFlavor(rv, list, a)
             }
         }
@@ -100,33 +77,21 @@ class ChooseFlavorFragment : Fragment() {
 
     private fun chargeSpecial(rv: RecyclerView, a: ArrayList<String>) {
         listFlavor = enrrolato.listFlavors
-        var list: ArrayList<Flavor> = ArrayList()
         flavorList = ArrayList()
 
         for (list in listFlavor) {
-            name = list.name
-            licour = list.isLiqueur
-            special = list.isSpecial
-            exclusive = list.isExclusive
-            avaliable = list.avaliable
-
-            if (special && !licour && avaliable) {
-                flavorList.add(name)
+            if (list.isSpecial && !list.isLiqueur && list.avaliable) {
+                flavorList.add(list.name)
                 chooseFlavor(rv, list, a)
             }
         }
     }
 
-    private fun chooseFlavor(recyclerFlavors: RecyclerView, name: Flavor, listToRecycler: ArrayList<String>) {
-        recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-                var af: AdapterIceCream
-                listToRecycler.add(name.name)
-                af = AdapterIceCream(listToRecycler)
-                recyclerFlavors.adapter = af
-        }
-
-
-
-
+    private fun chooseFlavor(recyclerFlavors: RecyclerView, f: Flavor, listToRecycler: ArrayList<String>) {
+        recyclerFlavors.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        listToRecycler.add(f.name)
+        var af = AdapterMenu(listToRecycler)
+        recyclerFlavors.adapter = af
+    }
 }

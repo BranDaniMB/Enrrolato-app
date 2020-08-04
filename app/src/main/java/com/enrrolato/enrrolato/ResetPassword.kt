@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_reset_password.*
 
 class ResetPassword : AppCompatActivity() {
 
-    val auth = FirebaseAuth.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +19,6 @@ class ResetPassword : AppCompatActivity() {
         btRecovery.setOnClickListener {
             sendEmail()
         }
-
     }
 
     private fun sendEmail() {

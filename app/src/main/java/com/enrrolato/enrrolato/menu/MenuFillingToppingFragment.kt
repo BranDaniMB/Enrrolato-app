@@ -10,26 +10,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.AdapterIceCream
+import com.enrrolato.enrrolato.adapter.AdapterMenu
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.Filling
-import com.enrrolato.enrrolato.iceCream.Flavor
-import com.enrrolato.enrrolato.iceCream.Topping
+import com.enrrolato.enrrolato.objects.Filling
+import com.enrrolato.enrrolato.objects.Topping
 
-class ChooseMenuFTFragment : Fragment() {
+class MenuFillingToppingFragment : Fragment() {
 
     private var selection: Boolean = false
-
     private lateinit var fillingList: ArrayList<String>
     private lateinit var toppingList: ArrayList<String>
     private lateinit var listFilling: ArrayList<Filling>
     private lateinit var listTopping: ArrayList<Topping>
     private var enrrolato = Enrrolato.instance
     private var listToRecycler: ArrayList<String> = ArrayList()
-
-    private lateinit var name: String
-    private var exclusive: Boolean = true
-    private var avaliable: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,19 +38,18 @@ class ChooseMenuFTFragment : Fragment() {
             back()
         }
 
-        if(selection == true) {
-            var title: String = "Menú de jarabes"
+        if(selection) {
+            var title = getString(R.string.filling_menu)
             var menu = view.findViewById<View>(R.id.txtFTMenu) as TextView
             menu.text = title
             chargeFilling(items)
         }
         else {
-            var title: String = "Menú de toppings"
+            var title = getString(R.string.topping_menu)
             var menu = view.findViewById<View>(R.id.txtFTMenu) as TextView
             menu.text = title
             chargeTopping(items)
         }
-
         return view
     }
 
@@ -75,43 +68,32 @@ class ChooseMenuFTFragment : Fragment() {
 
     private fun chargeFilling(rv: RecyclerView) {
         listFilling = enrrolato.listFillings
-        var list: ArrayList<Flavor> = ArrayList()
         fillingList = ArrayList()
 
         for (list in listFilling) {
-            name = list.name
-            exclusive = list.isExclusive
-            avaliable = list.available
-
-            if (avaliable) {
-                fillingList.add(name)
-                choose(rv, name)
+            if (list.available) {
+                fillingList.add(list.name)
+                choose(rv, list.name)
             }
         }
     }
 
     private fun chargeTopping(rv: RecyclerView) {
         listTopping = enrrolato.listToppings
-        var list: ArrayList<Flavor> = ArrayList()
         toppingList = ArrayList()
 
         for (list in listTopping) {
-            name = list.name
-            avaliable = list.available
-
-            if (avaliable) {
-                toppingList.add(name)
-                choose(rv, name)
+            if (list.available) {
+                toppingList.add(list.name)
+                choose(rv, list.name)
             }
         }
     }
 
     private fun choose(recycler: RecyclerView, fs:String) {
         recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        var af: AdapterIceCream
-
         listToRecycler.add(fs)
-        af = AdapterIceCream(listToRecycler)
+        var af = AdapterMenu(listToRecycler)
         recycler.adapter = af
     }
 

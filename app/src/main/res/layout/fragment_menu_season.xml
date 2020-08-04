@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cyan"
     android:orientation="vertical"
-    tools:context=".menu.MenuFillingToppingFragment"
-    android:id="@+id/ly_ft_menu">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".menu.MenuSeasonFragment"
+    android:id="@+id/ly_menu_season">
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollviewChooseMenu"
+        android:id="@+id/scrollviewSeasonMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -31,7 +31,7 @@
             tools:layout_editor_absoluteY="-43dp">
 
             <ImageButton
-                android:id="@+id/btBackToMenu"
+                android:id="@+id/btBackToPrincipal3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -44,12 +44,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtFTMenu"
+                android:id="@+id/txtSeasonMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text=""
+                android:text="@string/season_menu"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -58,19 +58,35 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/menuFT"
+                android:id="@+id/menuSeason"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginEnd="25dp"
                 android:layout_weight="1"
                 android:background="@color/black"
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSeasonMenu" />
 
-                app:layout_constraintTop_toBottomOf="@+id/txtFTMenu" />
+            <TextView
+                android:id="@+id/txtNoSeason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gotu_regular"
+                android:layout_marginTop="60dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:padding="10dp"
+                android:background="@drawable/round_shape"
+                android:text="@string/no_season"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSeasonMenu"
+                android:visibility="invisible"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -23,7 +23,7 @@
     <string name="forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="reset_password">Recupérala</string>
     <string name="log_in_action">Ingresar</string>
-    <string name="sign_up">¿No tienes una cuenta? Crea una</string>
+    <string name="sign_up">¿No tienes una cuenta?\nCrea una</string>
     <!-- Sign Up Activity -->
     <string name="sign_up_title">Regístrate</string>
     <string name="new_password">Ingresa tu contraseña</string>
@@ -42,7 +42,6 @@
     <!-- Principal Menú -->
     <string name="create_ice_cream">Crear helado</string>
     <string name="show_menu">Ver menú</string>
-    <string name="season_ice_cream">Helados de temporada</string>
     <!-- Profile Fragment -->
     <string name="account">Cuenta</string>
     <string name="email_text">Correo electrónico asociado</string>
@@ -95,10 +94,10 @@
     <string name="duplicated_topping">Ya seleccionó este topping</string>
     <string name="max_topping">Usted excedió el máximo de toppings</string>
     <!-- Container Fragment -->
-    <string name="container_title">Escogencia de recipiente</string>
-    <string name="container_list">Lista de contenedores</string>
-    <string name="container_selector">Elija un contenedor</string>
-    <string name="container_to_cart">Agregar el helado al carrito\n y enviar la orden</string>
+    <string name="container_title">Escogencia de envases</string>
+    <string name="container_list">Lista de envases</string>
+    <string name="container_selector">Elija un envase</string>
+    <string name="container_to_cart">Agregar el helado al carrito</string>
     <string name="container_new_icecream">Agregar un nuevo helado</string>
 
 
@@ -123,4 +122,29 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Texto de ejemplo</string>
     <string name="username">Nombre de usuario</string>
+    <string name="home">Inicio</string>
+    <string name="cart">Carrito</string>
+    <string name="profile">Cuenta</string>
+    <string name="flavor_menu">Menú de sabores</string>
+    <string name="traditional_flavor">Sabores tradicionales</string>
+    <string name="liqueur_flavor">Sabores con licor</string>
+    <string name="special_flavor">Sabores especiales</string>
+    <string name="menu">Menú</string>
+    <string name="show_flavors">Mostrar sabores</string>
+    <string name="show_fillings">Mostrar jarabes</string>
+    <string name="show_topping">Mostrar toppings</string>
+    <string name="alert_18">* Sabor recomendado para personas +18 años</string>
+    <string name="flavor">Sabor</string>
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="logout_confirmation">¿Está seguro que quiere cerrar sesión?</string>
+    <string name="no_container">Debe seleccionar un envase</string>
+    <string name="enter_name">Digite su nombre</string>
+    <string name="topping_menu">Menú de topping</string>
+    <string name="filling_menu">Menú de jarabes</string>
+    <string name="new_name">Ingrese su nuevo nombre</string>
+    <string name="choose_season">Escoja el helado de temporada</string>
+    <string name="no_season">No hay helados de temporada\npor el momento</string>
+    <string name="season_menu">Menú de helados\nde temporada</string>
+    <string name="show_season_menu">Ver menú de helados\nde temporada</string>
 </resources>

@@ -6,19 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.enrrolato.enrrolato.AdapterIceCream
-import com.enrrolato.enrrolato.PrincipalMenuFragment
+import com.enrrolato.enrrolato.adapter.AdapterIceCream
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.Flavor
-import com.enrrolato.enrrolato.iceCream.Topping
-import org.w3c.dom.Text
+import com.enrrolato.enrrolato.objects.Topping
 
 
 class ToppingFragment : Fragment() {
@@ -31,8 +26,12 @@ class ToppingFragment : Fragment() {
     private var count: Int = 0
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var af: AdapterIceCream
-
     private var listAux: ArrayList<Topping> = enrrolato.listToppings
+
+    private lateinit var spinner: Spinner
+    private lateinit var fill: RecyclerView
+    private lateinit var next: Button
+    private lateinit var msg: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,46 +39,45 @@ class ToppingFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_topping, container, false)
-        val spinner = view.findViewById<View>(R.id.spTopping) as Spinner
-        val fill = view.findViewById<View>(R.id.choosenTopping) as RecyclerView
-        val next = view.findViewById<View>(R.id.btCotinueToContainer) as Button
-        val msg = view.findViewById<View>(R.id.txtToppingAlert) as TextView
+        spinner = view.findViewById(R.id.spTopping)
+        fill = view.findViewById(R.id.choosenTopping)
+        next = view.findViewById(R.id.btCotinueToContainer)
+        msg = view.findViewById(R.id.txtToppingAlert)
 
-        loadToppings(msg, spinner, fill)
+        chargeStyle()
+        loadToppings()
 
         next.setOnClickListener {
-          selectContainer(fill)
+          selectContainer()
         }
-
         return view
     }
 
-    private fun loadToppings(msg: TextView, spT: Spinner, rv: RecyclerView) {
+    private fun loadToppings() {
         listTopping = enrrolato.listToppings
-        var list: ArrayList<Flavor> = ArrayList()
         toppingList = ArrayList()
 
         toppingList.add(getString(R.string.topping_selector))
 
         for(list in listTopping) {
 
-            if(list.available) {
+            if(list.available && !list.isExclusive) {
                 toppingList.add(list.name)
             }
         }
-        fillSpinner(msg, spT, rv)
+        fillSpinner()
     }
 
-    private fun fillSpinner(msg: TextView, topping: Spinner, rv: RecyclerView) {
+    private fun fillSpinner() {
         val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, toppingList)
-        topping.adapter = array
-        topping.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinner.adapter = array
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(av: AdapterView<*>?, view: View?, i: Int, p3: Long) {
                 toppingSelected = av?.getItemAtPosition(i).toString()
 
                 if(!toppingSelected.equals(getString(R.string.topping_selector))) {
-                    chooseTopping(msg, rv)
+                    chooseTopping()
                 }
             }
 
@@ -88,11 +86,11 @@ class ToppingFragment : Fragment() {
         }
     }
 
-    private fun selectContainer(rv: RecyclerView) {
-        if (rv == null || toppingSelected.equals(getString(R.string.topping_selector)) || toppingSelected.isEmpty()) {
+    private fun selectContainer() {
+        if (fill == null || toppingSelected.equals(getString(R.string.topping_selector)) || toppingSelected.isEmpty()) {
             errorTopping(getString(R.string.no_topping))
-        } else {
-
+        }
+        else {
             val fragment = SelectContainerFragment()
             val fm = requireActivity().supportFragmentManager
             val transaction = fm.beginTransaction()
@@ -113,43 +111,54 @@ class ToppingFragment : Fragment() {
     private fun removeToppingProcess(t: String) {
         for(l in listTopping) {
             if(l.name.equals(t)) {
-                //enrrolato.createIceCream().removeTopping(l)
+                enrrolato.createIceCream().removeTopping(l)
             }
         }
     }
 
-    private fun chooseTopping(msg:TextView, recyclerToppings: RecyclerView) {
-        mLayoutManager = LinearLayoutManager(context)
-        recyclerToppings.setHasFixedSize(true)
-        recyclerToppings.itemAnimator = DefaultItemAnimator()
-        recyclerToppings.layoutManager = mLayoutManager
-        recyclerToppings.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
+    private fun chooseTopping() {
         if (!listToRecycler.contains(toppingSelected)) {
             listToRecycler.add(toppingSelected)
 
             // AGREGARLO AL MANAGER
             addToppingProcess(toppingSelected)
-
             af = AdapterIceCream(listToRecycler)
-            count += 1
 
-                af.setOnClickListener(object: View.OnClickListener {
-                    override fun onClick(v: View) {
-                        var m: String = getString(R.string.delete_topping_prompt)
-                        //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
-                        popupMessage(recyclerToppings.getChildAdapterPosition(v), af, m)
+            af.setOnItemClickListener(object: AdapterIceCream.OnItemClickListener {
+                override fun onDeleteClick(position: Int) {
 
-                        // AQUI VA EL ELIMINAR TOPPING
-                        removeToppingProcess(af.list.get(recyclerToppings.getChildAdapterPosition(v)))
+                    // SE CAE CUANDO SOLO QUEDA UN SABOR EN LA LISTA
+                    //removeToppingProcess(af.list[position])
+                    //Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
 
-                        count -= 1
+                    if(listToRecycler.size == 1 || listToRecycler.size == 0) {
+                        removeToppingProcess(af.list[0])
+                        Toast.makeText(context, "Se eliminó " + af.list[0], Toast.LENGTH_SHORT).show()
+                        listToRecycler.removeAt(0)
+                        af.notifyItemRemoved(0)
                     }
-                })
-                recyclerToppings.adapter = af
+                    else {
+                        removeToppingProcess(af.list[position])
+                        Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
+                        listToRecycler.removeAt(position)
+                        af.notifyItemRemoved(position)
+                        af.itemCount - 1
+                    }
 
-            if(count > 2) {
-                if(msg.visibility == View.INVISIBLE) {
+                    fill.setItemViewCacheSize(listToRecycler.size)
+                    count -= 1
+
+                    if (count < 2 || msg.visibility == View.VISIBLE) {
+                        msg.visibility = View.INVISIBLE
+                    }
+                }
+            })
+
+            count += 1
+            fill.adapter = af
+
+            if (count > 2) {
+                if (msg.visibility == View.INVISIBLE) {
                     msg.visibility = View.VISIBLE
                 }
             }
@@ -159,16 +168,18 @@ class ToppingFragment : Fragment() {
         }
     }
 
-    private fun remove(p:Int) {
-        listToRecycler.removeAt(p)
-        af.notifyItemRemoved(p)
+    private fun chargeStyle() {
+        mLayoutManager = LinearLayoutManager(context)
+        fill.setHasFixedSize(true)
+        fill.itemAnimator = DefaultItemAnimator()
+        fill.layoutManager = mLayoutManager
+        fill.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
-
 
     private fun errorTopping(msg: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_choose_flavor, null)
+        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_alert_message, null)
         val message = popupMaxFlavor.findViewById<View>(R.id.txtMessage) as TextView
         message.text = msg
         val bt_ok: Button = popupMaxFlavor.findViewById(R.id.btOk);
@@ -182,6 +193,7 @@ class ToppingFragment : Fragment() {
         }
     }
 
+    /*
     private fun popupMessage(i: Int, a: AdapterIceCream, m: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
@@ -200,12 +212,12 @@ class ToppingFragment : Fragment() {
             alertDialog.cancel()
             listToRecycler.removeAt(i)
             a.notifyItemRemoved(i)
-            //Toast.makeText(context, "Usted ha eliminado " + n, Toast.LENGTH_SHORT).show()
         }
 
         bt_cancel.setOnClickListener {
             alertDialog.cancel()
         }
     }
+     */
 
 }

@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.Filling
 
 class FillingFragment : Fragment() {
 
@@ -18,17 +16,21 @@ class FillingFragment : Fragment() {
     private lateinit var fillingSelected: String
     private var enrrolato = Enrrolato.instance
 
+    private lateinit var sp: Spinner
+    private lateinit var back: ImageButton
+    private lateinit var next: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View =  inflater.inflate(R.layout.fragment_filling, container, false)
-        val sp = view.findViewById<View>(R.id.spFilling) as Spinner
-        val back = view.findViewById<View>(R.id.backBtn) as ImageButton
-        val next = view.findViewById<View>(R.id.btContinue) as Button
+        sp = view.findViewById(R.id.spFilling)
+        back = view.findViewById(R.id.backBtn)
+        next = view.findViewById(R.id.btContinue)
 
-        loadFillings(sp)
+        loadFillings()
 
         back.setOnClickListener {
             val fragment = FlavorsFragment()
@@ -41,9 +43,10 @@ class FillingFragment : Fragment() {
 
         next.setOnClickListener {
             val selected = sp.selectedItem as String
-            if (selected == null || selected.equals(getString(R.string.filling_selector))) { // Si es que debe
+            if (selected == null || selected.equals(getString(R.string.filling_selector))) {
                 errorPopup(getString(R.string.no_filling))
-            } else {
+            }
+            else {
                 enrrolato.createIceCream().addFilling(fillingSelected)
 
                 val fragment = ToppingFragment()
@@ -57,19 +60,17 @@ class FillingFragment : Fragment() {
         return view
     }
 
-    private fun loadFillings(s: Spinner) {
+    private fun loadFillings() {
         val fillings = Enrrolato.instance.listFillings
         nameList = ArrayList<String>()
-
         nameList.add(getString(R.string.filling_selector))
 
         for (filling in fillings) {
-
             if (filling.available && !filling.isExclusive) {
                 nameList.add(filling.name)
             }
         }
-        fillFilling(s)
+        fillFilling(sp)
     }
 
     private fun fillFilling(f: Spinner) {
@@ -81,15 +82,14 @@ class FillingFragment : Fragment() {
                 fillingSelected = av?.getItemAtPosition(i).toString()
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
     }
 
     private fun errorPopup(msg: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_choose_flavor, null)
+        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_alert_message, null)
         val message = popupMaxFlavor.findViewById<View>(R.id.txtMessage) as TextView
         message.text = msg
         val btOK: Button = popupMaxFlavor.findViewById(R.id.btOk);

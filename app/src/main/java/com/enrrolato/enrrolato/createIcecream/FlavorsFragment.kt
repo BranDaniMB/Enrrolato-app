@@ -10,12 +10,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.enrrolato.enrrolato.AdapterIceCream
+import com.enrrolato.enrrolato.adapter.AdapterIceCream
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.iceCream.Flavor
-
+import com.enrrolato.enrrolato.objects.Flavor
 
 class FlavorsFragment : Fragment() {
 
@@ -27,26 +25,33 @@ class FlavorsFragment : Fragment() {
     private var listLiquour: ArrayList<String> = ArrayList()
     private var count: Int = 0
     private lateinit var mLayoutManager: LinearLayoutManager
-
     private var listAux: ArrayList<Flavor> = enrrolato.listFlavors
+
+    private lateinit var backDefault: ImageButton
+    private lateinit var flavor: Spinner
+    private lateinit var trad: RadioButton
+    private lateinit var lic: RadioButton
+    private lateinit var recyclerFlavors: RecyclerView
+    private lateinit var next: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_flavors, container, false)
-        val backDefault = view.findViewById<View>(R.id.btBackToDefault) as ImageButton
-        val flavor = view.findViewById<View>(R.id.spFlavor) as Spinner
-        val trad = view.findViewById<View>(R.id.rbTradicional) as RadioButton
-        val lic = view.findViewById<View>(R.id.rbLicour) as RadioButton
-        val recyclerFlavors = view.findViewById<View>(R.id.choosenFlavors) as RecyclerView
-        val next = view.findViewById<View>(R.id.btContinue) as Button
+        backDefault = view.findViewById(R.id.btBackToDefault)
+        flavor = view.findViewById(R.id.spFlavor)
+        trad = view.findViewById(R.id.rbTradicional)
+        lic = view.findViewById(R.id.rbLicour)
+        recyclerFlavors = view.findViewById(R.id.choosenFlavors)
+        next = view.findViewById(R.id.btContinue)
 
-        loadFlavors(flavor, recyclerFlavors)
+        loadFlavors()
+        chargeStyle()
 
         trad.setOnClickListener {
-          filtrerTrad(flavor, recyclerFlavors)
+          filtrerTrad()
         }
 
         lic.setOnClickListener {
-            filtrerLic(flavor, recyclerFlavors)
+            filtrerLic()
         }
 
         backDefault.setOnClickListener {
@@ -54,9 +59,8 @@ class FlavorsFragment : Fragment() {
         }
 
         next.setOnClickListener {
-            nextStep(recyclerFlavors)
+            nextStep()
         }
-
         return view
     }
 
@@ -73,8 +77,8 @@ class FlavorsFragment : Fragment() {
         transaction.commit()
     }
 
-    private fun nextStep(rf: RecyclerView) {
-        if(rf == null || flavorSelected.equals(getString(R.string.flavor_selector)) || flavorSelected.isEmpty() || count == 0) {
+    private fun nextStep() {
+        if(recyclerFlavors == null || flavorSelected.equals(getString(R.string.flavor_selector)) || flavorSelected.isEmpty() || count == 0) {
             errorFlavor(getString(R.string.no_flavor))
         }
         else {
@@ -87,9 +91,8 @@ class FlavorsFragment : Fragment() {
         }
     }
 
-    private fun loadFlavors(f: Spinner, rv: RecyclerView) {
+    private fun loadFlavors() {
         listFlavor = enrrolato.listFlavors
-        var list: ArrayList<Flavor> = ArrayList()
         flavorList = ArrayList()
 
         flavorList.add(getString(R.string.flavor_selector))
@@ -104,13 +107,11 @@ class FlavorsFragment : Fragment() {
                 listLiquour.add(list.name)
             }
         }
-
-        fillSpinner(f, rv)
+        fillSpinner()
     }
 
-    private fun filtrerTrad(f: Spinner, rv: RecyclerView) {
+    private fun filtrerTrad() {
         listFlavor = enrrolato.listFlavors
-        var list: ArrayList<Flavor>
         flavorList = ArrayList()
         flavorList.add(getString(R.string.flavor_selector))
 
@@ -120,13 +121,11 @@ class FlavorsFragment : Fragment() {
                 flavorList.add(list.name)
             }
         }
-
-        fillSpinner(f, rv)
+        fillSpinner()
     }
 
-    private fun filtrerLic(f: Spinner, rv: RecyclerView) {
+    private fun filtrerLic() {
         listFlavor = enrrolato.listFlavors
-        var list: ArrayList<Flavor>
         flavorList = ArrayList()
 
         flavorList.add(getString(R.string.flavor_selector))
@@ -141,10 +140,10 @@ class FlavorsFragment : Fragment() {
                 }
             }
         }
-        fillSpinner(f, rv)
+        fillSpinner()
     }
 
-    private fun fillSpinner(flavor: Spinner, rv: RecyclerView) {
+    private fun fillSpinner() {
         val array: ArrayAdapter<String> = ArrayAdapter(context!!, android.R.layout.simple_spinner_dropdown_item, flavorList)
         flavor.adapter = array
         flavor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -153,12 +152,11 @@ class FlavorsFragment : Fragment() {
                 flavorSelected = av?.getItemAtPosition(i).toString()
 
                 if(!flavorSelected.equals(getString(R.string.flavor_selector))) {
-                    chooseFlavor(rv)
+                    chooseFlavor()
                 }
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
     }
 
@@ -173,18 +171,13 @@ class FlavorsFragment : Fragment() {
     private fun flavorProcessRemove(f: String) {
         for(l in listAux) {
             if(l.name.equals(f)) {
-                //enrrolato.createIceCream().removeFlavor(l)
+                enrrolato.createIceCream().removeFlavor(l)
             }
         }
     }
 
     // Este es el recycler view que manda los sabores a la lista y los muestra
-    private fun chooseFlavor(recyclerFlavors: RecyclerView) {
-        mLayoutManager = LinearLayoutManager(context)
-        recyclerFlavors.setHasFixedSize(true)
-        recyclerFlavors.itemAnimator = DefaultItemAnimator()
-        recyclerFlavors.layoutManager = mLayoutManager
-        recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    private fun chooseFlavor() {
         var alert = view?.findViewById<View>(R.id.txtLicourAlert)
 
         if(count < 3) {
@@ -203,18 +196,30 @@ class FlavorsFragment : Fragment() {
 
                 af = AdapterIceCream(listToRecycler)
 
-                af.setOnClickListener(object: View.OnClickListener {
-                    override fun onClick(v: View) {
-                        var m: String = getString(R.string.delete_flavor_prompt)
-                        //listToRecycler.get(recyclerFlavors.getChildAdapterPosition(v)).toString()
-                        popupMessage(recyclerFlavors.getChildAdapterPosition(v), af, m)
+                // ELIMINAR UN SABOR
+                af.setOnItemClickListener(object: AdapterIceCream.OnItemClickListener {
+                    override fun onDeleteClick(position: Int) {
 
-                        // AQUI VA A BUSCAR DE LA LISTA GRANDE Y MANDARLA AL MANAGER PARA ELIMINARLA
-                        flavorProcessRemove(af.list.get(recyclerFlavors.getChildAdapterPosition(v)))
+                        //flavorProcessRemove(af.list[position])
+                        //Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
 
+                        if(listToRecycler.size == 1 || listToRecycler.size == 0) {
+                            flavorProcessRemove(af.list[0])
+                            Toast.makeText(context, "Se eliminó " + af.list[0], Toast.LENGTH_SHORT).show()
+                            listToRecycler.removeAt(0)
+                            af.notifyItemRemoved(0)
+                        }
+                        else {
+                            flavorProcessRemove(af.list[position])
+                            Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
+                            listToRecycler.removeAt(position)
+                            af.notifyItemRemoved(position)
+                            af.itemCount - 1
+                        }
+
+                        recyclerFlavors.setItemViewCacheSize(listToRecycler.size)
                         count -= 1
                         alert?.visibility = View.INVISIBLE
-
                     }
                 })
 
@@ -230,10 +235,18 @@ class FlavorsFragment : Fragment() {
         }
     }
 
+    private fun chargeStyle() {
+        mLayoutManager = LinearLayoutManager(context)
+        recyclerFlavors.setHasFixedSize(true)
+        recyclerFlavors.itemAnimator = DefaultItemAnimator()
+        recyclerFlavors.layoutManager = mLayoutManager
+        recyclerFlavors.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    }
+
     private fun errorFlavor(msg: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_choose_flavor, null)
+        val popupMaxFlavor = layoutInflater.inflate(R.layout.popup_alert_message, null)
         val message = popupMaxFlavor.findViewById<View>(R.id.txtMessage) as TextView
         message.text = msg
         val bt_ok: Button = popupMaxFlavor.findViewById(R.id.btOk);
@@ -247,6 +260,7 @@ class FlavorsFragment : Fragment() {
         }
     }
 
+    /*
     private fun popupMessage(i: Int, a: AdapterIceCream, m: String) {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
@@ -264,39 +278,12 @@ class FlavorsFragment : Fragment() {
             alertDialog.cancel()
             listToRecycler.removeAt(i)
             a.notifyItemRemoved(i)
-            //Toast.makeText(context, "Usted ha eliminado " + n, Toast.LENGTH_SHORT).show()
         }
 
         bt_cancel.setOnClickListener {
             alertDialog.cancel()
         }
     }
-
+     */
 
 }
-
-/* database.child("business").child("ingredients").child("flavors").addValueEventListener(object: ValueEventListener {
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if(dataSnapshot.exists()) {
-                    for (data: DataSnapshot in dataSnapshot.children) {
-                        var id: String = data.key.toString()
-                        var name: String = data.child("name").getValue().toString()
-                        var licour: String = data.child("isLiqueur").getValue().toString()
-                        var special: String = data.child("isSpecial").getValue().toString()
-                        var exclusive: String = data.child("isExclusive").getValue().toString()
-                        var avaliable: String = data.child("avaliable").getValue().toString()
-
-                        if(special.equals("0") || (special.equals("1") && licour.equals("1")) && exclusive.equals("0")) {
-                            flavorList = ArrayList()
-                            flavorList.add(name)
-
-                            // VAN LOS FILTROS
-                        }
-                    }
-                    fillSpinner(f)
-                }
-            }
-            override fun onCancelled(ds: DatabaseError) {
-            }
-        })  */

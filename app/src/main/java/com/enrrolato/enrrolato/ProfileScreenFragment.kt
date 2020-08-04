@@ -18,23 +18,24 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-/**
- * A simple [Fragment] subclass.
- */
-
 class ProfileScreenFragment : Fragment() {
 
     private var enrrolato = Enrrolato.instance
     private var auth = FirebaseAuth.getInstance()
 
+    private lateinit var about: Button
+    private lateinit var out: Button
+    private lateinit var restore: Button
+    private lateinit var username: TextView
+    private lateinit var editUsername: ImageButton
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile_screen, container, false)
-        val btAbout = view.findViewById<View>(R.id.btAboutUs) as Button
-        val btOut = view.findViewById<View>(R.id.btLogout) as Button
-        val btRestore = view.findViewById<View>(R.id.btChangePassword) as Button
-        val username = view.findViewById<View>(R.id.txtAssociatedUsername) as TextView
-        val editUsername = view.findViewById<View>(R.id.btEditUsername) as ImageButton
-        //val hide = view.findViewById<View>(R.id.txtHidden) as TextView
+        about = view.findViewById(R.id.btAboutUs)
+        out = view.findViewById(R.id.btLogout)
+        restore = view.findViewById(R.id.btChangePassword)
+        username = view.findViewById(R.id.txtAssociatedUsername)
+        editUsername = view.findViewById(R.id.btEditUsername)
 
         showEmail(view)
         enrrolato.getUsername().addValueEventListener(object : ValueEventListener{
@@ -42,27 +43,24 @@ class ProfileScreenFragment : Fragment() {
                 username.text = d.child("username").value.toString()
             }
 
-            override fun onCancelled(d: DatabaseError) {
-            }
-
+            override fun onCancelled(d: DatabaseError) {}
         })
 
-        btAbout.setOnClickListener {
+        about.setOnClickListener {
             showAboutUsFragment()
         }
 
-        btRestore.setOnClickListener {
+        restore.setOnClickListener {
             showRestoreFragment()
         }
 
-        btOut.setOnClickListener {
+        out.setOnClickListener {
             logOut()
         }
 
         editUsername.setOnClickListener {
             updateName()
         }
-
         return view
     }
 
@@ -109,7 +107,7 @@ class ProfileScreenFragment : Fragment() {
             fragmentManager!!.beginTransaction().remove(this).commit();
             alertDialog.cancel()
 
-            val int: Intent = Intent(activity, LoginActivity::class.java)
+            val int = Intent(activity, LoginActivity::class.java)
             startActivity(int)
             Toast.makeText(context, getString(R.string.log_out_message), Toast.LENGTH_SHORT).show()
             val prefs = activity!!.getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
@@ -123,8 +121,7 @@ class ProfileScreenFragment : Fragment() {
     }
 
     private fun updateName() {
-        // HAY QUE CORREGIRLO
-        var txt = "Ingrese su nuevo nombre"
+        var txt = getString(R.string.new_name)
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
         val popupUsername = layoutInflater.inflate(R.layout.popup_username, null)
@@ -139,7 +136,6 @@ class ProfileScreenFragment : Fragment() {
         alertDialog.show()
 
         bt_ok.setOnClickListener {
-            //hide.text = u.text.toString().trim()
             enrrolato.setUsername(u.text.toString().trim())
             alertDialog.cancel()
         }

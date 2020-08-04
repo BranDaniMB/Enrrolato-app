@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.database.ProviderType
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -20,30 +20,32 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
-    private val GOOGLE_SIGN_IN = 100;
-    private val callbackManager = CallbackManager.Factory.create();
+    private val GOOGLE_SIGN_IN = 100
+    private val callbackManager = CallbackManager.Factory.create()
+    private var enrrolato = Enrrolato.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Cambiamos al tema por defecto
+        // CAMBIAMOS AL TEMA POR DEFECTO
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Analytics Event
-        val analytics : FirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        // ANALYTICS EVNT
+        val analytics : FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         val bundle = Bundle()
         bundle.putString("message", "Pantalla de inicio de sesión lanzada")
         analytics.logEvent("LoginScreen", bundle)
 
-        // Setup
         setup()
-        // Session Verifica si ya se inicio sesión
+        // SESSION = VERIFICA SI YA SE INICIÓ SESIÓN
         session()
-
         recoverPassword()
     }
 
@@ -53,9 +55,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         callbackManager.onActivityResult(requestCode, resultCode, data)
-
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == GOOGLE_SIGN_IN) {
@@ -99,18 +99,33 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setup() {
+
         // Da error si la cuenta no esta registrada
         loginBtn.setOnClickListener {
-            if (!usernameField.text.isNullOrEmpty() && !passwordField.text.isNullOrEmpty()) {
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(usernameField.text.toString()
+            if (!emailField2.text.isNullOrEmpty() && !passwordField.text.isNullOrEmpty()) {
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(emailField2.text.toString()
                     , passwordField.text.toString()).addOnCompleteListener {
+
+                    var name = ""
+
                     if (it.isSuccessful) {
+                        enrrolato.getUsername().addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(d: DataSnapshot) {
+                                name = d.child("username").value.toString()
+                            }
+                            override fun onCancelled(d: DatabaseError) {
+                            }
+                        })
                         //var id: String? = FirebaseAuth.getInstance().currentUser?.uid
-                        showMenu(it.result?.user?.uid, it.result?.user?.displayName?: "")
+
+                        showMenu(it.result?.user?.uid, it.result?.user?.displayName?: name)
                     } else {
                         showAlert();
                     }
                 }
+            } else {
+                Toast.makeText(this, "Campos incompletos", Toast.LENGTH_SHORT).show()
+                //errorMessage("El email y/o contraseña están vacíos")
             }
         }
 
@@ -124,14 +139,12 @@ class LoginActivity : AppCompatActivity() {
                 .build()
             val googleClient = GoogleSignIn.getClient(this, googleConfig)
             googleClient.signOut()
-
             startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
         }
 
         facebookLoginBtn.setOnClickListener{
 
             LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
-
             LoginManager.getInstance().registerCallback(callbackManager,
                 object: FacebookCallback<LoginResult> {
                     override fun onSuccess(result: LoginResult?) {
@@ -143,7 +156,7 @@ class LoginActivity : AppCompatActivity() {
                                 .addOnCompleteListener {
                                     if (it.isSuccessful) {
                                         var id: String? = FirebaseAuth.getInstance().currentUser?.uid
-                                        showMenu(id, it.result?.user?.displayName?: "")
+                                        showMenu(id, it.result?.user?.displayName)
                                     } else {
                                         showAlert();
                                     }
@@ -151,9 +164,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
 
-                    override fun onCancel() {
-
-                    }
+                    override fun onCancel() {}
 
                     override fun onError(error: FacebookException?) {
                         showAlert()
@@ -178,9 +189,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showMenu(id: String?, username: String?) {
         val menuIntent = Intent(this, PrincipalScreen::class.java)
-        if (id != null) {
-            Enrrolato.instance.initUser(id, username)
-        }
+
         // Guardando la session
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("id", id)
@@ -198,5 +207,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(recovery)
         }
     }
+
 }
 

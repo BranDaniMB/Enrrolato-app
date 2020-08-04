@@ -8,34 +8,30 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_restore_password.*
 
 
 class RestorePasswordFragment : Fragment() {
 
-    val auth = FirebaseAuth.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private lateinit var profile: ImageButton
+    private lateinit var change: Button
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_restore_password, container, false)
-        val btProfile = view.findViewById<View>(R.id.btBackToProfile) as ImageButton
-        val btChange = view.findViewById<View>(R.id.btRestore) as Button
+        profile = view.findViewById(R.id.btBackToProfile)
+        change = view.findViewById(R.id.btRestore)
 
-        btProfile.setOnClickListener {
+        profile.setOnClickListener {
             showProfileFragment()
         }
 
-        btChange.setOnClickListener {
+        change.setOnClickListener {
             sendEmail(view)
         }
-
         return view
     }
 
@@ -87,6 +83,5 @@ class RestorePasswordFragment : Fragment() {
         toast.show()
     }
 }
-    // https://firebase.google.com/docs/auth/web/manage-users?hl=es
 
 

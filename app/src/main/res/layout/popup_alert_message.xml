@@ -15,6 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text=""
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textAlignment="center"
         android:fontFamily="@font/gotu_regular"
         android:textSize="16sp"/>
 
@@ -29,8 +32,10 @@
         <Button
             android:id="@+id/btOk"
             android:background="@drawable/round_shape"
-            android:text="Aceptar"
+            android:text="@string/ok"
             android:fontFamily="@font/gotu_regular"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

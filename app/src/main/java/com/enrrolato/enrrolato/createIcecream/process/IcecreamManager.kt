@@ -52,7 +52,6 @@ class IcecreamManager {
         if ((flavor.isSpecial && flavor.isLiqueur) && !flavor.isExclusive && flavor.avaliable) { // LICOR
             price -= 1000
         }
-
     }
 
     fun removeTopping(topping: Topping) {
@@ -61,12 +60,9 @@ class IcecreamManager {
         if(listTopping.size >= 2) {
             price -= 400
         }
-
     }
 
     fun addSeasonIcecream(season: SeasonIcecream) {
-        // ESTE SE COGE DE ENRROLATO, NADA MAS SE CAPTURA EL NOMBRE Y SE LLEVA LO QUE TIENE DENTRO
-        // OJO -> SE DEBE BRINCAR TODOS LOS PASOS
         this.season = season
     }
 

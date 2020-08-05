@@ -107,15 +107,14 @@ class SelectContainerFragment : Fragment() {
         else {
             enrrolato.createIceCream().addContainer(containerSelected)
 
-            if(flag) {
+            if (flag) {
                 enrrolato.addListSeason()
-            }
-            else {
+            } else {
                 enrrolato.addList()
             }
+            enrrolato.createIceCream().cleanData()
+            goToCart()
         }
-        enrrolato.createIceCream().cleanData()
-        goToCart()
     }
 
     private fun goToCart() {

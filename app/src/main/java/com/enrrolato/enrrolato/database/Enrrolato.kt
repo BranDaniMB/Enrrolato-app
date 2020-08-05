@@ -1,6 +1,7 @@
 package com.enrrolato.enrrolato.database
 
 import android.app.Application
+import bolts.Bolts
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.objects.*
@@ -249,34 +250,39 @@ class Enrrolato: Application() {
         createIceCream().cleanData()
     }
 
+    fun addFavoriteIcecream(i: Int) {
+        var count = 1
+        val ref = FirebaseDatabase.getInstance().getReference("app/users")
+        var id = getId()
+        var icecream = getList()[i]
+
+        if (id != null) {
+            ref.child(id).child("favorites_icecream").child("favorite_$count").setValue(icecream)
+        }
+        count++
+    }
+
+    fun removeFavoriteIcecream(i: Int) {
+        var count = 1
+        val ref = FirebaseDatabase.getInstance().getReference("app/users")
+        var id = getId()
+
+        if (id != null) {
+            ref.child(id).child("favorites_icecream").child("favorite_$count").removeValue()
+        }
+    }
+
     fun create(): Icecream {
         var id = getId()
-        return Icecream(
-            id,
-            createIceCream().gFlavor(),
-            createIceCream().getFilling(),
-            createIceCream().gTopping(),
-            createIceCream().getContainer(),
-            createIceCream().getPrice(),
-            false,
-            false,
-            false
-        )
+        return Icecream(id, createIceCream().gFlavor(), createIceCream().getFilling(), createIceCream().gTopping(), createIceCream().getContainer(), createIceCream().getPrice(),
+            false, false, false)
     }
 
     fun createSeasonIceCream(): Icecream {
         var id = getId()
-        return Icecream(
-            id,
-            createIceCream().getSeasonIcecream().flavor + ",",
-            createIceCream().getSeasonIcecream().filling,
-            createIceCream().getSeasonIcecream().topping + ",",
-            createIceCream().getContainer(),
-            2900,  //createIceCream().getPrice(), // ESTO HAY QUE CAMBIARLO PERO CON EL AGREGADO DE PRECIOS QUE ESTÁ PRESENTE
-            false,
-            false,
-            false
-        )
+        return Icecream(id, createIceCream().getSeasonIcecream().flavor + ",", createIceCream().getSeasonIcecream().filling, createIceCream().getSeasonIcecream().topping + ",",
+            createIceCream().getContainer(), 2900,  //createIceCream().getPrice(), // ESTO HAY QUE CAMBIARLO PERO CON EL AGREGADO DE PRECIOS QUE ESTÁ PRESENTE
+             false, false, false)
     }
 
     fun addListSeason() {
@@ -291,8 +297,14 @@ class Enrrolato: Application() {
         return list
     }
 
+    /*
     fun setFavorite(i: Int) {
         list[i].favorite = list[i].favorite != true
+    }
+     */
+
+    fun getFavorite(i: Int): Boolean {
+        return list[i].favorite
     }
 
     /*

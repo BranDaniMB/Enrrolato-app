@@ -200,9 +200,6 @@ class FlavorsFragment : Fragment() {
                 af.setOnItemClickListener(object: AdapterIceCream.OnItemClickListener {
                     override fun onDeleteClick(position: Int) {
 
-                        //flavorProcessRemove(af.list[position])
-                        //Toast.makeText(context, "Se eliminó " + af.list[position], Toast.LENGTH_SHORT).show()
-
                         if(listToRecycler.size == 1 || listToRecycler.size == 0) {
                             flavorProcessRemove(af.list[0])
                             Toast.makeText(context, "Se eliminó " + af.list[0], Toast.LENGTH_SHORT).show()
@@ -259,31 +256,5 @@ class FlavorsFragment : Fragment() {
             alertDialog.cancel()
         }
     }
-
-    /*
-    private fun popupMessage(i: Int, a: AdapterIceCream, m: String) {
-        val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
-        val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-        val popupConfirmMessageView = layoutInflater.inflate(R.layout.popup_confirmation_message, null)
-        val msg: TextView = popupConfirmMessageView.findViewById(R.id.txtConfirmMessage)
-        msg.text = m
-        val bt_ok: Button = popupConfirmMessageView.findViewById(R.id.btOk1);
-        val bt_cancel: Button = popupConfirmMessageView.findViewById(R.id.btCancel1);
-        alertDialogBuilder?.setView(popupConfirmMessageView)
-        val alertDialog: AlertDialog = alertDialogBuilder!!.create()
-        alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog
-        alertDialog.show()
-
-        bt_ok.setOnClickListener {
-            alertDialog.cancel()
-            listToRecycler.removeAt(i)
-            a.notifyItemRemoved(i)
-        }
-
-        bt_cancel.setOnClickListener {
-            alertDialog.cancel()
-        }
-    }
-     */
 
 }

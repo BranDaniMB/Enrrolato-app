@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowId
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -50,6 +51,7 @@ class CartScreenFragment : Fragment() {
         })
 
         myOrders()
+        price.text = txtPrice + priceT
 
         if (recyclerCart == null || recyclerCart.adapter == null) {
             noIcecream.visibility = View.VISIBLE
@@ -61,23 +63,19 @@ class CartScreenFragment : Fragment() {
             sendAll.visibility = View.VISIBLE
             price.visibility = View.VISIBLE
         }
-
-        price.text = txtPrice + priceT
-
         sendAll.setOnClickListener {
             sendAllOrders()
         }
         return view
     }
 
-    // ENVIAR TODOS LOS PEDIDOS
     private fun sendAllOrders() {
         enrrolato.sendAllOrders(name.text.toString())
         message("Se ha enviado su orden\n Tiempo estimado 20 minutos\n (Esto puede variar según la cantidad de pedidos en el local)")
         sendAll.isEnabled = false
     }
 
-    // AQUI TIENE QUE MOSTRARSE TODAS LAS ÓRDENES MIAS (INCLUIDAS LAS DEL HISTORIAL(FAVORITAS))
+    // AQUI TIENE QUE MOSTRARSE TODAS LAS ÓRDENES MIAS (INCLUIDAS LAS FAVORITAS)
     private fun myOrders() {
         var list = enrrolato.getList()
 
@@ -95,6 +93,12 @@ class CartScreenFragment : Fragment() {
 
     }
 
+    private fun substractPrice(id: Int) {
+        var list = enrrolato.getList()
+        priceT -= list[id].price
+        price.text = txtPrice + priceT
+    }
+
     private fun showCart(listToRecycler: ArrayList<String>) {
         recyclerCart.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         var af = AdapterCart(listToRecycler)
@@ -103,14 +107,15 @@ class CartScreenFragment : Fragment() {
         // BORRAR UNO DE LA LISTA DE PEDIDOS
         af.setOnItemClickListener(object: AdapterCart.OnItemClickListener {
             override fun onDeleteClick(position: Int) {
-                //Toast.makeText(context, "Se eliminó $position", Toast.LENGTH_SHORT).show()
 
                 if(listToRecycler.size == 1 || listToRecycler.size == 0) {
+                    substractPrice(0)
                     enrrolato.deleteFromList(0)
                     listToRecycler.removeAt(0)
                     af.notifyItemRemoved(0)
                 }
                 else {
+                    substractPrice(position)
                     enrrolato.deleteFromList(position)
                     listToRecycler.removeAt(position)
                     af.notifyItemRemoved(position)

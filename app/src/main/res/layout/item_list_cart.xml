@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginStart="60dp">
+                    android:layout_marginStart="40dp">
 
                     <Button
                         android:id="@+id/btDetails"
@@ -43,21 +43,6 @@
                         android:paddingRight="10dp"
                         android:text="Detalles"
                         android:textSize="16sp" />
-
-                    <!--
-                    <Button
-                        android:id="@+id/btSend"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/round_shape_light"
-                        android:textColor="@color/black"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:layout_marginStart="10dp"
-                        android:text="Enviar"
-                        android:enabled="true"
-                        android:textSize="16sp" />
-                        -->
 
                     <Button
                         android:id="@+id/btDelete"
@@ -71,6 +56,26 @@
                         android:text="Eliminar"
                         android:enabled="true"
                         android:textSize="16sp" />
+
+                    <ImageButton
+                        android:id="@+id/favoriteDisabled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_light_star"
+                        android:background="@color/black"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="5dp"
+                        android:visibility="visible"/>
+
+                    <ImageButton
+                        android:id="@+id/favoriteEnabled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_dark_star"
+                        android:background="@color/black"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="-35dp"
+                        android:visibility="invisible"/>
 
                 </LinearLayout>
 

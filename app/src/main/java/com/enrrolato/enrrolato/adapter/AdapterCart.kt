@@ -60,6 +60,7 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
         var favoriteEnabled: ImageButton = itemView.findViewById(R.id.favoriteEnabled)
         var id: Int = 0
         var uName = ""
+        var idFavorite = ""
 
         fun asignData(eData: String) {
             data.setText(eData)
@@ -87,11 +88,22 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
                 }
 
                 R.id.favoriteDisabled -> {
-                    fav(id)
+                    if(!enrrolato.getFavorite(id)) {
+                        favoriteDisabled.visibility = View.INVISIBLE
+                        enrrolato.addFavoriteIcecream(id)
+                        idFavorite = enrrolato.catchFavorite()
+                        favoriteEnabled.visibility = View.VISIBLE
+                        enrrolato.setFavorite(id)
+                    }
                 }
 
                 R.id.favoriteEnabled -> {
-                    fav(id)
+                    if(enrrolato.getFavorite(id)) {
+                        favoriteDisabled.visibility = View.VISIBLE
+                        enrrolato.removeFavoriteIcecream(idFavorite)
+                        favoriteEnabled.visibility = View.INVISIBLE
+                        enrrolato.setFavorite(id)
+                    }
                 }
             }
         }
@@ -113,24 +125,5 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
             transaction.addToBackStack(null)
             transaction.commit()
         }
-
-        private fun fav(id: Int) {
-            if(enrrolato.getFavorite(id)) {
-                favoriteDisabled.visibility = View.VISIBLE
-                favoriteEnabled.visibility = View.INVISIBLE
-                enrrolato.addFavoriteIcecream(id)
-                //enrrolato.setFavorite(id)
-                // EN VEZ DEL SET_FAVORITE VA SE VA A CREAR UNA RAMA NUEVA CON LOS HELADOS SELECCIONADOS
-            }
-            else {
-                favoriteDisabled.visibility = View.INVISIBLE
-                favoriteEnabled.visibility = View.VISIBLE
-                enrrolato.removeFavoriteIcecream(id)
-                //enrrolato.setFavorite(id)
-                // AQUI HAY QUE ELIMINAR DE LA BASE DE DATOS
-            }
-        }
-
-
     }
 }

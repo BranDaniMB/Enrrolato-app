@@ -28,6 +28,8 @@ class Enrrolato: Application() {
     var listContainers: ArrayList<Container> = ArrayList()
     var listSeasonIcecream: ArrayList<SeasonIcecream> = ArrayList()
     var listPrices: ArrayList<Price> = ArrayList()
+    private var count = 1
+    private lateinit var df: String
     val String.toBoolean
         get() = this == "1"
 
@@ -251,25 +253,34 @@ class Enrrolato: Application() {
     }
 
     fun addFavoriteIcecream(i: Int) {
-        var count = 1
         val ref = FirebaseDatabase.getInstance().getReference("app/users")
         var id = getId()
         var icecream = getList()[i]
 
         if (id != null) {
-            ref.child(id).child("favorites_icecream").child("favorite_$count").setValue(icecream)
+            ref.child(id).child("favorites_icecream").push().setValue(icecream)
+            favorite(ref.child(id).child("favorites_icecream").push())
         }
         count++
     }
 
-    fun removeFavoriteIcecream(i: Int) {
+    // PROBLEMA CON EL CONTADOR ¿CÓMO SE OBTIENE?
+    fun removeFavoriteIcecream(idFavorite: String) {
         var count = 1
         val ref = FirebaseDatabase.getInstance().getReference("app/users")
         var id = getId()
 
         if (id != null) {
-            ref.child(id).child("favorites_icecream").child("favorite_$count").removeValue()
+            ref.child(id).child("favorites_icecream").setValue(null)
         }
+    }
+
+    private fun favorite(df: DatabaseReference) {
+        this.df = df.toString()
+    }
+
+    fun catchFavorite(): String {
+        return df
     }
 
     fun create(): Icecream {
@@ -297,11 +308,11 @@ class Enrrolato: Application() {
         return list
     }
 
-    /*
+
     fun setFavorite(i: Int) {
         list[i].favorite = list[i].favorite != true
     }
-     */
+
 
     fun getFavorite(i: Int): Boolean {
         return list[i].favorite

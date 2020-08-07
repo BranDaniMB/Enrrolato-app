@@ -29,7 +29,7 @@ class Enrrolato: Application() {
     var listSeasonIcecream: ArrayList<SeasonIcecream> = ArrayList()
     var listPrices: ArrayList<Price> = ArrayList()
     private var count = 1
-    private lateinit var df: String
+    private var df: String? = ""
     val String.toBoolean
         get() = this == "1"
 
@@ -258,28 +258,29 @@ class Enrrolato: Application() {
         var icecream = getList()[i]
 
         if (id != null) {
-            ref.child(id).child("favorites_icecream").push().setValue(icecream)
-            favorite(ref.child(id).child("favorites_icecream").push())
+            var d = ref.child(id).child("favorites_icecream").push()
+            favorite(d.key)
+            d.setValue(icecream)
         }
         count++
     }
 
     // PROBLEMA CON EL CONTADOR ¿CÓMO SE OBTIENE?
-    fun removeFavoriteIcecream(idFavorite: String) {
-        var count = 1
-        val ref = FirebaseDatabase.getInstance().getReference("app/users")
+    fun removeFavoriteIcecream(idFavorite: String?) {
+        //var count = 1
         var id = getId()
+        val ref = FirebaseDatabase.getInstance().getReference("app/users")
 
-        if (id != null) {
-            ref.child(id).child("favorites_icecream").setValue(null)
+        if (id != null && idFavorite != null) {
+            ref.child(id).child("favorites_icecream").child(idFavorite).removeValue()
         }
     }
 
-    private fun favorite(df: DatabaseReference) {
-        this.df = df.toString()
+    private fun favorite(df: String?) {
+        this.df = df
     }
 
-    fun catchFavorite(): String {
+    fun catchFavorite(): String? {
         return df
     }
 

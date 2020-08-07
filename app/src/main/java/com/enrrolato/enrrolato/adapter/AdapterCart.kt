@@ -60,7 +60,7 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
         var favoriteEnabled: ImageButton = itemView.findViewById(R.id.favoriteEnabled)
         var id: Int = 0
         var uName = ""
-        var idFavorite = ""
+        var idFavorite: String? = ""
 
         fun asignData(eData: String) {
             data.setText(eData)

@@ -95,6 +95,12 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
                         favoriteEnabled.visibility = View.VISIBLE
                         enrrolato.setFavorite(id)
                     }
+
+                    if(enrrolato.getFavorite(id) && favoriteDisabled.visibility == 0) {
+                        favoriteDisabled.visibility = View.INVISIBLE
+                        favoriteEnabled.visibility = View.VISIBLE
+                    }
+
                 }
 
                 R.id.favoriteEnabled -> {

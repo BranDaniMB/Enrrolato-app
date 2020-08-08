@@ -1,18 +1,11 @@
 package com.enrrolato.enrrolato.database
 
 import android.app.Application
-import bolts.Bolts
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
 import com.enrrolato.enrrolato.objects.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-
-enum class ProviderType {
-    BASIC,
-    GOOGLE,
-    FACEBOOK
-}
 
 class Enrrolato: Application() {
 
@@ -28,7 +21,6 @@ class Enrrolato: Application() {
     var listContainers: ArrayList<Container> = ArrayList()
     var listSeasonIcecream: ArrayList<SeasonIcecream> = ArrayList()
     var listPrices: ArrayList<Price> = ArrayList()
-    private var count = 1
     private var df: String? = ""
     val String.toBoolean
         get() = this == "1"
@@ -140,7 +132,8 @@ class Enrrolato: Application() {
                         Container(
                             value["name"]!!,
                             value["avaliable"]!!.toBoolean,
-                            value["isExclusive"]!!.toBoolean
+                            value["isExclusive"]!!.toBoolean,
+                            value["price"]!!.toInt()
                         )
                     )
                 }
@@ -181,6 +174,30 @@ class Enrrolato: Application() {
         refSeason.addValueEventListener(seasonListener)
     }
 
+    private fun loadPrices() {
+        // Acceder a la base de datos e inicializar las variables necesarias
+        val refPrices = database.getReference("business/prices")
+
+        val pricesListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val temp: HashMap<String, String> = dataSnapshot.getValue(false) as HashMap<String, String>
+                listPrices.clear()
+                for (value in temp) {
+                    listPrices.add(
+                        Price(value.key, value.value))
+                }
+                println("Prices: " + listPrices.size)
+
+                for(l in listPrices) {
+                    println("OJO AQUI = " + l.type + " - " + l.price + "\n")
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        }
+        refPrices.addValueEventListener(pricesListener)
+    }
+
     fun initUser(id: String?, username: String?) {
         user = User(username)
         val ref = database.getReference(applicationContext.getString(R.string.db_app_users))
@@ -209,14 +226,12 @@ class Enrrolato: Application() {
     }
 
     fun getUsername(): DatabaseReference {
-        return FirebaseDatabase.getInstance()
-            .getReference(applicationContext.getString(R.string.db_app_users) + "/" + getId())
+        return FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users) + "/" + getId())
     }
 
     fun setUsername(u: String) {
         var id: String? = getId()
-        val ref = FirebaseDatabase.getInstance()
-            .getReference(applicationContext.getString(R.string.db_app_users) + "/" + id)
+        val ref = FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users) + "/" + id)
 
         if (id != null) {
             ref.setValue(User(u))
@@ -229,6 +244,7 @@ class Enrrolato: Application() {
         loadToppings()
         loadContainers()
         loadSeason()
+        loadPrices()
     }
 
     fun createIceCream(): IcecreamManager {
@@ -262,12 +278,9 @@ class Enrrolato: Application() {
             favorite(d.key)
             d.setValue(icecream)
         }
-        count++
     }
 
-    // PROBLEMA CON EL CONTADOR ¿CÓMO SE OBTIENE?
     fun removeFavoriteIcecream(idFavorite: String?) {
-        //var count = 1
         var id = getId()
         val ref = FirebaseDatabase.getInstance().getReference("app/users")
 
@@ -284,17 +297,20 @@ class Enrrolato: Application() {
         return df
     }
 
+    fun showFavorites() {
+        // CODE HERE
+    }
+
     fun create(): Icecream {
         var id = getId()
-        return Icecream(id, createIceCream().gFlavor(), createIceCream().getFilling(), createIceCream().gTopping(), createIceCream().getContainer(), createIceCream().getPrice(),
-            false, false, false)
+        return Icecream(id, createIceCream().gFlavor(), createIceCream().getFilling(), createIceCream().gTopping(), createIceCream().getContainer(),
+            createIceCream().getPrice(),false, false, false)
     }
 
     fun createSeasonIceCream(): Icecream {
         var id = getId()
         return Icecream(id, createIceCream().getSeasonIcecream().flavor + ",", createIceCream().getSeasonIcecream().filling, createIceCream().getSeasonIcecream().topping + ",",
-            createIceCream().getContainer(), 2900,  //createIceCream().getPrice(), // ESTO HAY QUE CAMBIARLO PERO CON EL AGREGADO DE PRECIOS QUE ESTÁ PRESENTE
-             false, false, false)
+            createIceCream().getContainer(), createIceCream().getSeasonPrice(), false, false, false)
     }
 
     fun addListSeason() {
@@ -309,11 +325,9 @@ class Enrrolato: Application() {
         return list
     }
 
-
     fun setFavorite(i: Int) {
         list[i].favorite = list[i].favorite != true
     }
-
 
     fun getFavorite(i: Int): Boolean {
         return list[i].favorite

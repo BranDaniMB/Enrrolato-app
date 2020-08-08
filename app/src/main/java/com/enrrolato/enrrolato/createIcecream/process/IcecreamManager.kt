@@ -11,9 +11,10 @@ class IcecreamManager {
 
     private var listFlavor: ArrayList<Flavor> = ArrayList()
     private var listTopping: ArrayList<Topping> = ArrayList()
+    private var pm: PriceManager = PriceManager()
     private var filling: String = ""
     private var container: String = ""
-    private var price: Int = 2000
+    private var price = 0
     private var flavor: String = ""
     private var topping: String = ""
     private lateinit var season: SeasonIcecream
@@ -24,11 +25,13 @@ class IcecreamManager {
 
         if (flavor.isSpecial && !flavor.isLiqueur && flavor.avaliable) { // DEFAULT
             addFilling("leche condensada")
-            price += 900
+            price += pm.getSpecialPrice()
         }
-
-        if ((flavor.isSpecial && flavor.isLiqueur) && !flavor.isExclusive && flavor.avaliable) { // LICOR
-            price += 1000
+        else if ((flavor.isSpecial && flavor.isLiqueur) && !flavor.isExclusive && flavor.avaliable) { // LICOR
+            price += pm.getLiqueurPrice()
+        }
+        else {
+          price += pm.getRegularPrice()
         }
     }
 
@@ -50,7 +53,7 @@ class IcecreamManager {
         listFlavor.remove(flavor)
 
         if ((flavor.isSpecial && flavor.isLiqueur) && !flavor.isExclusive && flavor.avaliable) { // LICOR
-            price -= 1000
+            price -= pm.getLiqueurPrice()
         }
     }
 
@@ -58,7 +61,7 @@ class IcecreamManager {
         listTopping.remove(topping)
 
         if(listTopping.size >= 2) {
-            price -= 400
+            price -= pm.getRegularPrice()
         }
     }
 
@@ -77,13 +80,13 @@ class IcecreamManager {
         }
 
         if (listTopping.size > 2) {
-            price += 400
+            price += pm.getExtraTopping()
         }
     }
 
     fun addContainer(container: String) {
         if (container.equals("cono")) {
-            price += 500
+            price += pm.getSpecialContainer()
         }
         this.container = container
     }
@@ -99,6 +102,11 @@ class IcecreamManager {
     }
 
     fun getPrice(): Int {
+        return price
+    }
+
+    fun getSeasonPrice(): Int {
+        price += pm.getSeasonPrice()
         return price
     }
 
@@ -124,7 +132,7 @@ class IcecreamManager {
         filling = ""
         topping = ""
         container = ""
-        price = 2000
+        price = 0
         count = 0
     }
 

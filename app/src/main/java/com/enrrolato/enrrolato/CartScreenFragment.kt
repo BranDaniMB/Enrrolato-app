@@ -79,6 +79,12 @@ class CartScreenFragment : Fragment() {
     private fun myOrders() {
         var list = enrrolato.getList()
 
+        // AQUI TIENE QUE CAPTURARSE LAS ÓRDENES QUE YA SE HAYAN HECHO
+        // PERO SIMBOLIZAR DE ALGUNA MANERA QUE SOLO ESTAN PARA INFORMACION
+
+        //enrrolato.showFavorites(enrrolato.getId())
+        //enrrolato.chargeFavorites()
+
         for(l2 in list) {
             if(l2.id.equals(enrrolato.getId())) {
               listToRecycler.add("Sabores: " + l2.flavor.substring(0, l2.flavor.length - 1) + "\nJarabe: " + l2.filling + "\nToppings: " + l2.topping.substring(0, l2.topping.length - 1) +
@@ -87,10 +93,6 @@ class CartScreenFragment : Fragment() {
                 priceT += l2.price
             }
         }
-
-        // AQUI TIENE QUE CAPTURARSE LAS ÓRDENES QUE YA SE HAYAN HECHO
-        // PERO SIMBOLIZAR DE ALGUNA MANERA QUE SOLO ESTAN PARA INFORMACION
-
     }
 
     private fun substractPrice(id: Int) {

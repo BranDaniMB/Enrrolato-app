@@ -1,5 +1,6 @@
 package com.enrrolato.enrrolato.createIcecream.process
 
+import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.objects.Flavor
 import com.enrrolato.enrrolato.objects.SeasonIcecream
 import com.enrrolato.enrrolato.objects.Topping
@@ -11,7 +12,7 @@ class IcecreamManager {
 
     private var listFlavor: ArrayList<Flavor> = ArrayList()
     private var listTopping: ArrayList<Topping> = ArrayList()
-    private var pm: PriceManager = PriceManager()
+    private var pm: PriceManager
     private var filling: String = ""
     private var container: String = ""
     private var price = 0
@@ -19,19 +20,25 @@ class IcecreamManager {
     private var topping: String = ""
     private lateinit var season: SeasonIcecream
     private var count: Int = 0
+    private lateinit var enrrolato: Enrrolato
+
+    constructor(e: Enrrolato) {
+        enrrolato = e
+        pm = PriceManager(enrrolato)
+    }
 
     fun addFlavor(flavor: Flavor) {
         listFlavor.add(flavor)
 
         if (flavor.isSpecial && !flavor.isLiqueur && flavor.avaliable) { // DEFAULT
             addFilling("leche condensada")
-            price += pm.getSpecialPrice()
+            price = pm.getSpecialPrice()
         }
         else if ((flavor.isSpecial && flavor.isLiqueur) && !flavor.isExclusive && flavor.avaliable) { // LICOR
-            price += pm.getLiqueurPrice()
+            price = pm.getLiqueurPrice()
         }
         else {
-          price += pm.getRegularPrice()
+          price = pm.getRegularPrice()
         }
     }
 
@@ -106,7 +113,7 @@ class IcecreamManager {
     }
 
     fun getSeasonPrice(): Int {
-        price += pm.getSeasonPrice()
+        price = pm.getSeasonPrice()
         return price
     }
 
@@ -118,12 +125,14 @@ class IcecreamManager {
         return container
     }
 
+    /*
     fun isEmpty(): Boolean {
         if(flavor.equals("") && listFlavor.isEmpty() && filling.equals("") && topping.equals("") && listTopping.isEmpty() && container.equals("")) {
             return true
         }
         return false
     }
+     */
 
     fun cleanData() {
         flavor = ""

@@ -3,14 +3,16 @@ package com.enrrolato.enrrolato.database
 import android.app.Application
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
+import com.enrrolato.enrrolato.createIcecream.process.Manager
 import com.enrrolato.enrrolato.objects.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class Enrrolato: Application() {
 
-    private var manager: IcecreamManager = IcecreamManager()
+    //private var managerIcecream: IcecreamManager = IcecreamManager()
     private var list: ArrayList<Icecream> = ArrayList()
+    private lateinit var manager : Manager
 
     private val database: FirebaseDatabase
         get() = FirebaseDatabase.getInstance()
@@ -21,6 +23,7 @@ class Enrrolato: Application() {
     var listContainers: ArrayList<Container> = ArrayList()
     var listSeasonIcecream: ArrayList<SeasonIcecream> = ArrayList()
     var listPrices: ArrayList<Price> = ArrayList()
+    var listFavorites: ArrayList<Icecream> = ArrayList()
     private var df: String? = ""
     val String.toBoolean
         get() = this == "1"
@@ -29,11 +32,16 @@ class Enrrolato: Application() {
         super.onCreate()
         instance = this
         update()
+        initialize()
     }
 
     companion object {
         lateinit var instance: Enrrolato
             private set
+    }
+
+    private fun initialize() {
+        manager = Manager(instance)
     }
 
     private fun loadFlavors() {
@@ -164,7 +172,9 @@ class Enrrolato: Application() {
                             value["container"]!!,
                             value["isSpecial"]!!.toBoolean,
                             value["isLiqueur"]!!.toBoolean,
-                            value["avaliable"]!!.toBoolean))
+                            value["avaliable"]!!.toBoolean
+                        )
+                    )
                 }
                 println("Season: " + listSeasonIcecream.size)
             }
@@ -180,22 +190,58 @@ class Enrrolato: Application() {
 
         val pricesListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val temp: HashMap<String, String> = dataSnapshot.getValue(false) as HashMap<String, String>
+                val temp: HashMap<String, String> =
+                    dataSnapshot.getValue(false) as HashMap<String, String>
                 listPrices.clear()
                 for (value in temp) {
                     listPrices.add(
-                        Price(value.key, value.value))
+                        Price(value.key, value.value)
+                    )
                 }
                 println("Prices: " + listPrices.size)
 
-                for(l in listPrices) {
+                /*
+                for (l in listPrices) {
                     println("OJO AQUI = " + l.type + " - " + l.price + "\n")
                 }
+                 */
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
         }
         refPrices.addValueEventListener(pricesListener)
+    }
+
+    private fun loadFavorites(id: String?) {
+        // Acceder a la base de datos e inicializar las variables necesarias
+        val refFavorites = database.getReference("users/" + id + "/favorites_ice_cream")
+
+        val favoritesListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val temp: HashMap<String, HashMap<String, String>> =
+                    dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
+                listFavorites.clear()
+                for ((key, value) in temp) {
+                    listFavorites.add(
+                        Icecream(
+                            value["id"],
+                            value["flavor"]!!,
+                            value["filling"]!!,
+                            value["topping"]!!,
+                            value["container"]!!,
+                            value["price"]!!.toInt(),
+                            value["delivered"]!!.toBoolean,
+                            value["favorite"]!!.toBoolean,
+                            value["sent"]!!.toBoolean
+                        )
+                    )
+                }
+                println("Favorites: " + listFavorites.size)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        }
+        refFavorites.addValueEventListener(favoritesListener)
     }
 
     fun initUser(id: String?, username: String?) {
@@ -226,12 +272,14 @@ class Enrrolato: Application() {
     }
 
     fun getUsername(): DatabaseReference {
-        return FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users) + "/" + getId())
+        return FirebaseDatabase.getInstance()
+            .getReference(applicationContext.getString(R.string.db_app_users) + "/" + getId())
     }
 
     fun setUsername(u: String) {
         var id: String? = getId()
-        val ref = FirebaseDatabase.getInstance().getReference(applicationContext.getString(R.string.db_app_users) + "/" + id)
+        val ref = FirebaseDatabase.getInstance()
+            .getReference(applicationContext.getString(R.string.db_app_users) + "/" + id)
 
         if (id != null) {
             ref.setValue(User(u))
@@ -247,25 +295,25 @@ class Enrrolato: Application() {
         loadPrices()
     }
 
-    fun createIceCream(): IcecreamManager {
+    fun createIcecream(): Manager {
         return manager
     }
 
     fun sendAllOrders(username: String?) {
         var count = 0
         val ref = FirebaseDatabase.getInstance().getReference("app/orders")
-        var date = createIceCream().getDate()
+        var date = manager.getIcecreamManager().getDate()
 
         ref.child(date).child("username").setValue(username)
 
         for (l in getList()) {
             if (!l.sent) {
                 setSent(count)
-                count ++
+                count++
                 ref.child(date).child("icecream_$count").setValue(l)
             }
         }
-        createIceCream().cleanData()
+        manager.getIcecreamManager().cleanData()
     }
 
     fun addFavoriteIcecream(i: Int) {
@@ -297,28 +345,28 @@ class Enrrolato: Application() {
         return df
     }
 
-    fun showFavorites() {
-        // CODE HERE
+    fun showFavorites(id: String?) {
+        if(listFavorites.isEmpty()) {
+            loadFavorites(id)
+        }
     }
 
-    fun create(): Icecream {
-        var id = getId()
-        return Icecream(id, createIceCream().gFlavor(), createIceCream().getFilling(), createIceCream().gTopping(), createIceCream().getContainer(),
-            createIceCream().getPrice(),false, false, false)
-    }
-
-    fun createSeasonIceCream(): Icecream {
-        var id = getId()
-        return Icecream(id, createIceCream().getSeasonIcecream().flavor + ",", createIceCream().getSeasonIcecream().filling, createIceCream().getSeasonIcecream().topping + ",",
-            createIceCream().getContainer(), createIceCream().getSeasonPrice(), false, false, false)
+    fun chargeFavorites() {
+        for(l in listFavorites) {
+            list.add(l)
+        }
     }
 
     fun addListSeason() {
-        list.add(createSeasonIceCream())
+        var id = getId()
+        list.add(manager.createSeasonIceCream(id))
+        manager.getIcecreamManager().cleanData()
     }
 
     fun addList() {
-        list.add(create())
+        var id = getId()
+        list.add(manager.create(id))
+        manager.getIcecreamManager().cleanData()
     }
 
     fun getList(): ArrayList<Icecream> {
@@ -332,12 +380,6 @@ class Enrrolato: Application() {
     fun getFavorite(i: Int): Boolean {
         return list[i].favorite
     }
-
-    /*
-    fun isEmpty(): Boolean {
-        return manager.isEmpty()
-    }
-     */
 
     private fun setSent(i: Int) {
         list[i].sent = true

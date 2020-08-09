@@ -82,7 +82,7 @@ class SelectContainerFragment : Fragment() {
     }
 
     private fun newIcecream() {
-        enrrolato.createIceCream().cleanData()
+        enrrolato.createIcecream().getIcecreamManager().cleanData()
         val fragment = DefaultFlavorFragment()
         val fm = requireActivity().supportFragmentManager
         val transaction = fm.beginTransaction()
@@ -105,14 +105,14 @@ class SelectContainerFragment : Fragment() {
             errorContainer(getString(R.string.no_container))
         }
         else {
-            enrrolato.createIceCream().addContainer(containerSelected)
+            enrrolato.createIcecream().getIcecreamManager().addContainer(containerSelected)
 
             if (flag) {
                 enrrolato.addListSeason()
             } else {
                 enrrolato.addList()
             }
-            enrrolato.createIceCream().cleanData()
+            enrrolato.createIcecream().getIcecreamManager().cleanData()
             goToCart()
         }
     }
@@ -130,7 +130,7 @@ class SelectContainerFragment : Fragment() {
         if (containerSelected.equals(getString(R.string.container_selector))) {
             errorContainer(getString(R.string.no_container))
         } else {
-            enrrolato.createIceCream().addContainer(containerSelected)
+            enrrolato.createIcecream().getIcecreamManager().addContainer(containerSelected)
 
             if(flag) {
                 enrrolato.addListSeason()

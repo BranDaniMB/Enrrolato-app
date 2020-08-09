@@ -163,7 +163,7 @@ class FlavorsFragment : Fragment() {
     private fun flavorProcess(f: String) {
         for(l in listAux) {
             if(l.name.equals(f)) {
-                enrrolato.createIceCream().addFlavor(l)
+                enrrolato.createIcecream().getIcecreamManager().addFlavor(l)
             }
         }
     }
@@ -171,7 +171,7 @@ class FlavorsFragment : Fragment() {
     private fun flavorProcessRemove(f: String) {
         for(l in listAux) {
             if(l.name.equals(f)) {
-                enrrolato.createIceCream().removeFlavor(l)
+                enrrolato.createIcecream().getIcecreamManager().removeFlavor(l)
             }
         }
     }

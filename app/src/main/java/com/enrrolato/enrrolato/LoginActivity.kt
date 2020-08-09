@@ -99,7 +99,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setup() {
-
         // Da error si la cuenta no esta registrada
         loginBtn.setOnClickListener {
             if (!emailField2.text.isNullOrEmpty() && !passwordField.text.isNullOrEmpty()) {

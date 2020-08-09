@@ -6,9 +6,15 @@ import com.enrrolato.enrrolato.objects.Price
 
 class PriceManager {
 
-    private var enrrolato = Enrrolato.instance
-    private var listPrices: ArrayList<Price> = enrrolato.listPrices
-    private var listContainer: ArrayList<Container> = enrrolato.listContainers
+    private var enrrolato:Enrrolato
+    private var listPrices: ArrayList<Price>
+    private var listContainer: ArrayList<Container>
+
+    constructor(e: Enrrolato) {
+        enrrolato = e
+        listPrices = enrrolato.listPrices
+        listContainer = enrrolato.listContainers
+    }
 
     fun getRegularPrice(): Int {
         for(l in listPrices) {

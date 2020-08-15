@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import com.enrrolato.enrrolato.CartScreenFragment
 import com.enrrolato.enrrolato.PrincipalMenuFragment
 import com.enrrolato.enrrolato.R
+import com.enrrolato.enrrolato.createIcecream.process.Manager
 import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.objects.Flavor
 import com.enrrolato.enrrolato.objects.SeasonIcecream
@@ -123,11 +124,11 @@ class DefaultFlavorFragment : Fragment() {
 
                 if (!list.name.equals(f)) {
                     if (list2.name.equals(f)) {
-                        enrrolato.createIceCream().addSeasonIcecream(list2)
+                        enrrolato.createIcecream().getIcecreamManager().addSeasonIcecream(list2)
                         return true
                     }
                 } else {
-                    enrrolato.createIceCream().addFlavor(list)
+                    enrrolato.createIcecream().getIcecreamManager().addFlavor(list)
                     return false
                 }
             }

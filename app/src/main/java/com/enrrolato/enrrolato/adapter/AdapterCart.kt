@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -55,8 +56,11 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
         var data: TextView = itemView.findViewById(R.id.itemCart)
         var details: Button = itemView.findViewById(R.id.btDetails)
         var delete: Button = itemView.findViewById(R.id.btDelete)
+        var favoriteDisabled: ImageButton = itemView.findViewById(R.id.favoriteDisabled)
+        var favoriteEnabled: ImageButton = itemView.findViewById(R.id.favoriteEnabled)
         var id: Int = 0
         var uName = ""
+        var idFavorite: String? = ""
 
         fun asignData(eData: String) {
             data.setText(eData)
@@ -64,6 +68,8 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
 
         fun clickListener(position: Int) {
             details.setOnClickListener(this)
+            favoriteEnabled.setOnClickListener(this)
+            favoriteDisabled.setOnClickListener(this)
             id = position
 
             enrrolato.getUsername().addValueEventListener(object : ValueEventListener {
@@ -79,6 +85,31 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
             when (v?.id) {
                 R.id.btDetails -> {
                     goToDetail(id)
+                }
+
+                R.id.favoriteDisabled -> {
+                    if(!enrrolato.getFavorite(id)) {
+                        favoriteDisabled.visibility = View.INVISIBLE
+                        enrrolato.addFavoriteIcecream(id)
+                        idFavorite = enrrolato.catchFavorite()
+                        favoriteEnabled.visibility = View.VISIBLE
+                        enrrolato.setFavorite(id)
+                    }
+
+                    if(enrrolato.getFavorite(id) && favoriteDisabled.visibility == 0) {
+                        favoriteDisabled.visibility = View.INVISIBLE
+                        favoriteEnabled.visibility = View.VISIBLE
+                    }
+
+                }
+
+                R.id.favoriteEnabled -> {
+                    if(enrrolato.getFavorite(id)) {
+                        favoriteDisabled.visibility = View.VISIBLE
+                        enrrolato.removeFavoriteIcecream(idFavorite)
+                        favoriteEnabled.visibility = View.INVISIBLE
+                        enrrolato.setFavorite(id)
+                    }
                 }
             }
         }
@@ -100,25 +131,5 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
             transaction.addToBackStack(null)
             transaction.commit()
         }
-
-        /*
-        private fun confirmation(msg: String) {
-            val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
-            val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-            val popup = layoutInflater.inflate(R.layout.popup_alert_message, null)
-            val message = popup.findViewById<View>(R.id.txtMessage) as TextView
-            message.text = msg
-            val bt_ok: Button = popup.findViewById(R.id.btOk);
-            alertDialogBuilder?.setView(popup)
-            val alertDialog: AlertDialog = alertDialogBuilder!!.create()
-            alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog
-            alertDialog.show()
-
-            bt_ok.setOnClickListener {
-                alertDialog.cancel()
-            }
-        }
-       */
-
     }
 }

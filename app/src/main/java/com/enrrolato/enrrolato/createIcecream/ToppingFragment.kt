@@ -103,7 +103,7 @@ class ToppingFragment : Fragment() {
     private fun addToppingProcess(t: String) {
         for(l in listAux) {
             if(l.name.equals(t)) {
-                enrrolato.createIceCream().addTopping(l)
+                enrrolato.createIcecream().getIcecreamManager().addTopping(l)
             }
         }
     }
@@ -111,7 +111,7 @@ class ToppingFragment : Fragment() {
     private fun removeToppingProcess(t: String) {
         for(l in listTopping) {
             if(l.name.equals(t)) {
-                enrrolato.createIceCream().removeTopping(l)
+                enrrolato.createIcecream().getIcecreamManager().removeTopping(l)
             }
         }
     }

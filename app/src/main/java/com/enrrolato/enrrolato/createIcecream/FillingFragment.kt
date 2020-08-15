@@ -47,7 +47,7 @@ class FillingFragment : Fragment() {
                 errorPopup(getString(R.string.no_filling))
             }
             else {
-                enrrolato.createIceCream().addFilling(fillingSelected)
+                enrrolato.createIcecream().getIcecreamManager().addFilling(fillingSelected)
 
                 val fragment = ToppingFragment()
                 val fm = requireActivity().supportFragmentManager

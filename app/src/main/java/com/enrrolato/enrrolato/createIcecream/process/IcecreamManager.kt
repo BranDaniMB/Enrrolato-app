@@ -1,5 +1,6 @@
 package com.enrrolato.enrrolato.createIcecream.process
 
+import com.enrrolato.enrrolato.database.Enrrolato
 import com.enrrolato.enrrolato.objects.Flavor
 import com.enrrolato.enrrolato.objects.SeasonIcecream
 import com.enrrolato.enrrolato.objects.Topping
@@ -11,24 +12,33 @@ class IcecreamManager {
 
     private var listFlavor: ArrayList<Flavor> = ArrayList()
     private var listTopping: ArrayList<Topping> = ArrayList()
+    private var pm: PriceManager
     private var filling: String = ""
     private var container: String = ""
-    private var price: Int = 2000
+    private var price = 0
     private var flavor: String = ""
     private var topping: String = ""
     private lateinit var season: SeasonIcecream
     private var count: Int = 0
+    private lateinit var enrrolato: Enrrolato
+
+    constructor(e: Enrrolato) {
+        enrrolato = e
+        pm = PriceManager(enrrolato)
+    }
 
     fun addFlavor(flavor: Flavor) {
         listFlavor.add(flavor)
 
         if (flavor.isSpecial && !flavor.isLiqueur && flavor.avaliable) { // DEFAULT
             addFilling("leche condensada")
-            price += 900
+            price = pm.getSpecialPrice()
         }
-
-        if ((flavor.isSpecial && flavor.isLiqueur) && !flavor.isExclusive && flavor.avaliable) { // LICOR
-            price += 1000
+        else if ((flavor.isSpecial && flavor.isLiqueur) && !flavor.isExclusive && flavor.avaliable) { // LICOR
+            price = pm.getLiqueurPrice()
+        }
+        else {
+          price = pm.getRegularPrice()
         }
     }
 
@@ -50,23 +60,19 @@ class IcecreamManager {
         listFlavor.remove(flavor)
 
         if ((flavor.isSpecial && flavor.isLiqueur) && !flavor.isExclusive && flavor.avaliable) { // LICOR
-            price -= 1000
+            price -= pm.getLiqueurPrice()
         }
-
     }
 
     fun removeTopping(topping: Topping) {
         listTopping.remove(topping)
 
         if(listTopping.size >= 2) {
-            price -= 400
+            price -= pm.getRegularPrice()
         }
-
     }
 
     fun addSeasonIcecream(season: SeasonIcecream) {
-        // ESTE SE COGE DE ENRROLATO, NADA MAS SE CAPTURA EL NOMBRE Y SE LLEVA LO QUE TIENE DENTRO
-        // OJO -> SE DEBE BRINCAR TODOS LOS PASOS
         this.season = season
     }
 
@@ -81,13 +87,13 @@ class IcecreamManager {
         }
 
         if (listTopping.size > 2) {
-            price += 400
+            price += pm.getExtraTopping()
         }
     }
 
     fun addContainer(container: String) {
         if (container.equals("cono")) {
-            price += 500
+            price += pm.getSpecialContainer()
         }
         this.container = container
     }
@@ -106,6 +112,11 @@ class IcecreamManager {
         return price
     }
 
+    fun getSeasonPrice(): Int {
+        price = pm.getSeasonPrice()
+        return price
+    }
+
     fun getFilling(): String {
         return filling
     }
@@ -114,12 +125,14 @@ class IcecreamManager {
         return container
     }
 
+    /*
     fun isEmpty(): Boolean {
         if(flavor.equals("") && listFlavor.isEmpty() && filling.equals("") && topping.equals("") && listTopping.isEmpty() && container.equals("")) {
             return true
         }
         return false
     }
+     */
 
     fun cleanData() {
         flavor = ""
@@ -128,7 +141,7 @@ class IcecreamManager {
         filling = ""
         topping = ""
         container = ""
-        price = 2000
+        price = 0
         count = 0
     }
 

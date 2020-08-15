@@ -85,21 +85,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        var id = prefs.getString("id", null)
-        val email = prefs.getString("email", null)
+        val id = prefs.getString("id", null)
         val username = prefs.getString("username", null)
-        //val provider = prefs.getString("provider", null)
 
-        if (email != null) {
-            if (id != null) {
-                Enrrolato.instance.initUser(id,  username)
-            }
+        if (id != null) {
+            Enrrolato.instance.initUser(id, username)
             showMenu(id, username)
         }
     }
 
     private fun setup() {
-
         // Da error si la cuenta no esta registrada
         loginBtn.setOnClickListener {
             if (!emailField2.text.isNullOrEmpty() && !passwordField.text.isNullOrEmpty()) {
@@ -194,8 +189,6 @@ class LoginActivity : AppCompatActivity() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
         prefs.putString("id", id)
         prefs.putString("username", username)
-        //prefs.putString("email", email)
-        //prefs.putString("provider", provider.name)
         prefs.apply()
         startActivity(menuIntent)
         finish()

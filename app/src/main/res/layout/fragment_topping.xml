@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/cyan"
     android:orientation="vertical"
-    tools:context=".createIcecream.ToppingFragment"
+    tools:context=".createIceCream.ToppingFragment"
     android:id="@+id/ly_topping">
 
     <androidx.core.widget.NestedScrollView
@@ -26,6 +26,20 @@
             android:orientation="vertical"
             android:paddingBottom="40dp"
             tools:ignore="MissingConstraints">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/cyan"
+                android:contentDescription="Volver a elección de sabores"
+                android:src="@drawable/ic_back"
+                app:layout_constraintEnd_toStartOf="@+id/txtToppings"
+                app:layout_constraintHorizontal_bias="0.166"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txtToppings"
@@ -61,10 +75,9 @@
                 android:id="@+id/choosenTopping"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="50dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/topping_list"
                 android:scrollbars="vertical"

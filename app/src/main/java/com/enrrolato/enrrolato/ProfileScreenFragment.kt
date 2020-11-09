@@ -12,7 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.enrrolato.enrrolato.database.Enrrolato
+import com.enrrolato.enrrolato.manager.Enrrolato
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -94,16 +94,22 @@ class ProfileScreenFragment : Fragment() {
     private fun logOut() {
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+
+        // Construct
         val popupConfirmExitView =
-            layoutInflater.inflate(R.layout.popup_confirm_exit, null)
-        val bt_ok: Button = popupConfirmExitView.findViewById(R.id.btOk);
-        val bt_cancel: Button = popupConfirmExitView.findViewById(R.id.btCancel);
+            layoutInflater.inflate(R.layout.popup_confirmation_message, null)
+        val btOk: Button = popupConfirmExitView.findViewById(R.id.btOk);
+        val btCancel: Button = popupConfirmExitView.findViewById(R.id.btCancel);
+        val text: TextView = popupConfirmExitView.findViewById(R.id.txtConfirmMessage)
+        text.text = getString(R.string.logout_confirmation)
+
+        // Set
         alertDialogBuilder?.setView(popupConfirmExitView)
         val alertDialog: AlertDialog = alertDialogBuilder!!.create()
         alertDialog.window?.attributes!!.windowAnimations = R.style.alert_dialog
         alertDialog.show()
 
-        bt_ok.setOnClickListener {
+        btOk.setOnClickListener {
             fragmentManager!!.beginTransaction().remove(this).commit();
             alertDialog.cancel()
 
@@ -115,18 +121,17 @@ class ProfileScreenFragment : Fragment() {
             prefs.apply()
         }
 
-        bt_cancel.setOnClickListener {
+        btCancel.setOnClickListener {
             alertDialog.cancel()
         }
     }
 
     private fun updateName() {
-        var txt = getString(R.string.new_name)
         val alertDialogBuilder = context?.let { AlertDialog.Builder(it, R.style.alert_dialog) }
         val layoutInflater: LayoutInflater = LayoutInflater.from(context)
         val popupUsername = layoutInflater.inflate(R.layout.popup_username, null)
         val msg: TextView = popupUsername.findViewById(R.id.txtMessage)
-        msg.text = txt
+        msg.text = getString(R.string.new_name)
         val bt_ok: Button = popupUsername.findViewById(R.id.btOkUsername);
         val bt_cancel: Button = popupUsername.findViewById(R.id.btCancelUsername);
         val u: TextView = popupUsername.findViewById(R.id.eTextUsername)

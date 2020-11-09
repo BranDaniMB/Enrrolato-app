@@ -8,19 +8,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import com.enrrolato.enrrolato.R
+import com.enrrolato.enrrolato.manager.Enrrolato
 
 
-class AdapterIceCream(): Adapter<AdapterIceCream.ViewHolder>() {
+class AdapterIceCream() : Adapter<AdapterIceCream.ViewHolder>() {
+    lateinit var list: ArrayList<String>
+    lateinit var listener: OnItemClickListener
 
-lateinit var list: ArrayList<String>
-lateinit var listener: OnItemClickListener
-
-    constructor(list: ArrayList<String>): this() {
+    constructor(list: ArrayList<String>) : this() {
         this.list = list
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list_icecream, null,false)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.selected_item_detail, null, false)
         return ViewHolder(view, listener)
     }
 
@@ -29,7 +30,7 @@ lateinit var listener: OnItemClickListener
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.asignData(list[position])
+        holder.assignData(list[position])
         holder.deleteData(position)
     }
 
@@ -41,21 +42,21 @@ lateinit var listener: OnItemClickListener
         fun onDeleteClick(position: Int)
     }
 
-    class ViewHolder(itemView: View, listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
-        var listener = listener
-        var data: TextView = itemView.findViewById(R.id.item)
+    class ViewHolder(itemView: View, var listener: OnItemClickListener) :
+        RecyclerView.ViewHolder(itemView) {
+        var itemName: TextView = itemView.findViewById(R.id.itemName)
         var delete: ImageButton = itemView.findViewById(R.id.imgDelete)
 
         fun deleteData(position: Int) {
             delete.setOnClickListener {
-                if(position != NO_POSITION) {
+                if (position != NO_POSITION) {
                     listener.onDeleteClick(position)
                 }
             }
         }
 
-        fun asignData(eData: String) {
-            data.setText(eData)
+        fun assignData(name: String) {
+            itemName.text = name
         }
 
     }

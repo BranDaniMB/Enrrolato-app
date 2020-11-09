@@ -61,18 +61,22 @@
     <string name="reset_password_fragment_title">Cambiar contraseña</string>
     <string name="reset_password_fragment_action">Cambiar contraseña</string>
 
+    <!-- general use -->
+    <string name="all">Todos</string>
+    <string name="no_elements">No hay elementos disponibles</string>
     <!-- Default Flavors Fragment -->
-    <string name="default_flavor_title">Sabores predefinidos</string>
-    <string name="preset_flavor_label">Predefinidos</string>
-    <string name="preset_flavor_list">Elija sabor predefinido</string>
+    <string name="default_flavor_title">Selección de helado</string>
+    <string name="preset_flavor_label">Especiales</string>
+    <string name="preset_flavor_list">Elija sabor especial</string>
     <string name="season_flavor_label">Temporada</string>
     <string name="season_flavor_list">Elija sabor de temporada</string>
     <string name="custom_icecream">Crear helado personalizado</string>
     <string name="no_preset">Debe seleccionar un helado</string>
+    <string name="predefined_select_warn">Usted ha elegido un especial o temporada, ¿Quiere comenzar uno personalizado?</string>
     <!-- Flavors Fragment -->
     <string name="flavor_title">Sabores personalizados</string>
     <string name="flavor_list">Lista de sabores</string>
-    <string name="flavor_selector">Elija sabor</string>
+    <string name="flavor_selector">Mostrar sabores disponibles</string>
     <string name="regular_flavor">Tradicional</string>
     <string name="liquor_flavor">Licor</string>
     <string name="no_flavor">No se han seleccionado sabores</string>
@@ -82,12 +86,14 @@
     <!-- Filling Fragment -->
     <string name="filling_title">Selección del jarabe</string>
     <string name="filling_list">Lista de jarabe</string>
-    <string name="filling_selector">Elija jarabe</string>
+    <string name="filling_selector">Mostrar jarabes disponibles</string>
     <string name="no_filling">Debe seleccionar un jarabe</string>
+    <string name="duplicated_filling">Ya seleccionó este relleno</string>
+    <string name="max_filling">Usted excedió el máximo de rellenos</string>
     <!-- Toppings Fragment -->
     <string name="topping_title">Selección de topping</string>
     <string name="topping_list">Lista de toppings</string>
-    <string name="topping_selector">Elija topping</string>
+    <string name="topping_selector">Mostrar toppings disponibles</string>
     <string name="topping_alert">* Topping extra tiene un valor de 400 colones</string>
     <string name="no_topping">Debe seleccionar algún topping</string>
     <string name="delete_topping_prompt">¿Desea eliminar el topping?</string>
@@ -96,9 +102,11 @@
     <!-- Container Fragment -->
     <string name="container_title">Escogencia de envases</string>
     <string name="container_list">Lista de envases</string>
-    <string name="container_selector">Elija un envase</string>
-    <string name="container_to_cart">Agregar el helado al carrito</string>
-    <string name="container_new_icecream">Agregar un nuevo helado</string>
+    <string name="container_selector">Mostrar envases disponibles</string>
+    <string name="container_to_cart">Agregar e ir al carrito</string>
+    <string name="container_new_icecream">Añadir otro helado</string>
+    <string name="no_container">Debe seleccionar un envase</string>
+    <string name="duplicated_container">Ya seleccionó este envase</string>
 
 
     <!-- <string name="name">Sample text</string> -->
@@ -133,12 +141,11 @@
     <string name="show_flavors">Mostrar sabores</string>
     <string name="show_fillings">Mostrar jarabes</string>
     <string name="show_topping">Mostrar toppings</string>
-    <string name="alert_18">* Sabor recomendado para personas +18 años</string>
+    <string name="alert_18">* Requiere ser mayor de 18 años</string>
     <string name="flavor">Sabor</string>
     <string name="ok">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="logout_confirmation">¿Está seguro que quiere cerrar sesión?</string>
-    <string name="no_container">Debe seleccionar un envase</string>
     <string name="enter_name">Digite su nombre</string>
     <string name="topping_menu">Menú de topping</string>
     <string name="filling_menu">Menú de jarabes</string>

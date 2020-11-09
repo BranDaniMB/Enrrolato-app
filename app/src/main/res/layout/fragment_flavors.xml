@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ly_flavor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cyan"
     android:orientation="vertical"
-    tools:context=".createIcecream.FlavorsFragment"
-    android:id="@+id/ly_flavor">
+    tools:context=".createIceCream.FlavorsFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollviewFlavor"
@@ -77,10 +76,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtFlavor">
 
                 <RadioButton
-                    android:id="@+id/rbTradicional"
+                    android:id="@+id/showAllFlavors"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/gotu_regular"
+                    android:text="@string/all"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <RadioButton
+                    android:id="@+id/rbTradicional"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/gotu_regular"
                     android:text="@string/regular_flavor"
                     android:textColor="@color/black"
@@ -102,47 +112,46 @@
             </RadioGroup>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/choosenFlavors"
+                android:id="@+id/selectedFlavors"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="1"
-                android:contentDescription="lista de sabores"
+                android:contentDescription="Selected Flavors"
                 android:scrollbars="vertical"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/txtLicourAlert"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spFlavor" />
 
             <TextView
                 android:id="@+id/txtLicourAlert"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginBottom="64dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/alert_18"
-                android:visibility="invisible"
                 android:textColor="@color/black"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/choosenFlavors"/>
+                app:layout_constraintTop_toBottomOf="@+id/selectedFlavors" />
 
             <Button
                 android:id="@+id/btContinue"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/round_shape"
                 android:paddingLeft="50dp"
-                android:layout_marginTop="20dp"
                 android:paddingRight="50dp"
                 android:text="@string/continue_action"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtLicourAlert"/>
+                app:layout_constraintTop_toBottomOf="@+id/txtLicourAlert" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

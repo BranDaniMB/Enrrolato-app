@@ -62,8 +62,8 @@
     <string name="no_flavor">You haven\'t chosen any flavor</string>
     <string name="no_preset">You must select an ice cream</string>
     <string name="topping_alert">* Every additional topping adds up 400 colones</string>
-    <string name="default_flavor_title">Preset flavors</string>
-    <string name="preset_flavor_label">Preset</string>
+    <string name="default_flavor_title">Ice cream selection</string>
+    <string name="preset_flavor_label">Special</string>
     <string name="preset_flavor_list">Choose a preset flavor</string>
     <string name="season_flavor_label">Season</string>
     <string name="season_flavor_list">Choose a season flavor</string>
@@ -75,7 +75,6 @@
     <string name="container_title">Container chioce</string>
     <string name="container_list">Container list</string>
     <string name="container_selector">Choose a container</string>
-    <string name="container_to_cart">Add to shopping cart</string>
     <string name="container_new_icecream">Add another ice cream</string>
     <string name="username">Username</string>
     <string name="home">Home</string>
@@ -89,7 +88,6 @@
     <string name="show_flavors">Show flavors</string>
     <string name="show_fillings">Show fillings</string>
     <string name="show_topping">Show toppings</string>
-    <string name="alert_18">* Recommended flavor for people + 18 years old</string>
     <string name="flavor">Flavor</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -103,4 +101,12 @@
     <string name="no_season">"There isn't season ice cream\nat the moment "</string>
     <string name="season_menu">Season ice cream menu</string>
     <string name="show_season_menu">Show season ice cream menu</string>
+    <string name="all">All</string>
+    <string name="alert_18">* Requires being over 18 years old</string>
+    <string name="max_filling">You have exceeded the maximum amout of fillings</string>
+    <string name="duplicated_filling">You have already chosen that filling</string>
+    <string name="container_to_cart">Add and go to cart</string>
+    <string name="duplicated_container">You have already chosen that container</string>
+    <string name="no_elements">No items available</string>
+    <string name="predefined_select_warn">You have chosen a special or season, do you want to start a personalized one?</string>
 </resources>

@@ -1,29 +1,30 @@
-package com.enrrolato.enrrolato.database
+package com.enrrolato.enrrolato.manager
 
 import android.app.Application
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.createIcecream.process.IcecreamManager
-import com.enrrolato.enrrolato.createIcecream.process.Manager
 import com.enrrolato.enrrolato.objects.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.database.core.utilities.Tree
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class Enrrolato: Application() {
-
-    //private var managerIcecream: IcecreamManager = IcecreamManager()
-    private var list: ArrayList<Icecream> = ArrayList()
-    private lateinit var manager : Manager
-
+    private var shoppingCart: ArrayList<IceCream> = ArrayList()
+    public lateinit var manager : MakeIceCream
     private val database: FirebaseDatabase
         get() = FirebaseDatabase.getInstance()
     private var user: User? = null
-    var listFlavors: ArrayList<Flavor> = ArrayList()
-    var listFillings: ArrayList<Filling> = ArrayList()
-    var listToppings: ArrayList<Topping> = ArrayList()
-    var listContainers: ArrayList<Container> = ArrayList()
-    var listSeasonIcecream: ArrayList<SeasonIcecream> = ArrayList()
-    var listPrices: ArrayList<Price> = ArrayList()
-    var listFavorites: ArrayList<Icecream> = ArrayList()
+    lateinit var listFlavors: SortedMap<String,Flavor>
+    lateinit var listFillings: SortedMap<String,Filling>
+    lateinit var listToppings: SortedMap<String,Topping>
+    lateinit var listContainers: SortedMap<String,Container>
+    lateinit var listPredefinedIceCream: SortedMap<String,PredefinedIceCream>
+    var listSchedules: HashMap<String, Schedule> = HashMap()
+    lateinit var prices: Prices
+    var listFavorites: ArrayList<IceCream> = ArrayList()
     private var df: String? = ""
     val String.toBoolean
         get() = this == "1"
@@ -41,30 +42,28 @@ class Enrrolato: Application() {
     }
 
     private fun initialize() {
-        manager = Manager(instance)
+        manager = MakeIceCream(this);
     }
 
     private fun loadFlavors() {
         // Acceder a la base de datos e inicializar las variables necesarias
-        val refFlavor = database.getReference(applicationContext.getString(R.string.db_flavors))
+        val refFlavor = database.getReference(applicationContext.getString(R.string.db_flavors));
 
         val flavorListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val temp: HashMap<String, HashMap<String, String>> =
                     dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
-                listFlavors.clear();
+                val items: MutableMap<String, Flavor> = mutableMapOf()
                 for ((key, value) in temp) {
-                    listFlavors.add(
-                        Flavor(
-                            value["name"]!!,
-                            value["isLiqueur"]!!.toBoolean,
-                            value["isSpecial"]!!.toBoolean,
-                            value["isExclusive"]!!.toBoolean,
-                            value["avaliable"]!!.toBoolean
-                        )
+                    items[key] = Flavor(
+                        value["name"]!!,
+                        value["isLiqueur"]!!.toBoolean,
+                        value["isSpecial"]!!.toBoolean,
+                        value["isExclusive"]!!.toBoolean,
+                        value["avaliable"]!!.toBoolean
                     )
                 }
-                println("Flavor: " + listFlavors.size)
+                listFlavors = items.toSortedMap()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -74,24 +73,22 @@ class Enrrolato: Application() {
 
     private fun loadFillings() {
         // Acceder a la base de datos e inicializar las variables necesarias
-        val refFilling = database.getReference(applicationContext.getString(R.string.db_fillings))
+        val refFilling = database.getReference(applicationContext.getString(R.string.db_fillings));
 
         val fillingListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val temp: HashMap<String, HashMap<String, String>> =
                     dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
-                listFillings.clear()
+                val items: MutableMap<String, Filling> = mutableMapOf()
                 for ((key, value) in temp) {
-                    listFillings.add(
-                        Filling(
-                            value["name"]!!,
-                            value["avaliable"]!!.toBoolean,
-                            value["isExclusive"]!!.toBoolean,
-                            value["isLiqueur"]!!.toBoolean
-                        )
+                    items[key] = Filling(
+                        value["name"]!!,
+                        value["avaliable"]!!.toBoolean,
+                        value["isExclusive"]!!.toBoolean,
+                        value["isLiqueur"]!!.toBoolean
                     )
                 }
-                println("Filling: " + listFillings.size)
+                listFillings = items.toSortedMap()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -101,23 +98,21 @@ class Enrrolato: Application() {
 
     private fun loadToppings() {
         // Acceder a la base de datos e inicializar las variables necesarias
-        val refTopping = database.getReference(applicationContext.getString(R.string.db_toppings))
+        val refTopping = database.getReference(applicationContext.getString(R.string.db_toppings)).orderByKey();
 
         val toppingListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val temp: HashMap<String, HashMap<String, String>> =
                     dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
-                listToppings.clear()
+                val items: MutableMap<String, Topping> = mutableMapOf()
                 for ((key, value) in temp) {
-                    listToppings.add(
-                        Topping(
-                            value["name"]!!,
-                            value["isExclusive"]!!.toBoolean,
-                            value["avaliable"]!!.toBoolean
-                        )
+                    items[key] = Topping(
+                        value["name"]!!,
+                        value["isExclusive"]!!.toBoolean,
+                        value["avaliable"]!!.toBoolean
                     )
                 }
-                println("Topping: " + listToppings.size)
+                listToppings = items.toSortedMap()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -128,24 +123,22 @@ class Enrrolato: Application() {
     private fun loadContainers() {
         // Acceder a la base de datos e inicializar las variables necesarias
         val refContainer =
-            database.getReference(applicationContext.getString(R.string.db_containers))
+            database.getReference(applicationContext.getString(R.string.db_containers)).orderByKey();
 
         val containerListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val temp: HashMap<String, HashMap<String, String>> =
                     dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
-                listContainers.clear()
+                val items: MutableMap<String, Container> = mutableMapOf()
                 for ((key, value) in temp) {
-                    listContainers.add(
-                        Container(
-                            value["name"]!!,
-                            value["avaliable"]!!.toBoolean,
-                            value["isExclusive"]!!.toBoolean,
-                            value["price"]!!.toInt()
-                        )
+                    items[key] = Container(
+                        value["name"]!!,
+                        value["avaliable"]!!.toBoolean,
+                        value["isExclusive"]!!.toBoolean,
+                        value["price"]!!.toInt()
                     )
                 }
-                println("Container: " + listContainers.size)
+                listContainers = items.toSortedMap()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -153,30 +146,29 @@ class Enrrolato: Application() {
         refContainer.addValueEventListener(containerListener)
     }
 
-    private fun loadSeason() {
+    private fun loadPredefinedIceCreams() {
         // Acceder a la base de datos e inicializar las variables necesarias
-        val refSeason = database.getReference("business/ice_creams")
+        val refSeason = database.getReference("business/ice_creams").orderByKey();
 
         val seasonListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val temp: HashMap<String, HashMap<String, String>> =
                     dataSnapshot.getValue(false) as HashMap<String, HashMap<String, String>>
-                listSeasonIcecream.clear()
+                val items: MutableMap<String, PredefinedIceCream> = mutableMapOf()
                 for ((key, value) in temp) {
-                    listSeasonIcecream.add(
-                        SeasonIcecream(
-                            value["name"]!!,
-                            value["flavor"]!!,
-                            value["filling"]!!,
-                            value["topping"]!!,
-                            value["container"]!!,
-                            value["isSpecial"]!!.toBoolean,
-                            value["isLiqueur"]!!.toBoolean,
-                            value["avaliable"]!!.toBoolean
-                        )
+                    items[key] = PredefinedIceCream(
+                        value["name"]!!,
+                        value["flavor"]!!,
+                        value["filling"]!!,
+                        value["topping"]!!,
+                        value["container"]!!,
+                        value["isSeason"]!!.toBoolean,
+                        value["isSpecial"]!!.toBoolean,
+                        value["isLiqueur"]!!.toBoolean,
+                        value["avaliable"]!!.toBoolean
                     )
                 }
-                println("Season: " + listSeasonIcecream.size)
+                listPredefinedIceCream = items.toSortedMap()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -190,21 +182,17 @@ class Enrrolato: Application() {
 
         val pricesListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val temp: HashMap<String, String> =
-                    dataSnapshot.getValue(false) as HashMap<String, String>
-                listPrices.clear()
-                for (value in temp) {
-                    listPrices.add(
-                        Price(value.key, value.value)
-                    )
-                }
-                println("Prices: " + listPrices.size)
-
-                /*
-                for (l in listPrices) {
-                    println("OJO AQUI = " + l.type + " - " + l.price + "\n")
-                }
-                 */
+                val temp: HashMap<String, String> = dataSnapshot.getValue(false) as HashMap<String, String>;
+                prices = Prices(
+                    temp["flavor_amount"]!!.toInt(),
+                    temp["filling_amount"]!!.toInt(),
+                    temp["topping_amount"]!!.toInt(),
+                    temp["regular_price"]!!.toInt(),
+                    temp["season_ice_cream"]!!.toInt(),
+                    temp["special_flavor"]!!.toInt(),
+                    temp["liqueur_flavor"]!!.toInt(),
+                    temp["extra_topping_price"]!!.toInt()
+                )
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -223,16 +211,17 @@ class Enrrolato: Application() {
                 listFavorites.clear()
                 for ((key, value) in temp) {
                     listFavorites.add(
-                        Icecream(
+                        IceCream(
                             value["id"],
                             value["flavor"]!!,
                             value["filling"]!!,
                             value["topping"]!!,
                             value["container"]!!,
                             value["price"]!!.toInt(),
-                            value["delivered"]!!.toBoolean,
                             value["favorite"]!!.toBoolean,
-                            value["sent"]!!.toBoolean
+                            value["sent"]!!.toBoolean,
+                            value["finished"]!!.toBoolean,
+                            value["plus18"]!!.toBoolean
                         )
                     )
                 }
@@ -242,6 +231,34 @@ class Enrrolato: Application() {
             override fun onCancelled(databaseError: DatabaseError) {}
         }
         refFavorites.addValueEventListener(favoritesListener)
+    }
+
+    private fun loadSchedules() {
+        // Acceder a la base de datos e inicializar las variables necesarias
+        val ref = database.getReference("business/schedules")
+
+        val schedulesListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val temp: HashMap<String, HashMap<String, Any>> =
+                    dataSnapshot.getValue(false) as HashMap<String, HashMap<String, Any>>
+                listSchedules.clear()
+                for ((key, value) in temp) {
+                    listSchedules[key] = Schedule(
+                        value["days"] as HashMap<String, Boolean>,
+                        value["startDate"] as String,
+                        value["endDate"] as String,
+                        value["startTime"] as String,
+                        value["endTime"] as String,
+                        (value["isActive"] as String).toBoolean,
+                        value["repeat"] as String,
+                        (value["typeOfAvailability"] as String).toBoolean
+                    )
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        }
+        ref.addValueEventListener(schedulesListener)
     }
 
     fun initUser(id: String?, username: String?) {
@@ -271,13 +288,17 @@ class Enrrolato: Application() {
         return FirebaseAuth.getInstance().currentUser?.uid
     }
 
+    fun verifyAvailability(): Boolean {
+        return true;
+    }
+
     fun getUsername(): DatabaseReference {
         return FirebaseDatabase.getInstance()
             .getReference(applicationContext.getString(R.string.db_app_users) + "/" + getId())
     }
 
     fun setUsername(u: String) {
-        var id: String? = getId()
+        val id: String? = getId()
         val ref = FirebaseDatabase.getInstance()
             .getReference(applicationContext.getString(R.string.db_app_users) + "/" + id)
 
@@ -286,37 +307,53 @@ class Enrrolato: Application() {
         }
     }
 
-    fun update() {
+    private fun update() {
         loadFlavors()
         loadFillings()
         loadToppings()
         loadContainers()
-        loadSeason()
+        loadPredefinedIceCreams()
         loadPrices()
+        loadSchedules()
     }
 
-    fun createIcecream(): Manager {
-        return manager
+    private fun generateOrderID(): String {
+        val sdf = SimpleDateFormat("yyyyMMddHHmmss")
+        sdf.timeZone = TimeZone.getTimeZone("GMT-6")
+        return sdf.format(Date().time);
+    }
+
+    private fun getDateTime(): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        sdf.timeZone = TimeZone.getTimeZone("GMT-6")
+        return sdf.format(Date().time);
     }
 
     fun sendAllOrders(username: String?) {
         var count = 0
         val ref = FirebaseDatabase.getInstance().getReference("app/orders")
-        var date = manager.getIcecreamManager().getDate()
+        val date = generateOrderID();
+        var orderPrice: Double = 0.0;
 
         ref.child(date).child("username").setValue(username)
+        ref.child(date).child("prepared").setValue(false)
+        ref.child(date).child("delivered").setValue(false)
+        ref.child(date).child("done").setValue(false)
+        ref.child(date).child("date").setValue(getDateTime())
 
         for (l in getList()) {
             if (!l.sent) {
                 setSent(count)
                 count++
-                ref.child(date).child("icecream_$count").setValue(l)
+                ref.child(date).child("icecreams").child("icecream_$count").setValue(l)
+                orderPrice += l.price;
             }
         }
-        manager.getIcecreamManager().cleanData()
+
+        ref.child(date).child("price").setValue(orderPrice);
     }
 
-    fun addFavoriteIcecream(i: Int) {
+    fun addFavoriteIceCream(i: Int) {
         val ref = FirebaseDatabase.getInstance().getReference("app/users")
         var id = getId()
         var icecream = getList()[i]
@@ -328,7 +365,7 @@ class Enrrolato: Application() {
         }
     }
 
-    fun removeFavoriteIcecream(idFavorite: String?) {
+    fun removeFavoriteIceCream(idFavorite: String?) {
         var id = getId()
         val ref = FirebaseDatabase.getInstance().getReference("app/users")
 
@@ -353,42 +390,34 @@ class Enrrolato: Application() {
 
     fun chargeFavorites() {
         for(l in listFavorites) {
-            list.add(l)
+            shoppingCart.add(l)
         }
     }
 
-    fun addListSeason() {
-        var id = getId()
-        list.add(manager.createSeasonIceCream(id))
-        manager.getIcecreamManager().cleanData()
-    }
-
-    fun addList() {
-        var id = getId()
-        list.add(manager.create(id))
-        manager.getIcecreamManager().cleanData()
-    }
-
-    fun getList(): ArrayList<Icecream> {
-        return list
+    fun getList(): ArrayList<IceCream> {
+        return shoppingCart
     }
 
     fun setFavorite(i: Int) {
-        list[i].favorite = list[i].favorite != true
+        shoppingCart[i].favorite = shoppingCart[i].favorite != true
     }
 
     fun getFavorite(i: Int): Boolean {
-        return list[i].favorite
+        return shoppingCart[i].favorite
     }
 
     private fun setSent(i: Int) {
-        list[i].sent = true
+        shoppingCart[i].sent = true
     }
 
     fun deleteFromList(p: Int) {
-        if(list.isNotEmpty()) {
-            list.removeAt(p)
+        if(shoppingCart.isNotEmpty()) {
+            shoppingCart.removeAt(p)
         }
+    }
+
+    fun addIceCreamToShoppingCart(it: IceCream) {
+        shoppingCart.add(it);
     }
 
 }

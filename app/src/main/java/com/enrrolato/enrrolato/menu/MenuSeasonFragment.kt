@@ -12,29 +12,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.PrincipalMenuFragment
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.adapter.AdapterMenu
-import com.enrrolato.enrrolato.database.Enrrolato
-import com.enrrolato.enrrolato.objects.SeasonIcecream
+import com.enrrolato.enrrolato.manager.Enrrolato
 
 class MenuSeasonFragment : Fragment() {
-
-    private lateinit var listSeason: ArrayList<SeasonIcecream>
-    private lateinit var seasonList: ArrayList<String>
     private var enrrolato = Enrrolato.instance
-    private var listToRecycler: ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_menu_season, container, false)
-        var rvSeason = view.findViewById<View>(R.id.menuSeason) as RecyclerView
-        var back = view.findViewById<View>(R.id.btBackToPrincipal3) as ImageButton
-        var noSeason = view.findViewById<View>(R.id.txtNoSeason) as TextView
+        val view = inflater.inflate(R.layout.fragment_menu_season, container, false)
+        val rvSeason = view.findViewById<View>(R.id.menuSeason) as RecyclerView
+        val back = view.findViewById<View>(R.id.btBackToPrincipal3) as ImageButton
+        val noSeason = view.findViewById<View>(R.id.txtNoSeason) as TextView
 
-        chargeSeason(rvSeason)
+        chargePredefined(rvSeason)
 
-        if (rvSeason?.adapter == null) {
+        if (rvSeason.adapter == null) {
             noSeason.visibility = View.VISIBLE
         }
         else {
@@ -56,22 +51,20 @@ class MenuSeasonFragment : Fragment() {
         transaction.commit()
     }
 
-    private fun chargeSeason(rv: RecyclerView) {
-        listSeason = enrrolato.listSeasonIcecream
-        seasonList = ArrayList()
+    private fun chargePredefined(rv: RecyclerView) {
+        val temp: ArrayList<String> = ArrayList()
 
-        for (list in listSeason) {
-            if (list.avaliable) {
-                seasonList.add(list.name)
-                choose(rv, list.name)
+        for (item in enrrolato.listPredefinedIceCream.values) {
+            if (item.available && item.isSeason) {
+                temp.add(item.name)
             }
         }
+        choose(rv, temp)
     }
 
-    private fun choose(recycler: RecyclerView, fs:String) {
+    private fun choose(recycler: RecyclerView, list: ArrayList<String>) {
         recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        listToRecycler.add(fs)
-        var af = AdapterMenu(listToRecycler)
+        val af = AdapterMenu(list)
         recycler.adapter = af
     }
 }

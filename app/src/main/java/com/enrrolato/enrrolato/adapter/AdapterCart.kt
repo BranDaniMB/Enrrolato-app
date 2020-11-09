@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.enrrolato.enrrolato.DetailFragment
 import com.enrrolato.enrrolato.R
-import com.enrrolato.enrrolato.database.Enrrolato
+import com.enrrolato.enrrolato.manager.Enrrolato
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -90,7 +90,7 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
                 R.id.favoriteDisabled -> {
                     if(!enrrolato.getFavorite(id)) {
                         favoriteDisabled.visibility = View.INVISIBLE
-                        enrrolato.addFavoriteIcecream(id)
+                        enrrolato.addFavoriteIceCream(id)
                         idFavorite = enrrolato.catchFavorite()
                         favoriteEnabled.visibility = View.VISIBLE
                         enrrolato.setFavorite(id)
@@ -106,7 +106,7 @@ class AdapterCart(): Adapter<AdapterCart.ViewHolder>() {
                 R.id.favoriteEnabled -> {
                     if(enrrolato.getFavorite(id)) {
                         favoriteDisabled.visibility = View.VISIBLE
-                        enrrolato.removeFavoriteIcecream(idFavorite)
+                        enrrolato.removeFavoriteIceCream(idFavorite)
                         favoriteEnabled.visibility = View.INVISIBLE
                         enrrolato.setFavorite(id)
                     }

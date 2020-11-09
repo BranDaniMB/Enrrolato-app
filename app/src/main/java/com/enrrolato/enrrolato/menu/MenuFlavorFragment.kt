@@ -10,13 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.adapter.AdapterMenu
-import com.enrrolato.enrrolato.database.Enrrolato
+import com.enrrolato.enrrolato.manager.Enrrolato
 import com.enrrolato.enrrolato.objects.Flavor
 
 class MenuFlavorFragment : Fragment() {
-
-    private lateinit var flavorList: ArrayList<String>
-    private lateinit var listFlavor: ArrayList<Flavor>
     private var enrrolato = Enrrolato.instance
     private var traditional: ArrayList<String> = ArrayList()
     private var licour: ArrayList<String> = ArrayList()
@@ -52,46 +49,36 @@ class MenuFlavorFragment : Fragment() {
     }
 
     private fun chargeTrad(rv: RecyclerView, a: ArrayList<String>) {
-        listFlavor = enrrolato.listFlavors
-        flavorList = ArrayList()
-
-        for (list in listFlavor) {
-            if (!list.isSpecial && !list.isExclusive && list.avaliable) {
-                flavorList.add(list.name)
-                chooseFlavor(rv, list, a)
+        for (flavor in enrrolato.listFlavors.values) {
+            if (!flavor.isSpecial && !flavor.isExclusive && flavor.avaliable) {
+                a.add(flavor.name)
             }
         }
+        chooseFlavor(rv, a)
     }
 
     private fun chargeLic(rv: RecyclerView, a: ArrayList<String>) {
-        listFlavor = enrrolato.listFlavors
-        flavorList = ArrayList()
-
-        for (list in listFlavor) {
-            if((list.isSpecial && list.isLiqueur) && !list.isExclusive && list.avaliable) {
-                flavorList.add(list.name)
-                chooseFlavor(rv, list, a)
+        for (flavor in enrrolato.listFlavors.values) {
+            if (flavor.isLiqueur && !flavor.isExclusive && flavor.avaliable) {
+                a.add(flavor.name)
             }
         }
+        chooseFlavor(rv, a)
     }
 
     private fun chargeSpecial(rv: RecyclerView, a: ArrayList<String>) {
-        listFlavor = enrrolato.listFlavors
-        flavorList = ArrayList()
-
-        for (list in listFlavor) {
-            if (list.isSpecial && !list.isLiqueur && list.avaliable) {
-                flavorList.add(list.name)
-                chooseFlavor(rv, list, a)
+        for (flavor in enrrolato.listFlavors.values) {
+            if (flavor.isSpecial && !flavor.isLiqueur && flavor.avaliable) {
+                a.add(flavor.name)
             }
         }
+        chooseFlavor(rv, a)
     }
 
-    private fun chooseFlavor(recyclerFlavors: RecyclerView, f: Flavor, listToRecycler: ArrayList<String>) {
+    private fun chooseFlavor(recyclerFlavors: RecyclerView, listToRecycler: ArrayList<String>) {
         recyclerFlavors.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        listToRecycler.add(f.name)
-        var af = AdapterMenu(listToRecycler)
+        val af = AdapterMenu(listToRecycler)
         recyclerFlavors.adapter = af
     }
 }

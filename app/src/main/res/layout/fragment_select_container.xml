@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ly_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cyan"
     android:orientation="vertical"
-    tools:context=".createIcecream.SelectContainerFragment"
-    android:id="@+id/ly_container">
+    tools:context=".createIceCream.ContainerFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollviewTopping"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:paddingBottom="30dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:layout_editor_absoluteX="57dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,52 +50,66 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spContainer"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="32dp"
-        android:background="@color/black"
-        android:contentDescription="Elija el envase de preferencia"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtContainer" />
-    <!--android:style="@style/spinner_style"-->
+            <Spinner
+                android:id="@+id/spContainer"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="32dp"
+                android:background="@color/black"
+                android:contentDescription="Elija el envase de preferencia"
+                android:spinnerMode="dropdown"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtContainer" />
+            <!--android:style="@style/spinner_style"-->
 
-    <Button
-        android:id="@+id/btAddToShopCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/round_shape"
-        android:fontFamily="@font/gotu_regular"
-        android:padding="20dp"
-        android:text="@string/container_to_cart"
-        app:layout_constraintBottom_toTopOf="@+id/btAddNewIceCream"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spContainer" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/selectedContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/topping_list"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spContainer" />
 
-    <Button
-        android:id="@+id/btAddNewIceCream"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/round_shape"
-        android:fontFamily="@font/gotu_regular"
-        android:padding="20dp"
-        android:text="@string/container_new_icecream"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btAddToShopCart" />
+            <Button
+                android:id="@+id/btAddToShopCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/round_shape"
+                android:fontFamily="@font/gotu_regular"
+                android:padding="20dp"
+                android:text="@string/container_to_cart"
+                app:layout_constraintBottom_toTopOf="@+id/btAddNewIceCream"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectedContainer" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/btAddNewIceCream"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/round_shape"
+                android:fontFamily="@font/gotu_regular"
+                android:padding="20dp"
+                android:text="@string/container_new_icecream"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btAddToShopCart" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 

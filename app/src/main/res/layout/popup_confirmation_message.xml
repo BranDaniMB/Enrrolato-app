@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,45 +8,59 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_marginTop="15dp"
-        android:textColor="@color/black"
         android:id="@+id/txtConfirmMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text=""
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/gotu_regular"
-        android:textSize="16sp"/>
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+
+    <Button
+        android:id="@+id/btCancel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/round_shape"
+        android:fontFamily="@font/gotu_regular"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="@string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btOk"
+        app:layout_constraintTop_toBottomOf="@+id/txtConfirmMessage"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/btCancel1"
-            android:background="@drawable/round_shape"
-            android:layout_marginRight="50dp"
-            android:text="@string/cancel"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:fontFamily="@font/gotu_regular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btOk"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/round_shape"
+        android:fontFamily="@font/gotu_regular"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="@string/ok"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btCancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtConfirmMessage"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/btOk1"
-            android:background="@drawable/round_shape"
-            android:text="@string/ok"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:fontFamily="@font/gotu_regular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

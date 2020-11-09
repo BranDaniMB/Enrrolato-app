@@ -19,9 +19,7 @@ class AdapterMenu(): Adapter<AdapterMenu.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list_icecream, null,false)
-        var trash = view.findViewById<View>(R.id.imgDelete) as ImageButton
-        trash.visibility = View.INVISIBLE
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list_icecream, null,false)
         return ViewHolder(view)
     }
 
@@ -30,7 +28,7 @@ class AdapterMenu(): Adapter<AdapterMenu.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.asignData(list.get(position))
+        holder.assignData(list[position])
     }
 
     fun setOnClickListener(listener: View.OnClickListener) {
@@ -40,8 +38,8 @@ class AdapterMenu(): Adapter<AdapterMenu.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var data : TextView = itemView.findViewById(R.id.item)
 
-        fun asignData(eData: String) {
-            data.setText(eData)
+        fun assignData(eData: String) {
+            data.text = eData.capitalize();
         }
     }
 

@@ -11,17 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.enrrolato.enrrolato.R
 import com.enrrolato.enrrolato.adapter.AdapterMenu
-import com.enrrolato.enrrolato.database.Enrrolato
+import com.enrrolato.enrrolato.manager.Enrrolato
 import com.enrrolato.enrrolato.objects.Filling
 import com.enrrolato.enrrolato.objects.Topping
 
 class MenuFillingToppingFragment : Fragment() {
-
     private var selection: Boolean = false
-    private lateinit var fillingList: ArrayList<String>
-    private lateinit var toppingList: ArrayList<String>
-    private lateinit var listFilling: ArrayList<Filling>
-    private lateinit var listTopping: ArrayList<Topping>
     private var enrrolato = Enrrolato.instance
     private var listToRecycler: ArrayList<String> = ArrayList()
 
@@ -67,25 +62,17 @@ class MenuFillingToppingFragment : Fragment() {
     }
 
     private fun chargeFilling(rv: RecyclerView) {
-        listFilling = enrrolato.listFillings
-        fillingList = ArrayList()
-
-        for (list in listFilling) {
-            if (list.available) {
-                fillingList.add(list.name)
-                choose(rv, list.name)
+        for (filling in enrrolato.listFillings.values) {
+            if (filling.available) {
+                choose(rv, filling.name)
             }
         }
     }
 
     private fun chargeTopping(rv: RecyclerView) {
-        listTopping = enrrolato.listToppings
-        toppingList = ArrayList()
-
-        for (list in listTopping) {
-            if (list.available) {
-                toppingList.add(list.name)
-                choose(rv, list.name)
+        for (topping in enrrolato.listToppings.values) {
+            if (topping.available) {
+                choose(rv, topping.name)
             }
         }
     }
@@ -96,6 +83,4 @@ class MenuFillingToppingFragment : Fragment() {
         var af = AdapterMenu(listToRecycler)
         recycler.adapter = af
     }
-
-
 }
